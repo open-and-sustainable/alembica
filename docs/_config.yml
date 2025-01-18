@@ -1,0 +1,22 @@
+# Jekyll theme
+remote_theme: open-and-sustainable/greendoc_theme
+# title and description, URLs
+title: "`alembica`"
+description: "Documentation of `alembica`"
+baseurl: "/alembica"
+url: "https://open-and-sustainable.github.io"
+github_repo: "https://github.com/open-and-sustainable/alembica"
+# logo and favicon
+logo: "assets/images/logo.png"
+favicon: "assets/images/favicon.ico"
+# configuration of navigation entries
+nav_links:
+  - name: "Research &<br>Development"
+    url: "/research-development.html"
+  - name: "Help &<br>Resources"
+    url: "/help-resources.html"
+# configuration of custom colors
+nav_background_color: "#8B0000"  # Dark Red (Maroon) for the nav bar
+nav_hover_color: "#006400"       # Dark Green for hover effects
+nav_link_color: "#ffffff"        # Keep white for readability
+toc-hover-color: "#006400"       # Dark Green for TOC hover color
