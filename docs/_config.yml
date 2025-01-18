@@ -1,7 +1,7 @@
 # Jekyll theme
 remote_theme: open-and-sustainable/greendoc_theme
 # title and description, URLs
-title: "`alembica`"
+title: "alembica"
 description: "Documentation of `alembica`"
 baseurl: "/alembica"
 url: "https://open-and-sustainable.github.io"
