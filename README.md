@@ -1,4 +1,4 @@
-# ![logo](https://raw.githubusercontent.com/open-and-sustainable/alembica/main/figures/logo.png) alembica
+# ![logo](https://raw.githubusercontent.com/open-and-sustainable/alembica/main/docs/assets/images/logo.png) `alembica`
 
 Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
 ---

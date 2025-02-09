@@ -12,3 +12,5 @@ Security: For vulnerabilities.
 ## [0.0.1] - unreleased
 ### Added
 - Initial project structure
+- Code reuse from prismAId tool
+- Testing design
