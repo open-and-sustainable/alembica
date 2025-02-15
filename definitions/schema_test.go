@@ -39,8 +39,30 @@ func TestSchemaValidation(t *testing.T) {
 		t.Fatalf("Schema v1/input not found in SchemaStore")
 	}
 
-	documentLoader := gojsonschema.NewStringLoader(`{"metadata": {"schemaVersion": "v1", "timestamp": "2025-02-10T12:00:00Z"}}`)
-	result, err := schema.Validate(documentLoader)
+	documentLoader := gojsonschema.NewStringLoader(`{
+		"metadata": {
+			"schemaVersion": "v1",
+			"timestamp": "2025-02-10T12:00:00Z"
+		},
+		"models": [
+			{
+				"provider": "OpenAI",
+				"api_key": "test-key",
+				"model": "gpt-4o",
+				"temperature": 0.7,
+				"tpm_limit": 1000,
+				"rpm_limit": 2000
+			}
+		],
+		"prompts": [
+			{
+				"promptContent": "Hello",
+				"sequenceId": "123",
+				"sequenceNumber": 1
+			}
+		]
+	}`)
+		result, err := schema.Validate(documentLoader)
 	if err != nil {
 		t.Fatalf("Error during schema validation: %v", err)
 	}
