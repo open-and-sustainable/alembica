@@ -39,7 +39,7 @@ func (l standardLogger) Error(args ...interface{}) {
 }
 
 // defaultLogger is a Logger that does nothing.
-var defaultLogger = standardLogger{log.New(io.Discard, "", 0)}
+var defaultLogger Logger = standardLogger{log.New(io.Discard, "", log.LstdFlags)}
 
 // activeLogger holds the currently active Logger.
 var activeLogger Logger = defaultLogger
