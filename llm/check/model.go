@@ -2,6 +2,7 @@ package check
 
 import (
 	"log"
+
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 
 	anthropic "github.com/anthropics/anthropic-sdk-go"
@@ -62,31 +63,30 @@ func getOpenAIModel(prompt string, modelName string, key string) string {
 	case "gpt-4o-mini":
 		model = openai.GPT4oMini
 	default:
-		log.Println("Unsopported model: ", modelName)
+		log.Println("Unsupported model: ", modelName)
 		return ""
 	}
 	return model
 }
 
 func getGoogleAIModel(prompt string, modelName string, key string) string {
-	model := "gemini-1.0-pro"
+	model := "gemini-1.5-pro"
 	switch modelName {
-	case "": // cost optimization, input token limit values: gemini-1.0-pro 30720, gemini-1.5-flash 1048576, gemini-1.5-pro 2097152
+	case "": // cost optimization, input token limit values: gemini-1.5-flash 1048576, gemini-1.5-pro 2097152
 		counter := tokens.RealTokenCounter{}
 		numTokens := counter.GetNumTokensFromPrompt(prompt, "GoogleAI", modelName, key)
-		if numTokens > 30720 && numTokens <= 1048576 {
+		if numTokens <= 1048576 {
 			model = "gemini-1.5-flash"
-		} else if numTokens > 1048576 {
-			model = "gemini-1.5-pro"
 		}
-	case "gemini-1.0-pro": // leave the model selected by the user, but chek if supported
-		model = modelName
+	case "gemini-1.0-pro": // deprecated from Feb 15 2025
+		log.Println("Unsupported model: ", modelName)
+		return ""
 	case "gemini-1.5-flash":
 		model = modelName
 	case "gemini-1.5-pro":
 		model = modelName
 	default:
-		log.Println("Unsopported model: ", modelName)
+		log.Println("Unsupported model: ", modelName)
 		return ""
 	}
 	return model
@@ -108,7 +108,7 @@ func getCohereModel(prompt string, modelName string, key string) string {
 	case "command-r7b-12-2024":
 		model = modelName			
 	default:
-		log.Println("Unsopported model: ", modelName)
+		log.Println("Unsupported model: ", modelName)
 		return ""
 	}
 	return model
@@ -144,7 +144,7 @@ func getDeepSeekModel(prompt string, modelName string, key string) string {
 	case "deepseek-chat": // leave the model selected by the user, but chek if supported
 		model = modelName
 	default:
-		log.Println("Unsopported model: ", modelName)
+		log.Println("Unsupported model: ", modelName)
 		return ""
 	}
 	return model

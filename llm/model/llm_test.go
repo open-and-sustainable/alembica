@@ -1,48 +1,84 @@
-// mock_query_service.go
-
 package model
 
 import (
-	"fmt"
-	"github.com/open-and-sustainable/alembica/review"
+	"errors"
 	"testing"
+
+	"github.com/open-and-sustainable/alembica/definitions"
 )
 
-// MockQueryService simulates the QueryService for testing purposes
-type MockQueryService struct{}
-
-func (m MockQueryService) QueryLLM(prompt string, llm review.Model, options review.Options) (string, string, string, error) {
-	// Simulate responses based on input for testing
-	switch prompt {
-	case "test prompt":
-		return "justified based on prompt", "summary of prompt", "full response for prompt", nil
-	default:
-		return "", "", "", fmt.Errorf("no response for the given prompt")
-	}
+// MockQueryService implements QueryService for testing
+type MockQueryService struct {
+	MockResponse []string
+	MockError    error
 }
 
-func TestSomeFunctionThatUsesQueryLLM(t *testing.T) {
-	mockService := MockQueryService{}
-	llm := review.Model{Provider: "MockProvider"}
-	options := review.Options{}
+// Implements QueryLLM method for mocking
+func (mqs MockQueryService) QueryLLM(prompts []string, llm definitions.Model) ([]string, error) {
+	if mqs.MockError != nil {
+		return nil, mqs.MockError
+	}
+	return mqs.MockResponse, nil
+}
 
-	justification, summary, fullResponse, err := mockService.QueryLLM("test prompt", llm, options)
-	if err != nil {
-		t.Errorf("Failed during function execution: %v", err)
+func TestQueryLLM_MockService(t *testing.T) {
+	// Define test cases
+	tests := []struct {
+		name        string
+		prompts     []string
+		llm         definitions.Model
+		mockResp    []string
+		mockErr     error
+		expectResp  []string
+		expectError bool
+	}{
+		{
+			name:       "Successful query",
+			prompts:    []string{"Hello, AI!"},
+			llm:        definitions.Model{Provider: "MockProvider"},
+			mockResp:   []string{"Hello, human!"},
+			mockErr:    nil,
+			expectResp: []string{"Hello, human!"},
+		},
+		{
+			name:        "LLM returns an error",
+			prompts:     []string{"Error test"},
+			llm:         definitions.Model{Provider: "MockProvider"},
+			mockResp:    nil,
+			mockErr:     errors.New("API failure"),
+			expectResp:  nil,
+			expectError: true,
+		},
 	}
 
-	// Assert the expected outputs
-	expectedJustification := "justified based on prompt"
-	expectedSummary := "summary of prompt"
-	expectedFullResponse := "full response for prompt"
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			// Use MockQueryService
+			mockService := MockQueryService{
+				MockResponse: tc.mockResp,
+				MockError:    tc.mockErr,
+			}
 
-	if justification != expectedJustification {
-		t.Errorf("Expected justification %s, got %s instead", expectedJustification, justification)
-	}
-	if summary != expectedSummary {
-		t.Errorf("Expected summary %s, got %s instead", expectedSummary, summary)
-	}
-	if fullResponse != expectedFullResponse {
-		t.Errorf("Expected full response %s, got %s instead", expectedFullResponse, fullResponse)
+			// Call QueryLLM
+			resp, err := mockService.QueryLLM(tc.prompts, tc.llm)
+
+			// Check if error expectation matches
+			if tc.expectError && err == nil {
+				t.Errorf("%s: expected error, got nil", tc.name)
+			} else if !tc.expectError && err != nil {
+				t.Errorf("%s: unexpected error: %v", tc.name, err)
+			}
+
+			// Check response match
+			if len(resp) != len(tc.expectResp) {
+				t.Errorf("%s: expected response length %d, got %d", tc.name, len(tc.expectResp), len(resp))
+			} else {
+				for i := range resp {
+					if resp[i] != tc.expectResp[i] {
+						t.Errorf("%s: expected response %q, got %q", tc.name, tc.expectResp[i], resp[i])
+					}
+				}
+			}
+		})
 	}
 }
