@@ -1,7 +1,8 @@
 package tokens
 
 import (
-	"log"
+    "fmt"
+    "github.com/open-and-sustainable/alembica/utils/logger"
 )
 
 // TokenCounter defines an interface for counting tokens in text prompts.
@@ -44,7 +45,7 @@ func (rtc RealTokenCounter) GetNumTokensFromPrompt(prompt string, provider strin
     case "DeepSeek":
         numTokens = numTokensFromPromptOpenAI(prompt, "gpt-4o", key)
     default:
-        log.Println("Unsupported LLM provider: ", provider)
+        logger.Error(fmt.Println("Unsupported LLM provider: ", provider))
         return 0
     }
     return numTokens
