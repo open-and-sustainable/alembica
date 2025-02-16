@@ -4,6 +4,7 @@ import (
     "fmt"
     "github.com/xeipuuv/gojsonschema"
     "github.com/open-and-sustainable/alembica/definitions"
+	"github.com/open-and-sustainable/alembica/utils/logger"
 
     "strings"
 )
@@ -41,12 +42,17 @@ func validateJSON(jsonString, version, schemaType string) error {
 
 func ValidateInput(jsonString string, version string) error {
     if _, ok := definitions.SchemaStore[version]["input"]; !ok {
-        fmt.Printf("Loading schema for version %s\n", version) // Debug log
+        logger.Info(fmt.Printf("Loading schema for version %s\n", version))
         if err := definitions.LoadSchema(version, "input"); err != nil {
+            logger.Error(err)
             return err
         }
     }
-
     // Proceed with validation
-    return validateJSON(jsonString, version, "input")
+    errors := validateJSON(jsonString, version, "input")
+    if errors != nil {
+        logger.Error(errors)
+        return errors
+    }
+    return nil
 }

@@ -2,7 +2,6 @@ package pricing
 
 import (
     "testing"
-
     "github.com/shopspring/decimal"
 )
 
@@ -34,25 +33,43 @@ func TestComputeCosts(t *testing.T) {
     // Replace the package-level tokenCounter with the mock
     tokenCounter = mockCounter
 
-    prompts := []string{
-        "Test prompt one",
-        "Test prompt two",
-    }
-
-    provider := "OpenAI"
-    model := "gpt-4"
-    key := "test-api-key"
+    // Create JSON input
+    jsonInput := `{
+        "metadata": {
+            "schemaVersion": "v1",
+            "timestamp": "2025-02-15T12:00:00Z"
+        },
+        "models": [
+            {
+                "provider": "OpenAI",
+                "api_key": "test-api-key",
+                "model": "gpt-4"
+            }
+        ],
+        "prompts": [
+            {
+                "promptContent": "Test prompt one",
+                "sequenceId": "1",
+                "sequenceNumber": 1
+            },
+            {
+                "promptContent": "Test prompt two",
+                "sequenceId": "2",
+                "sequenceNumber": 2
+            }
+        ]
+    }`
 
     // Expected total cost calculation
     numTokens1 := mockCounter.TokensPerPrompt["Test prompt one"]
     numTokens2 := mockCounter.TokensPerPrompt["Test prompt two"]
 
-    cost1 := numCentsFromTokens(numTokens1, model)
-    cost2 := numCentsFromTokens(numTokens2, model)
+    cost1 := numCentsFromTokens(numTokens1, "gpt-4")
+    cost2 := numCentsFromTokens(numTokens2, "gpt-4")
     expectedTotalCost := cost1.Add(cost2)
 
     // Call ComputeCosts
-    totalCostStr := ComputeCosts(prompts, provider, model, key)
+    totalCostStr := ComputeCosts(jsonInput)
 
     totalCost, err := decimal.NewFromString(totalCostStr)
     if err != nil {

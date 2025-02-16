@@ -1,7 +1,11 @@
 package pricing
 
 import (
-	"log"
+	"encoding/json"
+	"fmt"
+
+	"github.com/open-and-sustainable/alembica/definitions"
+	"github.com/open-and-sustainable/alembica/utils/logger"
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 
 	"github.com/shopspring/decimal"
@@ -10,19 +14,26 @@ import (
 // Declare a package-level TokenCounter variable
 var tokenCounter tokens.TokenCounter = tokens.RealTokenCounter{}
 
-// ComputeCosts processes a list of input prompts and calculates the total cost based on the specified 
-// model and provider. The function uses predefined rates for each model and computes the cost by 
-// iterating through each prompt.
-//
-// Arguments:
-// - prompts: A slice of strings containing the input prompts to process.
-// - provider: The name of the service provider (e.g., OpenAI).
-// - model: The model being used to process the prompts.
-// - key: An authentication key used for accessing the service.
-//
-// Returns:
-// - A string containing the total cost information as a formatted output.
-func ComputeCosts(prompts []string, provider string, model string, key string) string {
+// ComputeCosts processes a list of input prompts and calculates the total cost of input tokensbased on the specified 
+// model and provider. 
+func ComputeCosts(jsonInput string) string {
+	// Parse the JSON input
+	var input definitions.Input
+	err := json.Unmarshal([]byte(jsonInput), &input)
+	if err != nil {
+		logger.Error(fmt.Println("Failed to parse JSON input:", err))
+		return "0"
+	}
+
+	// Extract relevant fields
+	provider := input.Models[0].Provider // Assuming at least one model exists
+	model := input.Models[0].Model
+	key := input.Models[0].APIKey
+	prompts := make([]string, len(input.Prompts))
+	for i, prompt := range input.Prompts {
+		prompts[i] = prompt.PromptContent
+	}
+	
 	// assess and report costs
 	totalCost := decimal.NewFromInt(0)
 	counter := 0
@@ -30,10 +41,10 @@ func ComputeCosts(prompts []string, provider string, model string, key string) s
 		counter++
 		cost, err := assessPromptCost(prompt, provider, model, key)
 		if err == nil {
-			log.Println("File: ", counter, "Model: ", model, " Cost: ", cost)
+			logger.Info(fmt.Println("File: ", counter, "Model: ", model, " Cost: ", cost))
 			totalCost = totalCost.Add(cost)
 		} else {
-			log.Println("Error: ", err)
+			logger.Error(fmt.Println("Error: ", err))
 		}
 	}
 	return totalCost.String()
