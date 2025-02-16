@@ -1,8 +1,9 @@
 package check
 
 import (
-	"log"
+	"fmt"
 
+	"github.com/open-and-sustainable/alembica/utils/logger"
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 
 	anthropic "github.com/anthropics/anthropic-sdk-go"
@@ -39,7 +40,7 @@ func GetModel(prompt string, providerName string, modelName string, key string) 
 	case "DeepSeek":
 		modelFunc = getDeepSeekModel
 	default:
-		log.Println("Unsupported LLM provider: ", providerName)
+		logger.Error(fmt.Println("Unsupported LLM provider: ", providerName))
 		return ""
 	}
 	return modelFunc(prompt, modelName, key)
@@ -63,7 +64,7 @@ func getOpenAIModel(prompt string, modelName string, key string) string {
 	case "gpt-4o-mini":
 		model = openai.GPT4oMini
 	default:
-		log.Println("Unsupported model: ", modelName)
+		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
 	}
 	return model
@@ -79,14 +80,14 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 			model = "gemini-1.5-flash"
 		}
 	case "gemini-1.0-pro": // deprecated from Feb 15 2025
-		log.Println("Unsupported model: ", modelName)
+		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
 	case "gemini-1.5-flash":
 		model = modelName
 	case "gemini-1.5-pro":
 		model = modelName
 	default:
-		log.Println("Unsupported model: ", modelName)
+		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
 	}
 	return model
@@ -108,7 +109,7 @@ func getCohereModel(prompt string, modelName string, key string) string {
 	case "command-r7b-12-2024":
 		model = modelName			
 	default:
-		log.Println("Unsupported model: ", modelName)
+		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
 	}
 	return model
@@ -130,7 +131,7 @@ func getAnthropicModel(prompt string, modelName string, key string) string {
 	case "claude-3-haiku":
 		model = anthropic.ModelClaude_3_Haiku_20240307
 	default:
-		log.Println("Unsopported model: ", modelName)
+		logger.Error(fmt.Println("Unsopported model: ", modelName))
 		return ""
 	}
 	return model
@@ -144,7 +145,7 @@ func getDeepSeekModel(prompt string, modelName string, key string) string {
 	case "deepseek-chat": // leave the model selected by the user, but chek if supported
 		model = modelName
 	default:
-		log.Println("Unsupported model: ", modelName)
+		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
 	}
 	return model
