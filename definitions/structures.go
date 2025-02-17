@@ -52,3 +52,21 @@ type Output struct {
     Metadata OutputMetadata `json:"metadata"`
     Responses []Response    `json:"responses"`
 }
+
+// Define cost structures
+type CostMetadata struct {
+    SchemaVersion string `json:"schemaVersion"`
+    Currency      string `json:"currency"`
+}
+
+type Cost struct {
+    SequenceID string  `json:"sequenceId"`
+    Provider   string  `json:"provider"`
+    Model      string  `json:"model"`
+    Cost       float64 `json:"cost"`
+}
+
+type CostOutput struct {
+    Metadata CostMetadata `json:"metadata"`
+    Costs    []Cost       `json:"costs"`
+}

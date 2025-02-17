@@ -56,3 +56,37 @@ func ValidateInput(jsonString string, version string) error {
     }
     return nil
 }
+
+func ValidateOutput(jsonString string, version string) error {
+    if _, ok := definitions.SchemaStore[version]["output"]; !ok {
+        logger.Info(fmt.Printf("Loading schema for version %s\n", version))
+        if err := definitions.LoadSchema(version, "output"); err != nil {
+            logger.Error(err)
+            return err
+        }
+    }
+    // Proceed with validation
+    errors := validateJSON(jsonString, version, "output")
+    if errors != nil {
+        logger.Error(errors)
+        return errors
+    }
+    return nil
+}
+
+func ValidateCost(jsonString string, version string) error {
+    if _, ok := definitions.SchemaStore[version]["cost"]; !ok {
+        logger.Info(fmt.Printf("Loading schema for version %s\n", version))
+        if err := definitions.LoadSchema(version, "cost"); err != nil {
+            logger.Error(err)
+            return err
+        }
+    }
+    // Proceed with validation
+    errors := validateJSON(jsonString, version, "cost")
+    if errors != nil {
+        logger.Error(errors)
+        return errors
+    }
+    return nil
+}

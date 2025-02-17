@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Schema for tracking costs by sequence ID and model/provider",
+    "type": "object",
+    "properties": {
+        "metadata": {
+            "type": "object",
+            "properties": {
+                "schemaVersion": {
+                    "type": "string",
+                    "description": "The version of the schema used for the cost data"
+                },
+                "currency": {
+                    "type": "string",
+                    "description": "Currency in which the costs are reported"
+                }
+            },
+            "required": ["schemaVersion", "currency"]
+        },
+        "costs": {
+            "type": "array",
+            "description": "Array of cost details per sequence ID, provider, and model",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "sequenceId": {
+                        "type": "string",
+                        "description": "Identifier for the sequence associated with this cost entry"
+                    },
+                    "provider": {
+                        "type": "string",
+                        "description": "The provider of the model used for this sequence"
+                    },
+                    "model": {
+                        "type": "string",
+                        "description": "The model used for this sequence"
+                    },
+                    "cost": {
+                        "type": "number",
+                        "description": "The cost associated with processing this sequence"
+                    }
+                },
+                "required": ["sequenceId", "provider", "model", "cost"],
+                "additionalProperties": false
+            }
+        }
+    },
+    "required": ["metadata", "costs"]
+}
