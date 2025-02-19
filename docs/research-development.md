@@ -10,16 +10,6 @@ layout: default
 - **Replicability**: Addresses the challenge of consistent, unbiased analysis, countering the subjective nature of human information extraction.
 - **Cost**: More economical than custom AI solutions.
 
-## Mechanism
-
-### LLM Basics
-- **How LLMs Work**:
-  - Large Language Models (LLMs) are AI trained on extensive text data to understand and generate human-like text.
-  - These models handle various language tasks like text completion, summarization, translation, and more.
-- **Data Flow and Processing**:
-  - Modern LLMs offer subscription-based API access, with prismAId focusing on prompt engineering to extract targeted information.
-  - prismAId enables structured, replicable prompt creation for systematic reviews, simplifying rigorous data extraction.
-
 ## Contributing
 
 ### How to Contribute
