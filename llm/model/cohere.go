@@ -19,7 +19,7 @@ func queryCohere(prompts []string, llm definitions.Model) ([]string, error) {
 	// Create a new Cohere client
 	client := cohereclient.NewClient(cohereclient.WithToken(llm.APIKey))
 
-	for _, prompt := range prompts {
+	for i, prompt := range prompts {
 		chatRequest := &cohere.ChatRequest{
 			Message:        prompt,
 			Model:          &llm.Model,
@@ -27,29 +27,44 @@ func queryCohere(prompts []string, llm definitions.Model) ([]string, error) {
 			Temperature:    &llm.Temperature,
 		}
 
+		// Log request for debugging
+		reqJSON, _ := json.MarshalIndent(chatRequest, "", "  ")
+		logger.Info("Sending Cohere request: %s\n", string(reqJSON))
+
 		// Make API call
 		response, err := client.Chat(context.TODO(), chatRequest)
 		if err != nil {
-			logger.Error(fmt.Sprintf("Completion error: err:%v len(text):%v\n", err, len(response.Text)))
-			return nil, fmt.Errorf("no response from Cohere: %v", err)
+			logger.Error("Cohere API error: %v", err)
+			return nil, fmt.Errorf("[Cohere] API error: %v", err)
+		}
+
+		// Check if response is nil before accessing its fields
+		if response == nil {
+			logger.Error("Received nil response from Cohere API")
+			return nil, fmt.Errorf("nil response from Cohere API")
 		}
 
 		// Log full response JSON
 		respJSON, err := json.MarshalIndent(response, "", "  ")
 		if err != nil {
-			logger.Error(fmt.Sprintf("Failed to marshal response: %v", err))
+			logger.Error("Failed to marshal response: %v", err)
 			return nil, err
 		}
-		logger.Info(fmt.Sprintf("Full Cohere response: %s\n", string(respJSON)))
+		logger.Info("Full Cohere response: %s\n", string(respJSON))
 
 		// Ensure valid response
 		if len(response.Text) == 0 {
 			logger.Error("No content found in response")
-			return nil, fmt.Errorf("no content in response")
+			return nil, fmt.Errorf("no content in response from Cohere")
 		}
 
 		// Append response to answers slice
 		answers = append(answers, response.Text)
+
+		// Call wait for all prompts except the last one
+		if i < len(prompts)-1 {
+			Wait(prompt, llm)
+		}
 	}
 
 	return answers, nil

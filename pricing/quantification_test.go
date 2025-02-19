@@ -29,11 +29,13 @@ func TestComputeCosts(t *testing.T) {
 	}`
 
 	// Execute function
-	resultJSON := ComputeCosts(inputJSON)
-
+	resultJSON, err := ComputeCosts(inputJSON)
+	if err != nil {
+		t.Errorf("ComputeCosts failed: %v", err)	
+	}
 	// Ensure output is valid JSON
 	var result map[string]interface{}
-	if err := json.Unmarshal([]byte(resultJSON), &result); err != nil {
+	if err = json.Unmarshal([]byte(resultJSON), &result); err != nil {
 		t.Errorf("Invalid JSON output: %v", err)
 	}
 }

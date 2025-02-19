@@ -17,7 +17,7 @@ func queryDeepSeek(prompts []string, llm definitions.Model) ([]string, error) {
 	client := deepseek.NewClient(llm.APIKey)
 	messages := []deepseek.ChatCompletionMessage{}
 
-	for _, prompt := range prompts {
+	for i, prompt := range prompts {
 		messages = append(messages, deepseek.ChatCompletionMessage{Role: constants.ChatMessageRoleUser, Content: prompt})
 
 		completionParams := &deepseek.ChatCompletionRequest{
@@ -32,19 +32,19 @@ func queryDeepSeek(prompts []string, llm definitions.Model) ([]string, error) {
 		resp, err := client.CreateChatCompletion(context.Background(), completionParams)
 		if err != nil {
 			if apiErr, ok := err.(*deepseek.APIError); ok {
-				logger.Error(fmt.Sprintf("API Error: HTTP %d, Code %d, Message: %s", apiErr.StatusCode, apiErr.APICode, apiErr.Message))
+				logger.Error("API Error: HTTP %d, Code %d, Message: %s", apiErr.StatusCode, apiErr.APICode, apiErr.Message)
 			} else {
-				logger.Error(fmt.Sprintf("Unexpected error: %v", err))
+				logger.Error("Unexpected error: %v", err)
 			}
 			return nil, fmt.Errorf("no response from deepseek: %v", err)
 		}
 
 		respJSON, err := json.MarshalIndent(resp, "", "  ")
 		if err != nil {
-			logger.Error(fmt.Sprintf("Failed to marshal response: %v", err))
+			logger.Error("Failed to marshal response: %v", err)
 			return nil, err
 		}
-		logger.Info(fmt.Sprintf("Full deepseek response: %s\n", string(respJSON)))
+		logger.Info("Full deepseek response: %s\n", string(respJSON))
 
 		if len(resp.Choices) == 0 || resp.Choices[0].Message.Content == "" {
 			logger.Error("No content found in response")
@@ -54,6 +54,11 @@ func queryDeepSeek(prompts []string, llm definitions.Model) ([]string, error) {
 		answer := resp.Choices[0].Message.Content
 		answers = append(answers, answer)
 		messages = append(messages, deepseek.ChatCompletionMessage{Role: constants.ChatMessageRoleAssistant, Content: answer})
+	
+		// Call wait for all prompts except the last one
+		if i < len(prompts)-1 {
+			Wait(prompt, llm)
+		}
 	}
 
 	return answers, nil

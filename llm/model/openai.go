@@ -19,7 +19,7 @@ func queryOpenAI(prompts []string, llm definitions.Model) ([]string, error) {
 	// Initialize conversation history
 	messages := []openai.ChatCompletionMessage{}
 
-	for _, prompt := range prompts {
+	for i, prompt := range prompts {
 		// Append user message to conversation history
 		messages = append(messages, openai.ChatCompletionMessage{Role: openai.ChatMessageRoleUser, Content: prompt})
 
@@ -35,21 +35,21 @@ func queryOpenAI(prompts []string, llm definitions.Model) ([]string, error) {
 		// Make API call
 		resp, err := client.CreateChatCompletion(context.Background(), completionParams)
 		if err != nil || len(resp.Choices) != 1 {
-			logger.Error(fmt.Printf("Completion error: err:%v len(choices):%v\n", err, len(resp.Choices)))
+			logger.Error("Completion error: err:%v len(choices):%v\n", err, len(resp.Choices))
 			return nil, fmt.Errorf("no response from OpenAI: %v", err)
 		}
 
 		// Log full response JSON
 		respJSON, err := json.MarshalIndent(resp, "", "  ")
 		if err != nil {
-			logger.Error(fmt.Println("Failed to marshal response:", err))
+			logger.Error("Failed to marshal response:", err)
 			return nil, err
 		}
-		logger.Info(fmt.Printf("Full OpenAI response: %s\n", string(respJSON)))
+		logger.Info("Full OpenAI response: %s\n", string(respJSON))
 
 		// Extract response text
 		if len(resp.Choices) == 0 || resp.Choices[0].Message.Content == "" {
-			logger.Error(fmt.Println("No content found in response"))
+			logger.Error("No content found in response")
 			return nil, fmt.Errorf("no content in response")
 		}
 
@@ -58,6 +58,12 @@ func queryOpenAI(prompts []string, llm definitions.Model) ([]string, error) {
 
 		// Append model response to conversation history
 		messages = append(messages, openai.ChatCompletionMessage{Role: openai.ChatMessageRoleAssistant, Content: answer})
+
+
+		// Call wait for all prompts except the last one
+		if i < len(prompts)-1 {
+			Wait(prompt, llm)
+		}
 	}
 
 	return answers, nil

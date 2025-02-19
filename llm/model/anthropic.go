@@ -19,7 +19,7 @@ func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
 		option.WithAPIKey(llm.APIKey),
 	)
 
-	for _, prompt := range prompts {
+	for i, prompt := range prompts {
 		// Append new user message to the conversation history
 		messages = append(messages, anthropic.NewUserMessage(anthropic.NewTextBlock(prompt)))
 
@@ -31,11 +31,18 @@ func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
 			Messages:  anthropic.F(messages),
 		})
 		if err != nil {
-			return nil, fmt.Errorf("no response from Anthropic: %v", err)
+			logger.Error("Anthropic API error: %v", err)
+			return nil, fmt.Errorf("[Anthropic] API error: %v", err)
+		}
+
+		// Check if response content is valid
+		if message == nil || len(message.Content) == 0 {
+			logger.Error("Received nil or empty response from Anthropic API")
+			return nil, fmt.Errorf("nil or empty response from Anthropic API")
 		}
 
 		// Log the response from Anthropic
-		logger.Info("Anthropic response first block: " + message.Content[0].Text)
+		logger.Info("Anthropic response first block: %s", message.Content[0].Text)
 
 		// Extract response text
 		textBlock := extractTextBlock(message.Content)
@@ -46,9 +53,15 @@ func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
 		// Extract valid JSON from response
 		answer, err := extractJSONString(textBlock)
 		if err != nil {
+			logger.Error("Failed to extract JSON from response: %v", err)
 			return nil, fmt.Errorf("no valid JSON review response from Anthropic: %v", err)
 		}
 		answers = append(answers, answer)
+
+		// Call wait for all prompts except the last one
+		if i < len(prompts)-1 {
+			Wait(prompt, llm)
+		}
 	}
 
 	return answers, nil

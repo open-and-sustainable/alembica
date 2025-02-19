@@ -16,11 +16,13 @@ Core Functions:
   - queryCohere: Processes queries for Cohere's Command models.
   - queryAnthropic: Manages interactions with Anthropic's Claude models.
   - queryDeepSeek: Sends queries to DeepSeek's models.
+  - Wait: Ensures compliance with TPM and RPM limits for API queries.
 
 Features:
   - Supports multi-turn chat history for context-aware responses.
   - Ensures all responses are in structured JSON format.
   - Implements automatic model selection and error handling.
+  - Enforces API rate limits using Wait function.
 
 Example Usage:
 	package main
@@ -50,6 +52,6 @@ Example Usage:
 			fmt.Printf("Response %d: %s\n", i+1, answer)
 		}
 	}
-
 */
 package model
+

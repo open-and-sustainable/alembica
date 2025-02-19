@@ -16,7 +16,7 @@ var tokenCounter tokens.TokenCounter = tokens.RealTokenCounter{}
 
 // ComputeCosts processes a list of input prompts and calculates the total cost of input tokensbased on the specified 
 // model and provider. 
-func ComputeCosts(jsonInput string, version ...string) string {
+func ComputeCosts(jsonInput string, version ...string) (string, error) {
 	// Set default version if not provided
 	v := "v1"
 	if len(version) > 0 {
@@ -26,7 +26,7 @@ func ComputeCosts(jsonInput string, version ...string) string {
 	// Validate input JSON
 	if err := validation.ValidateInput(jsonInput, v); err != nil {
 		logger.Error("Invalid input JSON:", err)
-		return "0"
+		return "", err
 	}
 
 	// Parse the JSON input
@@ -34,7 +34,7 @@ func ComputeCosts(jsonInput string, version ...string) string {
 	err := json.Unmarshal([]byte(jsonInput), &input)
 	if err != nil {
 		logger.Error("Failed to parse JSON input:", err)
-		return "0"
+		return "", err
 	}
 
 	// Initialize cost tracking structure
@@ -90,16 +90,16 @@ func ComputeCosts(jsonInput string, version ...string) string {
 	costOutputJSON, err := json.Marshal(costOutput)
 	if err != nil {
 		logger.Error("Failed to marshal cost output JSON:", err)
-		return "0"
+		return "", err
 	}
 
 	// Validate output JSON
 	if err := validation.ValidateCost(string(costOutputJSON), v); err != nil {
 		logger.Error("Invalid output JSON:", err)
-		return "0"
+		return "", err
 	}
 
-	return string(costOutputJSON)
+	return string(costOutputJSON), nil
 }
 
 func assessPromptCost(prompt string, provider string, model string, key string) (decimal.Decimal, error) {

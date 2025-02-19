@@ -37,10 +37,11 @@ type OutputMetadata struct {
 }
 
 type Response struct {
-    SequenceID    string `json:"sequenceId"`
-    SequenceNumber int    `json:"sequenceNumber"`
-    ModelResponse string `json:"modelResponse"`
-    Error         *ErrorInfo `json:"error,omitempty"`
+    Provider       string      `json:"provider"`
+    Model          string      `json:"model"`
+    SequenceID     string      `json:"sequenceId"`
+    ModelResponses []string    `json:"modelResponses"`
+    Error          *ErrorInfo  `json:"error,omitempty"`
 }
 
 type ErrorInfo struct {
@@ -49,8 +50,8 @@ type ErrorInfo struct {
 }
 
 type Output struct {
-    Metadata OutputMetadata `json:"metadata"`
-    Responses []Response    `json:"responses"`
+    Metadata  OutputMetadata `json:"metadata"`
+    Responses []Response     `json:"responses"`
 }
 
 // Define cost structures
