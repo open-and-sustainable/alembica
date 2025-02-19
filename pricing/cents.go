@@ -36,6 +36,14 @@ var modelRates = map[string]decimal.Decimal{ // dollar prices per input M token
 	"deepseek-chat":           decimal.NewFromFloat(0.14).Div(decimal.NewFromInt(1000000)),
 }
 
+// numCentsFromTokens calculates the cost in cents based on token usage and model pricing.
+//
+// Parameters:
+//   - numTokens: The number of tokens used in the request.
+//   - model: The model identifier used for processing the request.
+//
+// Returns:
+//   - The computed cost as a decimal.Decimal value.
 func numCentsFromTokens(numTokens int, model string) decimal.Decimal {
 	rate, ok := modelRates[model]
 	if !ok {

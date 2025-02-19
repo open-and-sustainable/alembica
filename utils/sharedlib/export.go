@@ -24,7 +24,7 @@ func handlePanic() *C.char {
     return nil
 }
 
-// Python- and R-specific function
+// Python- R- and others-specific function
 //export RunValidationInput
 func RunValidationInput(input *C.char, version *C.char) *C.char {
     defer handlePanic()

@@ -11,11 +11,18 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-// Declare a package-level TokenCounter variable
+// Global TokenCounter for calculating token usage across models.
 var tokenCounter tokens.TokenCounter = tokens.RealTokenCounter{}
 
-// ComputeCosts processes a list of input prompts and calculates the total cost of input tokensbased on the specified 
-// model and provider. 
+// ComputeCosts calculates the cost of processing input prompts based on the specified models and providers.
+//
+// Parameters:
+//   - jsonInput: A JSON string containing the input data.
+//   - version: (Optional) The schema version to validate against. Defaults to "v1" if not provided.
+//
+// Returns:
+//   - A JSON string containing computed cost details.
+//   - An error if input validation, cost computation, or output validation fails.
 func ComputeCosts(jsonInput string, version ...string) (string, error) {
 	// Set default version if not provided
 	v := "v1"
@@ -46,7 +53,7 @@ func ComputeCosts(jsonInput string, version ...string) (string, error) {
 		Costs: []definitions.Cost{},
 	}
 
-	// Compute costs by sequence
+	// Compute costs per sequence
 	sequenceCostMap := make(map[string]decimal.Decimal)
 	for _, prompt := range input.Prompts {
 		sequenceTotalCost := decimal.NewFromInt(0)
@@ -54,7 +61,7 @@ func ComputeCosts(jsonInput string, version ...string) (string, error) {
 			cost, err := assessPromptCost(prompt.PromptContent, model.Provider, model.Model, model.APIKey)
 			if err != nil {
 				logger.Error("Error processing cost for Sequence ID:", prompt.SequenceID, "Model:", model.Model, "Error:", err)
-				continue // Skip this model and move to the next one
+				continue
 			}
 
 			logger.Info("Sequence ID:", prompt.SequenceID, "Provider:", model.Provider, "Model:", model.Model, "Cost:", cost)
@@ -69,7 +76,7 @@ func ComputeCosts(jsonInput string, version ...string) (string, error) {
 			})
 		}
 
-		// Ensure per-sequence cost accumulates correctly
+		// Accumulate total per sequence
 		if existingCost, ok := sequenceCostMap[prompt.SequenceID]; ok {
 			sequenceCostMap[prompt.SequenceID] = existingCost.Add(sequenceTotalCost)
 		} else {
@@ -77,16 +84,17 @@ func ComputeCosts(jsonInput string, version ...string) (string, error) {
 		}
 	}
 
+	// Append total cost per sequence
 	for seqID, total := range sequenceCostMap {
 		costOutput.Costs = append(costOutput.Costs, definitions.Cost{
 			SequenceID: seqID,
 			Provider:   "TOTAL",
 			Model:      "TOTAL",
-			Cost: float64(total.InexactFloat64()),
+			Cost:       float64(total.InexactFloat64()),
 		})
 	}
 
-	// Convert costOutput to JSON for returning
+	// Convert costOutput to JSON
 	costOutputJSON, err := json.Marshal(costOutput)
 	if err != nil {
 		logger.Error("Failed to marshal cost output JSON:", err)
@@ -102,10 +110,19 @@ func ComputeCosts(jsonInput string, version ...string) (string, error) {
 	return string(costOutputJSON), nil
 }
 
+// assessPromptCost calculates the cost of processing a prompt based on token usage.
+//
+// Parameters:
+//   - prompt: The text prompt whose cost is being assessed.
+//   - provider: The LLM provider handling the prompt.
+//   - model: The model processing the prompt.
+//   - key: The API key for accessing the model.
+//
+// Returns:
+//   - The computed cost as a decimal.Decimal value.
+//   - An error if token counting fails.
 func assessPromptCost(prompt string, provider string, model string, key string) (decimal.Decimal, error) {
 	numTokens := tokenCounter.GetNumTokensFromPrompt(prompt, provider, model, key)
 	numCents := numCentsFromTokens(numTokens, model)
 	return numCents, nil
 }
-
-

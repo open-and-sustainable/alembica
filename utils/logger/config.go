@@ -12,14 +12,16 @@ import (
 type LogLevel int
 
 const (
-    Silent LogLevel = iota
-    Stdout
-    File
+    Silent LogLevel = iota // No logging output.
+    Stdout                 // Logs messages to standard output.
+    File                   // Logs messages to a file.
 )
 
-// Logger interface used throughout the library to abstract the actual logging.
+// Logger is an interface used for logging messages.
 type Logger interface {
+    // Info logs informational messages.
     Info(args ...interface{})
+    // Error logs error messages.
     Error(args ...interface{})
 }
 
@@ -44,22 +46,33 @@ var defaultLogger Logger = standardLogger{log.New(io.Discard, "", log.LstdFlags)
 // activeLogger holds the currently active Logger.
 var activeLogger Logger = defaultLogger
 
-// SetLogger sets the active Logger.
+// SetLogger sets the active Logger for use in the application.
+//
+// Parameters:
+//   - l: The Logger instance to use.
 func SetLogger(l Logger) {
     activeLogger = l
 }
 
-// Info delegates an info message to the active logger.
+// Info logs an informational message using the active logger.
 func Info(args ...interface{}) {
     activeLogger.Info(args...)
 }
 
-// Error delegates an error message to the active logger.
+// Error logs an error message using the active logger.
 func Error(args ...interface{}) {
     activeLogger.Error(args...)
 }
 
-// SetupLogging configures the logging output based on the specified log level and optional file name for file logging.
+// SetupLogging configures the logging output based on the specified log level.
+// If File logging is chosen, it will write logs to a file.
+//
+// Parameters:
+//   - level: The desired log level (Silent, Stdout, File).
+//   - filename: The filename to use when logging to a file (if applicable).
+//
+// Returns:
+//   - An error if file logging fails to initialize.
 func SetupLogging(level LogLevel, filename string) error {
     var logOutput io.Writer
     switch level {

@@ -11,6 +11,13 @@ import (
     "github.com/open-and-sustainable/alembica/llm/model"
 )
 
+// Extract processes input JSON, queries LLMs, and returns structured responses.
+//
+// Parameters:
+//   - inputJSON: JSON string containing metadata, models, and prompts.
+//
+// Returns:
+//   - A JSON string with responses from the models, or an error if processing fails.
 func Extract(inputJSON string) (string, error) {
     var inputData definitions.Input
     err := json.Unmarshal([]byte(inputJSON), &inputData)

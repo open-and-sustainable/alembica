@@ -2,15 +2,21 @@ package validation
 
 import (
     "fmt"
+    "strings"
     "github.com/xeipuuv/gojsonschema"
     "github.com/open-and-sustainable/alembica/definitions"
 	"github.com/open-and-sustainable/alembica/utils/logger"
-
-    "strings"
 )
 
-// ValidateJSON validates a JSON string against a specified version and type of schema.
-// It returns an error if validation fails, or nil if it succeeds.
+// validateJSON checks if a given JSON string adheres to the specified schema version and type.
+//
+// Parameters:
+//   - jsonString: The JSON string to be validated.
+//   - version: The schema version to validate against.
+//   - schemaType: The type of schema (e.g., "input", "output", "cost").
+//
+// Returns:
+//   - An error if validation fails, or nil if validation succeeds.
 func validateJSON(jsonString, version, schemaType string) error {
     schemaMap, versionExists := definitions.SchemaStore[version]
     if !versionExists {
@@ -40,53 +46,59 @@ func validateJSON(jsonString, version, schemaType string) error {
     return fmt.Errorf("validation errors: %s", strings.Join(errorMessages, "; "))
 }
 
+// ValidateInput checks whether the given input JSON conforms to the expected schema.
+//
+// Parameters:
+//   - jsonString: The JSON string to validate.
+//   - version: The schema version to use.
+//
+// Returns:
+//   - An error if validation fails, or nil if it succeeds.
 func ValidateInput(jsonString string, version string) error {
     if _, ok := definitions.SchemaStore[version]["input"]; !ok {
-        logger.Info(fmt.Printf("Loading schema for version %s\n", version))
+        logger.Info(fmt.Sprintf("Loading schema for version %s\n", version))
         if err := definitions.LoadSchema(version, "input"); err != nil {
             logger.Error(err)
             return err
         }
     }
-    // Proceed with validation
-    errors := validateJSON(jsonString, version, "input")
-    if errors != nil {
-        logger.Error(errors)
-        return errors
-    }
-    return nil
+    return validateJSON(jsonString, version, "input")
 }
 
+// ValidateOutput checks whether the given output JSON conforms to the expected schema.
+//
+// Parameters:
+//   - jsonString: The JSON string to validate.
+//   - version: The schema version to use.
+//
+// Returns:
+//   - An error if validation fails, or nil if it succeeds.
 func ValidateOutput(jsonString string, version string) error {
     if _, ok := definitions.SchemaStore[version]["output"]; !ok {
-        logger.Info(fmt.Printf("Loading schema for version %s\n", version))
+        logger.Info(fmt.Sprintf("Loading schema for version %s\n", version))
         if err := definitions.LoadSchema(version, "output"); err != nil {
             logger.Error(err)
             return err
         }
     }
-    // Proceed with validation
-    errors := validateJSON(jsonString, version, "output")
-    if errors != nil {
-        logger.Error(errors)
-        return errors
-    }
-    return nil
+    return validateJSON(jsonString, version, "output")
 }
 
+// ValidateCost checks whether the given cost JSON conforms to the expected schema.
+//
+// Parameters:
+//   - jsonString: The JSON string to validate.
+//   - version: The schema version to use.
+//
+// Returns:
+//   - An error if validation fails, or nil if it succeeds.
 func ValidateCost(jsonString string, version string) error {
     if _, ok := definitions.SchemaStore[version]["cost"]; !ok {
-        logger.Info(fmt.Printf("Loading schema for version %s\n", version))
+        logger.Info(fmt.Sprintf("Loading schema for version %s\n", version))
         if err := definitions.LoadSchema(version, "cost"); err != nil {
             logger.Error(err)
             return err
         }
     }
-    // Proceed with validation
-    errors := validateJSON(jsonString, version, "cost")
-    if errors != nil {
-        logger.Error(errors)
-        return errors
-    }
-    return nil
+    return validateJSON(jsonString, version, "cost")
 }
