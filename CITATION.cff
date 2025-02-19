@@ -4,23 +4,23 @@ message: >-
   v0.0.1 - initial release. 
   Support for main LLM models accessible from API.
 type: software
-doi: 10.5281/zenodo.11210796
+
 authors:
   - given-names: Riccardo
     family-names: Boero
     email: ribo@nilu.no
     orcid: 'https://orcid.org/0000-0002-7468-9096'
     affiliation: NILU
-identifiers:
-  - type: doi
-    value: 10.5281/zenodo.11210796
-    description: This DOI represents all software versions.
+
 repository-code: 'https://github.com/open-and-sustainable/alembica'
 url: 'https://open-and-sustainable.github.io/alembica/'
 abstract: >-
-  alembica uses generative AI models to ...
+  `alembica` simplifies the use of Large Language Models (LLMs) to extract structured data sets from unstructured corpora of text. It provides a flexible and scalable framework to process, synthesize, and transform textual information of any type. The output is structured into formats suitable for analysis and further processing.
 keywords:
   - Generative AI
+  - Large Language Models
   - Open Source
   - Open Science
+  - Semantic Synthesis
+  - Information Extraction
 license: AGPL-3.0-only
