@@ -4,14 +4,17 @@ message: >-
   v0.0.1 - initial release. 
   Support for main LLM models accessible from API.
 type: software
-
+doi: 10.5281/zenodo.14899666
 authors:
   - given-names: Riccardo
     family-names: Boero
     email: ribo@nilu.no
     orcid: 'https://orcid.org/0000-0002-7468-9096'
     affiliation: NILU
-
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.14899666
+    description: This DOI represents all software versions.
 repository-code: 'https://github.com/open-and-sustainable/alembica'
 url: 'https://open-and-sustainable.github.io/alembica/'
 abstract: >-
