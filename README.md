@@ -20,3 +20,4 @@ GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
 ![license](https://www.gnu.org/graphics/agplv3-155x51.png)
 
 ## Citation
+Boero, R. (2025). alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources. Zenodo. https://doi.org/10.5281/zenodo.14899666
