@@ -11,6 +11,10 @@ logo: "assets/images/logo.png"
 favicon: "assets/images/favicon.ico"
 # configuration of navigation entries
 nav_links:
+  - name: "Features"
+    url: "/features.html"
+  - name: "Getting &<br>Started"
+    url: "/getting-started.html"
   - name: "Research &<br>Development"
     url: "/research-development.html"
   - name: "Help &<br>Resources"
