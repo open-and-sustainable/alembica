@@ -7,63 +7,63 @@ import (
 )
 
 func TestValidateJSON(t *testing.T) {
-    // Load schemas before running tests
-    definitions.LoadSchema("v1", "input")
-    definitions.LoadSchema("v1", "output")
+	// Load schemas before running tests
+	definitions.LoadSchema("v1", "input")
+	definitions.LoadSchema("v1", "output")
 
 	tests := []struct {
-		name        string
-		jsonInput   string
-		version     string
-		schemaType  string
+		name         string
+		jsonInput    string
+		version      string
+		schemaType   string
 		expectsError bool
-		errorMsg    string
+		errorMsg     string
 	}{
 		{
-			name:       "Valid Input for Input Schema v1",
-			jsonInput:  `{"metadata": {"schemaVersion": "v1", "timestamp": "2025-02-10T12:00:00Z"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
-			version:    "v1",
-			schemaType: "input",
+			name: "Valid Input for Input Schema v1",
+			jsonInput: `{"metadata": {"schemaVersion": "v1", "timestamp": "2025-02-10T12:00:00Z"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
+			version:      "v1",
+			schemaType:   "input",
 			expectsError: false,
 		},
 		{
-			name:       "Invalid Input Missing Required Field",
-			jsonInput:  `{"metadata": {"schemaVersion": "v1"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
-			version:    "v1",
-			schemaType: "input",
+			name: "Invalid Input Missing Required Field",
+			jsonInput: `{"metadata": {"schemaVersion": "v1"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
+			version:      "v1",
+			schemaType:   "input",
 			expectsError: true,
-			errorMsg:   "validation errors: metadata: timestamp is required",
+			errorMsg:     "validation errors: metadata: timestamp is required",
 		},
 		{
-			name:       "Valid Output Schema v1",
-			jsonInput:  `{"metadata": {"schemaVersion": "v1"}, "responses": [{"sequenceId": "123", "sequenceNumber": 1, "modelResponse": "This is a response"}]}`,
-			version:    "v1",
-			schemaType: "output",
+			name: "Valid Output Schema v1",
+			jsonInput: `{"metadata": {"schemaVersion": "v1"}, "responses": [{"provider": "OpenAI", "model": "gpt-4", "sequenceId": "123", "modelResponses": ["This is a response"]}]}`,
+			version:      "v1",
+			schemaType:   "output",
 			expectsError: false,
 		},
 		{
-			name:       "Invalid Output Schema Missing Required Field",
-			jsonInput:  `{"metadata": {"schemaVersion": "v1"}, "responses": [{"sequenceNumber": 1, "modelResponse": "This is a response"}]}`,
-			version:    "v1",
-			schemaType: "output",
+			name: "Invalid Output Schema Missing Required Field",
+			jsonInput: `{"metadata": {"schemaVersion": "v1"}, "responses": [{"provider": "OpenAI", "model": "gpt-4", "modelResponses": ["This is a response"]}]}`,
+			version:      "v1",
+			schemaType:   "output",
 			expectsError: true,
-			errorMsg:   "validation errors: responses.0: sequenceId is required",
+			errorMsg:     "validation errors: responses.0: sequenceId is required",
 		},
 		{
-			name:       "Non-existent Schema Version",
-			jsonInput:  `{"metadata": {"schemaVersion": "v99"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
-			version:    "v99",
-			schemaType: "input",
+			name: "Non-existent Schema Version",
+			jsonInput: `{"metadata": {"schemaVersion": "v99"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
+			version:      "v99",
+			schemaType:   "input",
 			expectsError: true,
-			errorMsg:   "no schemas found for version v99",
+			errorMsg:     "no schemas found for version v99",
 		},
 		{
-			name:       "Non-existent Schema Type",
-			jsonInput:  `{"metadata": {"schemaVersion": "v1"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
-			version:    "v1",
-			schemaType: "unknown",
+			name: "Non-existent Schema Type",
+			jsonInput: `{"metadata": {"schemaVersion": "v1"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
+			version:      "v1",
+			schemaType:   "unknown",
 			expectsError: true,
-			errorMsg:   "no schema found for type unknown in version v1",
+			errorMsg:     "no schema found for type unknown in version v1",
 		},
 	}
 
@@ -84,6 +84,7 @@ func TestValidateJSON(t *testing.T) {
 		})
 	}
 }
+
 
 func TestValidateInput(t *testing.T) {
     tests := []struct {

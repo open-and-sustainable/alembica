@@ -42,4 +42,4 @@ jobs:
 
       # Run the tests
       - name: Run tests
-        run: go test ./... -v
+        run: go test -short ./... -v

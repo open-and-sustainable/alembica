@@ -9,6 +9,9 @@ import (
 )
 
 func TestLiveExtraction(t *testing.T) {
+	if testing.Short() {
+        t.Skip("Skipping live extraction tests in short mode")
+    }
 	apiKeys, err := loadAPIKeys("test_keys.txt")
 	if err != nil {
 		t.Fatalf("Failed to load API keys: %v", err)
