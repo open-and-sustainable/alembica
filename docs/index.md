@@ -21,7 +21,7 @@ layout: default
 ## Get Started
 - [Installation Guide](getting-started)
 - [Feature Overview](features)
-- [API Reference](api) *(coming soon)*
+- [API Reference](https://pkg.go.dev/github.com/open-and-sustainable/alembica)
 - [Help & Resources](help-resources)
 
 ## License

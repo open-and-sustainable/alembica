@@ -11,7 +11,7 @@ layout: default
 Before installing `alembica`, ensure you have:
 - **Go (latest stable version)** – Required for using `alembica` as a library.
 - **API Keys** – Necessary for accessing external LLM providers (OpenAI, Google, Cohere, etc.).
-- **Git** – Recommended for managing the source code if developing.
+- **Git** – Recommended for managing the source code **if developing `alembica`**.
 
 ### Install `alembica`
 ```sh
@@ -48,3 +48,6 @@ func main() {
     }
 }
 ```
+
+## API Reference
+Avalable at [https://pkg.go.dev/github.com/open-and-sustainable/alembica](https://pkg.go.dev/github.com/open-and-sustainable/alembica).

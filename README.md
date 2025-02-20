@@ -2,6 +2,12 @@
 
 Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
 
+---
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/open-and-sustainable/alembica.svg)](https://pkg.go.dev/github.com/open-and-sustainable/alembica) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14899666.svg)](https://doi.org/10.5281/zenodo.14899666)
+
+---
+
 ## About
 `alembica` simplifies the use of Large Language Models (LLMs) to extract structured data sets from unstructured corpora of text. It provides a flexible and scalable framework to process, synthesize, and transform textual information of any type. The output is structured into formats suitable for analysis and further processing.
 
@@ -20,4 +26,4 @@ GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
 ![license](https://www.gnu.org/graphics/agplv3-155x51.png)
 
 ## Citation
-Boero, R. (2025). alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources. Zenodo. https://doi.org/10.5281/zenodo.14899666
+Boero, R. (2025). alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources. Zenodo. [https://doi.org/10.5281/zenodo.14899666](https://doi.org/10.5281/zenodo.14899666)
