@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+title: alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
+message: >-
+  v0.0.1 - initial release. 
+  Support for main LLM models accessible from API.
+type: software
+
+authors:
+  - given-names: Riccardo
+    family-names: Boero
+    email: ribo@nilu.no
+    orcid: 'https://orcid.org/0000-0002-7468-9096'
+    affiliation: NILU
+
+repository-code: 'https://github.com/open-and-sustainable/alembica'
+url: 'https://open-and-sustainable.github.io/alembica/'
+abstract: >-
+  `alembica` simplifies the use of Large Language Models (LLMs) to extract structured data sets from unstructured corpora of text. It provides a flexible and scalable framework to process, synthesize, and transform textual information of any type. The output is structured into formats suitable for analysis and further processing.
+keywords:
+  - Generative AI
+  - Large Language Models
+  - Open Source
+  - Open Science
+  - Semantic Synthesis
+  - Information Extraction
+license: AGPL-3.0-only

@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Schema for output data including model responses, sequence information, error details, and metadata with schema version",
+    "type": "object",
+    "properties": {
+        "metadata": {
+            "type": "object",
+            "properties": {
+                "schemaVersion": {
+                    "type": "string",
+                    "description": "The version of the schema used for the output data"
+                }
+            },
+            "required": ["schemaVersion"]
+        },
+        "responses": {
+            "type": "array",
+            "description": "Array of responses from models",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "provider": {
+                        "type": "string",
+                        "description": "The provider of the model that generated this response"
+                    },
+                    "model": {
+                        "type": "string",
+                        "description": "The model that generated this response"
+                    },
+                    "sequenceId": {
+                        "type": "string",
+                        "description": "Identifier for the sequence from which this response was generated"
+                    },
+                    "modelResponses": {
+                        "type": "array",
+                        "description": "An array of strings containing the model's answers",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "error": {
+                        "type": "object",
+                        "properties": {
+                            "code": {
+                                "type": "integer",
+                                "description": "Error code indicating the type of error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "description": "A message describing the error"
+                            }
+                        },
+                        "required": ["code", "message"],
+                        "description": "Details of any errors that occurred while generating the response"
+                    }
+                },
+                "required": ["provider", "model", "sequenceId", "modelResponses"],
+                "additionalProperties": false
+            }
+        }
+    },
+    "required": ["metadata", "responses"]
+}
