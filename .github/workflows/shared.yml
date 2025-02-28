@@ -28,10 +28,9 @@ jobs:
         run: |
           ls -la  # Debugging: check files
           pwd     # Print the current directory
-          go mod init github.com/open-and-sustainable/alembica/utils/sharedlib || true
-          echo "replace github.com/open-and-sustainable/alembica/utils/sharedlib => ./ " >> go.mod
-          go mod tidy
-          GOOS=linux GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o alembica_linux_${{ matrix.arch }}.so .
+          cd /home/runner/work/alembica/alembica  # Move to the project root
+          go mod tidy  # Ensure dependencies are resolved
+          GOOS=linux GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o utils/sharedlib/alembica_linux_${{ matrix.arch }}.so utils/sharedlib
 
       - name: Upload Linux shared library artifact
         uses: actions/upload-artifact@v4
