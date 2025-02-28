@@ -28,7 +28,8 @@ jobs:
         run: |
           ls -la  # Debugging: check files
           pwd     # Print the current directory
-          go mod tidy  # Ensure dependencies are resolved
+          go mod init github.com/open-and-sustainable/alembica/utils/sharedlib || true
+          go mod tidy
           GOOS=linux GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o alembica_linux_${{ matrix.arch }}.so .
 
       - name: Upload Linux shared library artifact
