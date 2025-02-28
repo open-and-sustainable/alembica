@@ -26,13 +26,15 @@ jobs:
       - name: Build shared library for Linux
         working-directory: utils/sharedlib
         run: |
-          GOOS=linux GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o libprismaid_linux_${{ matrix.arch }}.so export.go
+          ls -la  # List files in the current directory
+          if [ ! -f export.go ]; then echo "Error: export.go not found"; exit 1; fi
+          GOOS=linux GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o alembica_linux_${{ matrix.arch }}.so export.go
 
       - name: Upload Linux shared library artifact
         uses: actions/upload-artifact@v4
         with:
           name: linux-${{ matrix.arch }}-shared-library
-          path: utils/sharedlib/libprismaid_linux_${{ matrix.arch }}.so
+          path: utils/sharedlib/alembica_linux_${{ matrix.arch }}.so
 
   build-windows:
     name: Build Windows Shared Library
@@ -56,18 +58,18 @@ jobs:
           go-version: '1.21'
 
       - name: Build shared library for Windows
-        working-directory: sharedlib
+        working-directory: utils/sharedlib
         shell: pwsh
         run: |
           $Env:GOOS="windows"
           $Env:GOARCH="${{ matrix.arch }}"
-          go build -buildmode=c-shared -o libprismaid_windows_${{ matrix.arch }}.dll .\export.go
+          go build -buildmode=c-shared -o alembica_windows_${{ matrix.arch }}.dll .\export.go
 
       - name: Upload Windows shared library artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-${{ matrix.arch }}-shared-library
-          path: sharedlib/libprismaid_windows_${{ matrix.arch }}.dll
+          path: sharedlib/alembica_windows_${{ matrix.arch }}.dll
 
   build-macos:
     name: Build macOS Shared Library
@@ -91,14 +93,14 @@ jobs:
           go-version: '1.21'
 
       - name: Build shared library for macOS
-        working-directory: sharedlib
+        working-directory: utils/sharedlib
         run: |
-          GOOS=darwin GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o libprismaid_darwin_${{ matrix.arch }}.dylib export.go
+          GOOS=darwin GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o alembica_darwin_${{ matrix.arch }}.dylib export.go
 
       - name: Upload macOS shared library artifact
         uses: actions/upload-artifact@v4
         with:
           name: macos-${{ matrix.arch }}-shared-library
-          path: sharedlib/libprismaid_darwin_${{ matrix.arch }}.dylib
+          path: sharedlib/alembica_darwin_${{ matrix.arch }}.dylib
 
           
