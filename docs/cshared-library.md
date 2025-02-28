@@ -9,7 +9,27 @@ layout: default
 
 The shared library can be downloaded as an artifact from the [release page](https://github.com/open-and-sustainable/alembica/releases).  
 
-Once downloaded, make sure it is placed in an accessible path for your system (`/usr/local/lib/`, `C:\path\to\lib\`, etc.).  
+We provide precompiled binaries for different platforms and architectures:  
+
+- **Linux** (`.so`)  
+  - `x86_64 (AMD64)`  
+  - `ARM64 (aarch64)`  
+
+- **macOS** (`.dylib`)  
+  - `x86_64 (Intel)`  
+  - `ARM64 (Apple Silicon/M1, M2)`  
+
+- **Windows** (`.dll`)  
+  - `x86_64 (AMD64)`  
+  - `ARM64`  
+
+### **Installation**  
+
+Once downloaded, place the library in an accessible location:  
+- **Linux/macOS** → `/usr/local/lib/` or the same directory as your application.  
+- **Windows** → The same directory as your `.exe` or a system path (`C:\Windows\System32`).  
+
+Ensure that the correct version of the library is used based on your operating system and CPU architecture.  
 
 ## Available Functions  
 
@@ -21,9 +41,7 @@ This library provides three main entry points:
 
 Each function takes a **C string (`char*`)** as input and returns a **C string (`char*`)**, which should be freed using **FreeCString** after use.  
 
-## Language Bindings  
-
-This section provides examples of how to use the **`alembica.so`** shared library in different programming languages. The library exposes three main functions:  
+The library exposes them as:  
 
 - **`RunValidationInput(input, version)`** → Validates the input based on a given version.  
 - **`RunComputeCosts(input)`** → Computes costs based on the provided input.  
@@ -35,13 +53,24 @@ Each function:
 - Accepts **a single string or multiple strings as input (`char*`)**.  
 - Returns **a dynamically allocated C string (`char*`)**, which must be freed using **`FreeCString`** after use to avoid memory leaks.  
 
-### Usage in Different Languages  
+## Usage in Different Languages  
 
 Below are examples of how to call these functions from different languages, using **Foreign Function Interface (FFI)** or the appropriate interop mechanisms.  
 
-- Make sure **`alembica.so`** is in a directory where the runtime can find it (e.g., `/usr/local/lib/` on Linux or in the same directory as your script).  
-- Each example demonstrates calling **one of the three functions** and properly freeing the returned string.  
+### **Platform-Specific Library Names**  
 
+Depending on your operating system, use the correct library file:  
+- **Linux** → `alembica.so`  
+- **macOS** → `alembica.dylib`  
+- **Windows** → `alembica.dll`  
+
+In each example, replace **`alembica.so`** with the appropriate filename for your platform when loading the library.  
+
+### **General Instructions**  
+- Ensure **`alembica.so` / `alembica.dylib` / `alembica.dll`** is in a directory where the runtime can find it:  
+  - **Linux/macOS** → `/usr/local/lib/` or the same directory as your script.  
+  - **Windows** → The same directory as your `.exe` or a system path (`C:\Windows\System32`).  
+- Each example demonstrates calling **one of the three functions** and properly freeing the returned string.  
 
 ### **1. C**  
 
