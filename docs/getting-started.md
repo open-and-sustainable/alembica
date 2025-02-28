@@ -5,7 +5,7 @@ layout: default
 
 # Getting Started
 
-## Installation
+## Installation in Go
 
 ### Prerequisites
 Before installing `alembica`, ensure you have:
@@ -18,13 +18,8 @@ Before installing `alembica`, ensure you have:
 go get github.com/open-and-sustainable/alembica
 ```
 
-## Configuration
-
-alembica requires API keys to interact with LLM providers. API keys should be included within the JSON input data structures instead of environment variables or separate configuration files.
-
 ## Using alembica in Your Go Project
-
-To use alembica as a library in your Go code:
+To use `alembica` as a library in your Go code:
 ```go
 package main
 
@@ -51,3 +46,10 @@ func main() {
 
 ## API Reference
 Avalable at [https://pkg.go.dev/github.com/open-and-sustainable/alembica](https://pkg.go.dev/github.com/open-and-sustainable/alembica).
+
+## Configuration
+`alembica` requires API keys to interact with LLM providers. API keys should be included within the JSON input data structures instead of environment variables or separate configuration files.
+
+
+<div id="wcb" class="carbonbadge"></div>
+<script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
