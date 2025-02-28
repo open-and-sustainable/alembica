@@ -24,11 +24,8 @@ For detailed contribution guidelines, see our [`CONTRIBUTING.md`](CONTRIBUTING.m
 
 `alembica` is developed in Go, selected for its simplicity and efficiency with concurrent operations. We prioritize the latest stable Go releases to incorporate improvements.
 
-
 ## Open Science Support
 `alembica` actively supports Open Science principles.
-
-
 
 <div id="wcb" class="carbonbadge"></div>
 <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>

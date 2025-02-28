@@ -1,9 +1,9 @@
 ---
-title: Features
+title: Main Features
 layout: default
 ---
 
-# Features
+# Main Features
 
 `alembica` provides a robust framework for structured data extraction using Large Language Models (LLMs). It simplifies interaction with AI models by ensuring validation, cost assessment, and structured output generation.
 
@@ -28,3 +28,5 @@ Processes unstructured text and converts it into structured datasets, making it 
 - Allows **sequenced query processing**, maintaining logical context across interactions.
 - Ensures **schema-compliant structured output**, making data ready for storage or analysis.
 
+<div id="wcb" class="carbonbadge"></div>
+<script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
