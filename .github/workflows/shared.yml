@@ -26,8 +26,8 @@ jobs:
       - name: Build shared library for Linux
         working-directory: utils/sharedlib
         run: |
-          ls -la  # List files in the current directory
-          if [ ! -f export.go ]; then echo "Error: export.go not found"; exit 1; fi
+          ls -la  # Debugging: check files
+          pwd     # Print the current directory
           GOOS=linux GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o alembica_linux_${{ matrix.arch }}.so export.go
 
       - name: Upload Linux shared library artifact
