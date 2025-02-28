@@ -20,7 +20,8 @@ layout: default
 
 ## Get Started
 - [Installation Guide](getting-started)
-- [Feature Overview](features)
+- [Feature Overview](main-features)
+- [Use in Other Languages](cshared-library)
 - [API Reference](https://pkg.go.dev/github.com/open-and-sustainable/alembica)
 - [Help & Resources](help-resources)
 
