@@ -57,7 +57,7 @@ Each function:
 
 Below are examples of how to call these functions from different languages, using **Foreign Function Interface (FFI)** or the appropriate interop mechanisms.  
 
-### **Platform-Specific Library Names**  
+### Platform-Specific Library Names
 
 Depending on your operating system, use the correct library file:  
 - **Linux** → `alembica.so`  
@@ -66,7 +66,7 @@ Depending on your operating system, use the correct library file:
 
 In each example, replace **`alembica.so`** with the appropriate filename for your platform when loading the library.  
 
-### **General Instructions**  
+### General Instructions
 - Ensure **`alembica.so` / `alembica.dylib` / `alembica.dll`** is in a directory where the runtime can find it:  
   - **Linux/macOS** → `/usr/local/lib/` or the same directory as your script.  
   - **Windows** → The same directory as your `.exe` or a system path (`C:\Windows\System32`).  
