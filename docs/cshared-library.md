@@ -23,7 +23,7 @@ We provide precompiled binaries for different platforms and architectures:
   - `x86_64 (AMD64)`  
   - `ARM64`  
 
-### **Installation**  
+### Installation
 
 Once downloaded, place the library in an accessible location:  
 - **Linux/macOS** → `/usr/local/lib/` or the same directory as your application.  
@@ -72,7 +72,7 @@ In each example, replace **`alembica.so`** with the appropriate filename for you
   - **Windows** → The same directory as your `.exe` or a system path (`C:\Windows\System32`).  
 - Each example demonstrates calling **one of the three functions** and properly freeing the returned string.  
 
-### **1. C**  
+### 1. C 
 
 ```c
 #include <stdio.h>  
@@ -87,7 +87,7 @@ int main() {
 }  
 ```  
 
-### **2. C++**  
+### 2. C++  
 
 ```c++
 #include <iostream>  
@@ -101,7 +101,7 @@ int main() {
 }  
 ```  
 
-### **3. Python (ctypes)**  
+### 3. Python (ctypes)  
 
 ```python
 import ctypes  
@@ -114,7 +114,7 @@ print("Extraction Result:", result.decode())
 lib.FreeCString(result)  
 ```  
 
-### **4. Rust (libloading FFI)**  
+### 4. Rust (libloading FFI)  
 
 ```rust
 use libloading::{Library, Symbol};  
@@ -131,7 +131,7 @@ fn main() {
 }  
 ```  
 
-### **5. Java (JNI)**  
+### 5. Java (JNI)
 
 ```java
 public class SharedLibTest {  
@@ -147,7 +147,7 @@ public class SharedLibTest {
 }  
 ```  
 
-### **6. C# (P/Invoke)**  
+### 6. C# (P/Invoke)  
 
 ```c#
 using System;  
@@ -168,7 +168,7 @@ class Program {
 }  
 ```  
 
-### **7. Swift**  
+### 7. Swift
 
 ```swift
 import Foundation  
@@ -184,7 +184,7 @@ if let f = function {
 }  
 ```  
 
-### **8. Node.js (ffi-napi)**  
+### 8. Node.js (ffi-napi)  
 
 ```javascript
 const ffi = require("ffi-napi");  
@@ -197,7 +197,7 @@ const result = lib.RunComputeCosts("some_input");
 console.log("Cost Computation:", result);  
 ```  
 
-### **9. Ruby (ffi gem)**  
+### 9. Ruby (ffi gem)  
 
 ```ruby
 require 'ffi'  
@@ -213,7 +213,7 @@ result = SharedLib.RunValidationInput("some_input", "v1.0")
 puts "Validation Result: #{result}"  
 ```  
 
-### **10. PHP (FFI)**  
+### 10. PHP (FFI)  
 
 ```php
 $ffi = FFI::cdef("  
@@ -225,7 +225,7 @@ $result = $ffi->RunComputeCosts("some_input");
 echo "Cost Computation: $result\n";  
 ```  
 
-### **11. Perl (FFI::Platypus)**  
+### 11. Perl (FFI::Platypus)  
 
 ```perl
 use FFI::Platypus;  
@@ -239,7 +239,7 @@ my $result = RunExtraction("some_input");
 print "Extraction Result: $result\n";  
 ```  
 
-### **12. Kotlin (JNI)**  
+### 12. Kotlin (JNI)
 
 ```java
 class AlembicaLib {  
@@ -257,7 +257,7 @@ fun main() {
 }  
 ```  
 
-### **13. Dart (dart:ffi)**  
+### 13. Dart (dart:ffi) 
 
 ```Dart
 import 'dart:ffi';  
@@ -276,7 +276,7 @@ void main() {
 }  
 ```  
 
-### **14. Fortran (ISO_C_BINDING)**  
+### 14. Fortran (ISO_C_BINDING)  
 
 ```fortran
 program test_alembica  
@@ -297,7 +297,7 @@ program test_alembica
 end program test_alembica  
 ```  
 
-### **15. VBA (Declare Function - Windows Only)**  
+### 15. VBA (Declare Function - Windows Only)  
 
 ```vb
 Declare PtrSafe Function RunExtraction Lib "alembica.dll" (ByVal input As String) As String  
@@ -309,7 +309,7 @@ Sub TestAlembica()
 End Sub  
 ```  
 
-### **16. Julia (ccall FFI)**  
+### 16. Julia (ccall FFI)
 
 ```julia
 function run_extraction(input::String)  
@@ -321,7 +321,7 @@ end
 run_extraction("some_input")  
 ```  
 
-### **17. R (Rcpp FFI)**  
+### 17. R (Rcpp FFI)  
 
 ```r
 library(Rcpp)  
@@ -348,6 +348,7 @@ The **`alembica.so`** shared library can be used in **many programming languages
 Beyond the languages covered here, it can also work with **other languages** such as **Tcl, Ada, and more**, provided they support calling C libraries.  
 
 For more details, refer to the FFI documentation of your specific language.  
+
 
 <div id="wcb" class="carbonbadge"></div>
 <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>

@@ -32,5 +32,6 @@ layout: default
 ## Citation
 Boero, R. (2025). alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources. Zenodo. https://doi.org/10.5281/zenodo.14899666
 
+
 <div id="wcb" class="carbonbadge"></div>
 <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
