@@ -31,7 +31,7 @@ jobs:
           cd /home/runner/work/alembica/alembica  # Move to the project root
           go mod tidy  # Ensure dependencies are resolved
           cd utils/sharedlib
-          GOOS=linux GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o alembica_linux_${{ matrix.arch }}.so .
+          GOOS=linux GOARCH=${{ matrix.arch }} go build -buildmode=c-shared -o alembica_linux_${{ matrix.arch }}.so export.go
 
       - name: Upload Linux shared library artifact
         uses: actions/upload-artifact@v4
