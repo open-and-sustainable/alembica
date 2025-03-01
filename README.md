@@ -2,8 +2,7 @@
 
 **Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.**
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/open-and-sustainable/alembica.svg)](https://pkg.go.dev/github.com/open-and-sustainable/alembica)  
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14899666.svg)](https://doi.org/10.5281/zenodo.14899666)
+[![Go Reference](https://pkg.go.dev/badge/github.com/open-and-sustainable/alembica.svg)](https://pkg.go.dev/github.com/open-and-sustainable/alembica) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14899666.svg)](https://doi.org/10.5281/zenodo.14899666)
 
 ---
 
