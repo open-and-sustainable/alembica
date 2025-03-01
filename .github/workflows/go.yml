@@ -9,9 +9,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read  # Read-only access, since this workflow only runs tests
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
