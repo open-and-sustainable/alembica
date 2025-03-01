@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 title: alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
 message: >-
-  v0.0.1 - initial release. 
-  Support for main LLM models accessible from API.
+  v0.0.2 - deployment of C-Shared library.
+  Documentation on using C-Shared lib in different languages.
 type: software
 doi: 10.5281/zenodo.14899666
 authors:
