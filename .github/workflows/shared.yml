@@ -4,10 +4,15 @@ on:
   release:  
     types: [created]  # Runs when a new release is published  
 
+permissions:  
+  contents: read  # Default to read-only permissions  
+
 jobs:
   build-linux-amd64:
     name: Build Linux AMD64 Shared Library
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed for uploading release assets
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,6 +35,8 @@ jobs:
   build-linux-arm64:
     name: Build Linux ARM64 Shared Library
     runs-on: ubuntu-22.04-arm
+    permissions:
+      contents: write  # Needed for uploading release assets
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -52,6 +59,8 @@ jobs:
   build-windows-amd64:
     name: Build Windows AMD64 Shared Library
     runs-on: windows-latest
+    permissions:
+      contents: write  # Needed for uploading release assets
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -75,6 +84,8 @@ jobs:
   build-macos-amd64:
     name: Build macOS AMD64 Shared Library
     runs-on: macos-13
+    permissions:
+      contents: write  # Needed for uploading release assets
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -97,6 +108,8 @@ jobs:
   build-macos-arm64:
     name: Build macOS ARM64 Shared Library
     runs-on: macos-latest
+    permissions:
+      contents: write  # Needed for uploading release assets
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
