@@ -28,6 +28,7 @@ layout: default
 ## License
 `alembica` is released under the [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl-3.0.html).
 
+
 ![license](https://www.gnu.org/graphics/agplv3-155x51.png)
 
 ## Citation

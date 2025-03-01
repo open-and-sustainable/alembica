@@ -19,7 +19,8 @@ Open Science Software for Semantic Synthesis and Extraction of Information from 
 
 ---
 ## Documentation
-[https://open-and-sustainable.github.io/alembica/](https://open-and-sustainable.github.io/alembica/)
+- [User Guide](https://open-and-sustainable.github.io/alembica/)
+- [API Reference](https://pkg.go.dev/github.com/open-and-sustainable/alembica)
 
 ---
 ## Credits
