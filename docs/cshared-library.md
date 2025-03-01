@@ -20,8 +20,7 @@ We provide precompiled binaries for different platforms and architectures:
   - `ARM64 (Apple Silicon/M1, M2)`  
 
 - **Windows** (`.dll`)  
-  - `x86_64 (AMD64)`  
-  - `ARM64`  
+  - `x86_64 (AMD64)`
 
 ### Installation
 
@@ -31,7 +30,7 @@ Once downloaded, place the library in an accessible location:
 
 Ensure that the correct version of the library is used based on your operating system and CPU architecture.  
 
-## Available Functions  
+## Available Functions
 
 This library provides three main entry points:  
 
