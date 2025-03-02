@@ -177,3 +177,13 @@ func TestValidateInput(t *testing.T) {
     }
 }
 
+func TestValidateOutput(t *testing.T) {
+    jsonString := `{"metadata": {"schemaVersion": "1.0"}, "responses": []}`
+    version := "1.0"
+
+    err := ValidateOutput(jsonString, version)
+
+    if err != nil {
+        t.Errorf("Expected no error, but got: %v", err)
+    }
+}
