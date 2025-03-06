@@ -32,16 +32,17 @@ type Input struct {
 }
 
 // Define output structures
-type OutputMetadata struct {
-    SchemaVersion string `json:"schemaVersion"`
+type Response struct {
+    Provider       string   `json:"provider"`
+    Model          string   `json:"model"`
+    SequenceID     string   `json:"sequenceId"`
+    SequenceNumber int      `json:"sequenceNumber"`
+    ModelResponses []string `json:"modelResponses"`
+    Error          *ErrorInfo `json:"error,omitempty"`
 }
 
-type Response struct {
-    Provider       string      `json:"provider"`
-    Model          string      `json:"model"`
-    SequenceID     string      `json:"sequenceId"`
-    ModelResponses []string    `json:"modelResponses"`
-    Error          *ErrorInfo  `json:"error,omitempty"`
+type OutputMetadata struct {
+    SchemaVersion string `json:"schemaVersion"`
 }
 
 type ErrorInfo struct {

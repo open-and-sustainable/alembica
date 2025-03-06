@@ -35,6 +35,7 @@ func Extract(inputJSON string) (string, error) {
 
     promptsBySequence := make(map[string][]definitions.Prompt)
     sequenceIDs := []string{}
+
     for _, prompt := range inputData.Prompts {
         if _, exists := promptsBySequence[prompt.SequenceID]; !exists {
             sequenceIDs = append(sequenceIDs, prompt.SequenceID)
@@ -49,28 +50,29 @@ func Extract(inputJSON string) (string, error) {
     }
 
     queryService := model.DefaultQueryService{}
+
     for _, modelInstance := range inputData.Models {
         for _, sequenceID := range sequenceIDs {
             prompts := promptsBySequence[sequenceID]
-            var promptTexts []string
+
             for _, p := range prompts {
-                promptTexts = append(promptTexts, p.PromptContent)
-            }
+                // Query model with each individual prompt
+                responses, err := queryService.QueryLLM([]string{p.PromptContent}, modelInstance)
+                if err != nil {
+                    logger.Error("error querying LLM: %v", err)
+                    continue
+                }
 
-            responses, err := queryService.QueryLLM(promptTexts, modelInstance)
-            if err != nil {
-                logger.Error("error querying LLM: %v", err)
-                continue
-            }
+                outputResponses := definitions.Response{
+                    Provider:       modelInstance.Provider,
+                    Model:          modelInstance.Model,
+                    SequenceID:     sequenceID,
+                    SequenceNumber: p.SequenceNumber,
+                    ModelResponses: responses,
+                }
 
-            outputResponses := definitions.Response{
-                Provider:       modelInstance.Provider,
-                Model:          modelInstance.Model,
-                SequenceID:     sequenceID,
-                ModelResponses: responses,
+                outputData.Responses = append(outputData.Responses, outputResponses)
             }
-
-            outputData.Responses = append(outputData.Responses, outputResponses)
         }
     }
 

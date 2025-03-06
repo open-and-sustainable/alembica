@@ -31,6 +31,11 @@
                         "type": "string",
                         "description": "Identifier for the sequence from which this response was generated"
                     },
+                    "sequenceNumber": {
+                        "type": "integer",
+                        "description": "The order number of this response within its sequence",
+                        "minimum": 1
+                    },
                     "modelResponses": {
                         "type": "array",
                         "description": "An array of strings containing the model's answers",
