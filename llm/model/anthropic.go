@@ -4,11 +4,12 @@ import (
 	"context"
 	"fmt"
 	"strings"
+
 	"github.com/open-and-sustainable/alembica/definitions"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
-	anthropic "github.com/anthropics/anthropic-sdk-go"
-	option "github.com/anthropics/anthropic-sdk-go/option"
+	"github.com/anthropics/anthropic-sdk-go"
+	"github.com/anthropics/anthropic-sdk-go/option"
 )
 
 func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
@@ -25,10 +26,13 @@ func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
 
 		// Send the updated conversation history to the model
 		message, err := client.Messages.New(context.TODO(), anthropic.MessageNewParams{
-			Model:     anthropic.F(llm.Model),
-			MaxTokens: anthropic.F(int64(4096)),
-			Temperature: anthropic.F(float64(llm.Temperature)),
-			Messages:  anthropic.F(messages),
+			Model:       llm.Model,
+			MaxTokens:   4096,
+			Temperature: anthropic.Float(llm.Temperature),
+			Messages:    messages,
+			System: []anthropic.TextBlockParam{
+				{Text: "Respond with properly formatted JSON."},
+			},
 		})
 		if err != nil {
 			logger.Error("Anthropic API error: %v", err)
@@ -68,7 +72,7 @@ func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
 }
 
 // extractTextBlock extracts the first text block from the model's response.
-func extractTextBlock(content []anthropic.ContentBlock) string {
+func extractTextBlock(content []anthropic.ContentBlockUnion) string {
 	for _, block := range content {
 		if block.Type == "text" {
 			return block.Text
@@ -93,16 +97,16 @@ func extractSubstring(s, startDelim, endDelim string) (string, error) {
 	if startIndex == -1 {
 		return "", fmt.Errorf("start delimiter not found")
 	}
-	
+
 	// Adjust the start index to skip over the start delimiter
 	startIndex += len(startDelim)
-	
+
 	// Find the index of the first occurrence of the end delimiter after the start delimiter
 	endIndex := strings.Index(s[startIndex:], endDelim)
 	if endIndex == -1 {
 		return "", fmt.Errorf("end delimiter not found")
 	}
-	
+
 	// Adjust the endIndex relative to the original string
 	endIndex += startIndex
 

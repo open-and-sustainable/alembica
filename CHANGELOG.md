@@ -9,6 +9,15 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.0.5] - 2025-04-14
+### Added
+- Real test of multi prompt queries
+### Changed
+- Upgraded all dependencies and Go version
+- API keys loading for real API tests
+### Fixed
+- Anthropic model source code because of breaking chnages in lib not compatible with previous versions
+
 ## [0.0.4] - 2025-03-06
 ### Added
 - Sequence number in output schema and object
