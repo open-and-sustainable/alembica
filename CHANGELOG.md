@@ -9,6 +9,11 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.0.6] - 2025-04-14
+### Fixed
+- Prompts in sequences where sent to models separately, now they are aware of queries and answers
+- Test to verify independence across sequences and contextual awareness within them
+
 ## [0.0.5] - 2025-04-14
 ### Added
 - Real test of multi prompt queries
