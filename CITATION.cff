@@ -2,7 +2,7 @@ cff-version: 1.2.0
 title: alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
 message: >-
   v0.0.5 - overall upgrade and multi prompt live test.
-  Upgrade of all dependencies and Go version, fix code to accomodate Anthropic breaking chnages, test live multi prompts.
+  Upgrade of all dependencies and Go version, fix code to accommodate Anthropic breaking changes, test live multi prompts.
 type: software
 doi: 10.5281/zenodo.14899666
 authors:
