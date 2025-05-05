@@ -7,21 +7,21 @@ layout: default
 
 `alembica` provides a robust framework for structured data extraction using Large Language Models (LLMs). It simplifies interaction with AI models by ensuring validation, cost assessment, and structured output generation.
 
-## 1️⃣ Validation of Input
+## Validation of Input
 Ensures that input queries are properly formatted before being processed by LLMs, preventing errors and improving response accuracy.
 
 - Uses **JSON schema validation** to enforce structured input.
 - Helps avoid malformed queries that could lead to incorrect or costly API calls.
 - Supports multiple schema versions for flexibility.
 
-## 2️⃣ Cost Assessment
+## Cost Assessment
 Calculates token-based processing costs before submitting queries to LLM providers, helping users optimize their usage.
 
 - Estimates costs **based on token consumption** per model and provider.
 - Supports **OpenAI, GoogleAI, Cohere, Anthropic, and DeepSeek** pricing models.
 - Enables informed decision-making by providing **real-time cost estimates**.
 
-## 3️⃣ Data Extraction
+## Data Extraction
 Processes unstructured text and converts it into structured datasets, making it easier to analyze and integrate into workflows.
 
 - Extracts named entities, structured responses, and key insights.

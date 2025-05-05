@@ -11,18 +11,22 @@ logo: "assets/images/logo.png"
 favicon: "assets/images/favicon.ico"
 # configuration of navigation entries
 nav_links:
-  - name: "Main <br>Features"
-    url: "/main-features.html"
-  - name: "Getting <br>Started"
-    url: "/getting-started.html"
-  - name: "C-Shared <br>Library"
-    url: "/cshared-library.html"
-  - name: "Research &<br>Development"
-    url: "/research-development.html"
-  - name: "Help &<br>Resources"
-    url: "/help-resources.html"
+    - name: "Main <br>Features"
+      url: "/main-features.html"
+    - name: "Getting <br>Started"
+      url: "/getting-started.html"
+    - name: "C-Shared <br>Library"
+      url: "/cshared-library.html"
+    - name: "Supported <br>Models"
+      url: "/supported-models.html"
+    - name: "Rate <br>Limits"
+      url: "/rate-limits.html"
+    - name: "Research &<br>Development"
+      url: "/research-development.html"
+    - name: "Help &<br>Resources"
+      url: "/help-resources.html"
 # configuration of custom colors
-nav_background_color: "#8B0000"  # Dark Red (Maroon) for the nav bar
-nav_hover_color: "#006400"       # Dark Green for hover effects
-nav_link_color: "#ffffff"        # Keep white for readability
-toc-hover-color: "#006400"       # Dark Green for TOC hover color
+nav_background_color: "#8B0000" # Dark Red (Maroon) for the nav bar
+nav_hover_color: "#006400" # Dark Green for hover effects
+nav_link_color: "#ffffff" # Keep white for readability
+toc-hover-color: "#006400" # Dark Green for TOC hover color
