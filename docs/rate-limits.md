@@ -20,7 +20,7 @@ Exceeding these limits may result in request throttling or errors. `alembica` he
 
 **Disclaimer:** Daily limits (RPD and TPD) are not currently supported by `alembica`. Users are responsible for implementing and respecting these constraints on their own within their applications.
 
-### OpenAI Rate Limits
+## OpenAI
 **(August 2024, tier 1 users)**
 
 <table class="table-spacing">
@@ -66,7 +66,7 @@ Exceeding these limits may result in request throttling or errors. `alembica` he
 </table>
 
 
-### GoogleAI Rate Limits
+## GoogleAI
 **(October 2024)**
 
 **Free Tier**:
@@ -133,10 +133,10 @@ Exceeding these limits may result in request throttling or errors. `alembica` he
     </tbody>
 </table>
 
-### Cohere Rate Limits
+## Cohere
 Cohere production keys have no limit, but trial keys are limited to 20 API calls per minute.
 
-### Anthropic Rate Limits
+## Anthropic
 **(November 2024, tier 1 users)**
 <table class="table-spacing">
     <thead>
@@ -181,7 +181,7 @@ Cohere production keys have no limit, but trial keys are limited to 20 API calls
     </tbody>
 </table>
 
-### DeepSeek Rate Limits
+## DeepSeek
 DeepSeek does not impose rate limits.
 
 <div id="wcb" class="carbonbadge"></div>
