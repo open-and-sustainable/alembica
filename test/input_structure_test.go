@@ -45,7 +45,7 @@ func TestMultiSequenceChat(t *testing.T) {
 			{
 				Provider:    "Anthropic",
 				APIKey:      apiKeys["Anthropic"],
-				Model:       check.GetModel("", "Anthropic", "claude-3-sonnet", ""),
+				Model:       check.GetModel("", "Anthropic", "claude-3-5-sonnet", ""),
 				Temperature: 0.7,
 			},
 		},

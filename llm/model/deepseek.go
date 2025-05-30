@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"github.com/open-and-sustainable/alembica/definitions"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
@@ -20,13 +21,20 @@ func queryDeepSeek(prompts []string, llm definitions.Model) ([]string, error) {
 	for i, prompt := range prompts {
 		messages = append(messages, deepseek.ChatCompletionMessage{Role: constants.ChatMessageRoleUser, Content: prompt})
 
+		// Output token limit depend on model
+		maxTokens := 8192
+
+		if llm.Model == "deepseek-reasoner" {
+			maxTokens = 64000
+		}
+
 		completionParams := &deepseek.ChatCompletionRequest{
-			Model:    llm.Model,
-			Messages: messages,
+			Model:          llm.Model,
+			Messages:       messages,
 			ResponseFormat: &deepseek.ResponseFormat{Type: "json_object"},
-			TopP:        float32(1.0),
-			MaxTokens:   8192,
-			Temperature: float32(llm.Temperature),
+			TopP:           float32(1.0),
+			MaxTokens:      maxTokens,
+			Temperature:    float32(llm.Temperature),
 		}
 
 		resp, err := client.CreateChatCompletion(context.Background(), completionParams)
@@ -54,7 +62,7 @@ func queryDeepSeek(prompts []string, llm definitions.Model) ([]string, error) {
 		answer := resp.Choices[0].Message.Content
 		answers = append(answers, answer)
 		messages = append(messages, deepseek.ChatCompletionMessage{Role: constants.ChatMessageRoleAssistant, Content: answer})
-	
+
 		// Call wait for all prompts except the last one
 		if i < len(prompts)-1 {
 			Wait(prompt, llm)
