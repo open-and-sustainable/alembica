@@ -26,7 +26,7 @@ func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
 
 		// Send the updated conversation history to the model
 		message, err := client.Messages.New(context.TODO(), anthropic.MessageNewParams{
-			Model:       llm.Model,
+			Model:       anthropic.Model(llm.Model),
 			MaxTokens:   4096,
 			Temperature: anthropic.Float(llm.Temperature),
 			Messages:    messages,

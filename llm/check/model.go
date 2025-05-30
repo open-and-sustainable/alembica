@@ -3,8 +3,8 @@ package check
 import (
 	"fmt"
 
-	"github.com/open-and-sustainable/alembica/utils/logger"
 	"github.com/open-and-sustainable/alembica/llm/tokens"
+	"github.com/open-and-sustainable/alembica/utils/logger"
 
 	anthropic "github.com/anthropics/anthropic-sdk-go"
 	openai "github.com/sashabaranov/go-openai"
@@ -22,10 +22,11 @@ import (
 //   - A string representing the selected model name. An empty string is returned if the model is unsupported.
 //
 // Example:
-//   > selectedModel := GetModel("some prompt", "OpenAI", "gpt-4-turbo", "api-key")
-//   > if selectedModel == "" {
-//   >     log.Println("No supported model selected")
-//   > }
+//
+//	> selectedModel := GetModel("some prompt", "OpenAI", "gpt-4-turbo", "api-key")
+//	> if selectedModel == "" {
+//	>     log.Println("No supported model selected")
+//	> }
 func GetModel(prompt string, providerName string, modelName string, key string) string {
 	var modelFunc func(string, string, string) string
 	switch providerName {
@@ -63,6 +64,22 @@ func getOpenAIModel(prompt string, modelName string, key string) string {
 		model = openai.GPT4o
 	case "gpt-4o-mini":
 		model = openai.GPT4oMini
+	case "o1":
+		model = openai.O1
+	case "o1-mini":
+		model = openai.O1Mini
+	case "o3":
+		model = openai.O3
+	case "o3-mini":
+		model = openai.O3Mini
+	case "o4-mini":
+		model = openai.O4Mini
+	case "gpt-4.1":
+		model = openai.GPT4Dot1
+	case "gpt-4.1-mini":
+		model = openai.GPT4Dot1Mini
+	case "gpt-4.1-nano":
+		model = openai.GPT4Dot1Nano
 	default:
 		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
@@ -77,7 +94,7 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 		counter := tokens.RealTokenCounter{}
 		numTokens := counter.GetNumTokensFromPrompt(prompt, "GoogleAI", modelName, key)
 		if numTokens <= 1048576 {
-			model = "gemini-1.5-flash"
+			model = "gemini-2.0-flash-lite"
 		}
 	case "gemini-1.0-pro": // deprecated from Feb 15 2025
 		logger.Error(fmt.Println("Unsupported model: ", modelName))
@@ -85,6 +102,10 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 	case "gemini-1.5-flash":
 		model = modelName
 	case "gemini-1.5-pro":
+		model = modelName
+	case "gemini-2.0-flash-lite":
+		model = modelName
+	case "gemini-2.0-flash":
 		model = modelName
 	default:
 		logger.Error(fmt.Println("Unsupported model: ", modelName))
@@ -96,7 +117,7 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 func getCohereModel(prompt string, modelName string, key string) string {
 	model := "command-r7b-12-2024"
 	switch modelName {
-	case "": 
+	case "":
 		// cost optimization, command-r7b is currently the cheapest and with the most input tokens allowed
 	case "command": // leave the model selected by the user, but chek if supported
 		model = modelName
@@ -104,10 +125,14 @@ func getCohereModel(prompt string, modelName string, key string) string {
 		model = modelName
 	case "command-r":
 		model = modelName
+	case "command-r-08-2024":
+		model = modelName
 	case "command-r-plus":
 		model = modelName
 	case "command-r7b-12-2024":
-		model = modelName			
+		model = modelName
+	case "command-a-03-2025":
+		model = modelName
 	default:
 		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
@@ -116,20 +141,24 @@ func getCohereModel(prompt string, modelName string, key string) string {
 }
 
 func getAnthropicModel(prompt string, modelName string, key string) string {
-	model := anthropic.ModelClaude_3_Haiku_20240307
+	model := string(anthropic.ModelClaude_3_Haiku_20240307)
 	switch modelName {
 	case "": // cost optimization
 		// all models have the same context window size, hence leave to haiku as the cheapest
+	case "claude-4-0-opus":
+		model = string(anthropic.ModelClaudeOpus4_0)
+	case "claude-4-0-sonnet":
+		model = string(anthropic.ModelClaudeSonnet4_0)
+	case "claude-3-7-sonnet":
+		model = string(anthropic.ModelClaude3_7SonnetLatest)
 	case "claude-3-5-sonnet":
-		model = anthropic.ModelClaude3_5SonnetLatest
+		model = string(anthropic.ModelClaude3_5SonnetLatest)
 	case "claude-3-5-haiku":
-		model = anthropic.ModelClaude3_5HaikuLatest
+		model = string(anthropic.ModelClaude3_5HaikuLatest)
 	case "claude-3-opus":
-		model = anthropic.ModelClaude3OpusLatest
-	case "claude-3-sonnet":
-		model = anthropic.ModelClaude_3_Sonnet_20240229
+		model = string(anthropic.ModelClaude3OpusLatest)
 	case "claude-3-haiku":
-		model = anthropic.ModelClaude_3_Haiku_20240307
+		model = string(anthropic.ModelClaude_3_Haiku_20240307)
 	default:
 		logger.Error(fmt.Println("Unsopported model: ", modelName))
 		return ""
@@ -140,9 +169,12 @@ func getAnthropicModel(prompt string, modelName string, key string) string {
 func getDeepSeekModel(prompt string, modelName string, key string) string {
 	model := "deepseek-chat"
 	switch modelName {
-	case "": 
-		// cost optimization.. there is only one model available, use that
+	case "":
+		// cost optimization: use chat that is cheapest
+		model = "deepseek-chat"
 	case "deepseek-chat": // leave the model selected by the user, but chek if supported
+		model = modelName
+	case "deepseek-reasoner": // leave the model selected by the user, but chek if supported
 		model = modelName
 	default:
 		logger.Error(fmt.Println("Unsupported model: ", modelName))

@@ -9,6 +9,18 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.0.7] - 2025-05-30
+### Removed
+- removed "claude-3-sonnet" because deprecated by provider and with end of life in July 2025.
+- removed support for Gemini 1.0 Pro because of EoL.
+### Added
+- Support for Claude 3.7 Sonnet model
+- Support for Cohere Command-R August 2024 (command-r-08-2024) and Command A (command-a-03-2025)
+- Support for DeepSeek-V3-Reasoner
+- Support for Google AI Gemini 2.0 Flash and Gemini 2.0 Flash Lite
+- Support for Claude 4.0 Sonnet and Claude 4.0 Opus model
+- Support for OpenAI models O4Mini, O1, O1Mini, O3, O3Mini, GPT4.1, GPT4.1Mini, GPT4.1Nano
+
 ## [0.0.6] - 2025-04-14
 ### Fixed
 - Prompts in sequences where sent to models separately, now they are aware of queries and answers
