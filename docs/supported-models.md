@@ -146,6 +146,15 @@ DeepSeek V3 models cost depends on cache and time of use. Here are the pricing d
     </thead>
     <tbody>
         <tr>
+            <td style="text-align: left;">Gemini 2.0 Flash Lite</td>
+            <td style="text-align: right;">1,048,576</td>
+            <td style="text-align: right;">$0.075</td>
+        </tr>        <tr>
+            <td style="text-align: left;">Gemini 2.0 Flash</td>
+            <td style="text-align: right;">1,048,576</td>
+            <td style="text-align: right;">$0.10</td>
+        </tr>
+        <tr>
             <td style="text-align: left;">Gemini 1.5 Flash</td>
             <td style="text-align: right;">1,048,576</td>
             <td style="text-align: right;">$0.15</td>

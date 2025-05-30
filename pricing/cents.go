@@ -30,8 +30,8 @@ var modelRates = map[string]decimal.Decimal{ // dollar prices per input M token
 	openai.GPT3Dot5TurboInstruct:           decimal.NewFromFloat(1.5).Div(decimal.NewFromInt(1000000)),
 	"gemini-2.0-flash-lite":                decimal.NewFromFloat(0.075).Div(decimal.NewFromInt(1000000)),
 	"gemini-2.0-flash":                     decimal.NewFromFloat(0.1).Div(decimal.NewFromInt(1000000)),
-	"gemini-1.5-flash":                     decimal.NewFromFloat(0.075).Div(decimal.NewFromInt(1000000)), // the rate is halved if <= 128K input tokens, fixed below
-	"gemini-1.5-pro":                       decimal.NewFromFloat(2.5).Div(decimal.NewFromInt(1000000)),   // the rate is halved if <= 128K input tokens, fixed below
+	"gemini-1.5-flash":                     decimal.NewFromFloat(0.15).Div(decimal.NewFromInt(1000000)), // the rate is halved if <= 128K input tokens, fixed below
+	"gemini-1.5-pro":                       decimal.NewFromFloat(2.5).Div(decimal.NewFromInt(1000000)),  // the rate is halved if <= 128K input tokens, fixed below
 	"gemini-1.0-pro":                       decimal.NewFromFloat(0.5).Div(decimal.NewFromInt(1000000)),
 	"command-a-03-2025":                    decimal.NewFromFloat(2.50).Div(decimal.NewFromInt(1000000)),
 	"command-r-08-2024":                    decimal.NewFromFloat(0.15).Div(decimal.NewFromInt(1000000)),
