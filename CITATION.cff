@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 title: alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
 message: >-
-  v0.0.7 - added new models.
-  Added support for Claude 3.7 Sonnet, Cohere Command-R August 2024 (command-r-08-2024) and Command A (command-a-03-2025), DeepSeek-V3-Reasoner, Google AI Gemini 2.0 Flash and Gemini 2.0 Flash Lite, Claude 4.0 Sonnet and Claude 4.0 Opus, O4Mini, O1, O1Mini, O3, O3Mini, GPT4.1, GPT4.1Mini, GPT4.1Nano.
+  v0.0.8 - formatting and typos.
+  Fixed formatting issues and spelling errors.
 type: software
 doi: 10.5281/zenodo.14899666
 authors:

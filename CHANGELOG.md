@@ -9,6 +9,10 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.0.8] - 2025-06-01
+### Fixed
+- Formatting issues and spelling errors.
+
 ## [0.0.7] - 2025-05-30
 ### Removed
 - removed "claude-3-sonnet" because deprecated by provider and with end of life in July 2025.
