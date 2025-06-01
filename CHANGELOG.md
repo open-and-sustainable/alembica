@@ -12,6 +12,7 @@ Security: For vulnerabilities.
 ## [0.0.8] - 2025-06-01
 ### Fixed
 - Formatting issues and spelling errors.
+- Filled in docstrings and tests.
 
 ## [0.0.7] - 2025-05-30
 ### Removed

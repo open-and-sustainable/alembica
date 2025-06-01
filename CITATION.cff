@@ -2,7 +2,7 @@ cff-version: 1.2.0
 title: alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
 message: >-
   v0.0.8 - formatting and typos.
-  Fixed formatting issues and spelling errors.
+  Fixed formatting issues and spelling errors, filled in docstrings and tests.
 type: software
 doi: 10.5281/zenodo.14899666
 authors:
