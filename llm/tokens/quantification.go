@@ -1,15 +1,15 @@
 package tokens
 
 import (
-    "fmt"
-    "github.com/open-and-sustainable/alembica/utils/logger"
+	"fmt"
+	"github.com/open-and-sustainable/alembica/utils/logger"
 )
 
 // TokenCounter defines an interface for counting tokens in text prompts.
 // It requires an implementation that can handle different providers and models,
 // using provider-specific logic to interact with APIs or SDKs.
 type TokenCounter interface {
-    GetNumTokensFromPrompt(prompt string, provider string, model string, key string) int
+	GetNumTokensFromPrompt(prompt string, provider string, model string, key string) int
 }
 
 // RealTokenCounter is an implementation of the TokenCounter interface that uses actual APIs.
@@ -32,21 +32,21 @@ type RealTokenCounter struct{}
 //
 // The function logs an error and returns zero if the provider is not supported.
 func (rtc RealTokenCounter) GetNumTokensFromPrompt(prompt string, provider string, model string, key string) int {
-    var numTokens int
-    switch provider {
-    case "OpenAI":
-        numTokens = numTokensFromPromptOpenAI(prompt, model, key)
-    case "GoogleAI":
-        numTokens = numTokensFromPromptGoogleAI(prompt, model, key)
-    case "Cohere":
-        numTokens = numTokensFromPromptCohere(prompt, model, key)
-    case "Anthropic":
-        numTokens = numTokensFromPromptOpenAI(prompt, "gpt-4o", key)
-    case "DeepSeek":
-        numTokens = numTokensFromPromptOpenAI(prompt, "gpt-4o", key)
-    default:
-        logger.Error(fmt.Println("Unsupported LLM provider: ", provider))
-        return 0
-    }
-    return numTokens
+	var numTokens int
+	switch provider {
+	case "OpenAI":
+		numTokens = numTokensFromPromptOpenAI(prompt, model, key)
+	case "GoogleAI":
+		numTokens = numTokensFromPromptGoogleAI(prompt, model, key)
+	case "Cohere":
+		numTokens = numTokensFromPromptCohere(prompt, model, key)
+	case "Anthropic":
+		numTokens = numTokensFromPromptOpenAI(prompt, "gpt-4o", key)
+	case "DeepSeek":
+		numTokens = numTokensFromPromptOpenAI(prompt, "gpt-4o", key)
+	default:
+		logger.Error(fmt.Println("Unsupported LLM provider: ", provider))
+		return 0
+	}
+	return numTokens
 }

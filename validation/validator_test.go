@@ -1,9 +1,9 @@
 package validation
 
 import (
-	"testing"
+	"github.com/open-and-sustainable/alembica/definitions"
 	"strings"
-    "github.com/open-and-sustainable/alembica/definitions"
+	"testing"
 )
 
 func TestValidateJSON(t *testing.T) {
@@ -20,46 +20,46 @@ func TestValidateJSON(t *testing.T) {
 		errorMsg     string
 	}{
 		{
-			name: "Valid Input for Input Schema v1",
-			jsonInput: `{"metadata": {"schemaVersion": "v1", "timestamp": "2025-02-10T12:00:00Z"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
+			name:         "Valid Input for Input Schema v1",
+			jsonInput:    `{"metadata": {"schemaVersion": "v1", "timestamp": "2025-02-10T12:00:00Z"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
 			version:      "v1",
 			schemaType:   "input",
 			expectsError: false,
 		},
 		{
-			name: "Invalid Input Missing Required Field",
-			jsonInput: `{"metadata": {"schemaVersion": "v1"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
+			name:         "Invalid Input Missing Required Field",
+			jsonInput:    `{"metadata": {"schemaVersion": "v1"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
 			version:      "v1",
 			schemaType:   "input",
 			expectsError: true,
 			errorMsg:     "validation errors: metadata: timestamp is required",
 		},
 		{
-			name: "Valid Output Schema v1",
-			jsonInput: `{"metadata": {"schemaVersion": "v1"}, "responses": [{"provider": "OpenAI", "model": "gpt-4", "sequenceId": "123", "modelResponses": ["This is a response"]}]}`,
+			name:         "Valid Output Schema v1",
+			jsonInput:    `{"metadata": {"schemaVersion": "v1"}, "responses": [{"provider": "OpenAI", "model": "gpt-4", "sequenceId": "123", "modelResponses": ["This is a response"]}]}`,
 			version:      "v1",
 			schemaType:   "output",
 			expectsError: false,
 		},
 		{
-			name: "Invalid Output Schema Missing Required Field",
-			jsonInput: `{"metadata": {"schemaVersion": "v1"}, "responses": [{"provider": "OpenAI", "model": "gpt-4", "modelResponses": ["This is a response"]}]}`,
+			name:         "Invalid Output Schema Missing Required Field",
+			jsonInput:    `{"metadata": {"schemaVersion": "v1"}, "responses": [{"provider": "OpenAI", "model": "gpt-4", "modelResponses": ["This is a response"]}]}`,
 			version:      "v1",
 			schemaType:   "output",
 			expectsError: true,
 			errorMsg:     "validation errors: responses.0: sequenceId is required",
 		},
 		{
-			name: "Non-existent Schema Version",
-			jsonInput: `{"metadata": {"schemaVersion": "v99"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
+			name:         "Non-existent Schema Version",
+			jsonInput:    `{"metadata": {"schemaVersion": "v99"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
 			version:      "v99",
 			schemaType:   "input",
 			expectsError: true,
 			errorMsg:     "no schemas found for version v99",
 		},
 		{
-			name: "Non-existent Schema Type",
-			jsonInput: `{"metadata": {"schemaVersion": "v1"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
+			name:         "Non-existent Schema Type",
+			jsonInput:    `{"metadata": {"schemaVersion": "v1"}, "models": [{"provider": "OpenAI", "model": "gpt-4o", "temperature": 0.7}], "prompts": [{"promptContent": "Hello", "sequenceId": "123", "sequenceNumber": 1}]}`,
 			version:      "v1",
 			schemaType:   "unknown",
 			expectsError: true,
@@ -85,18 +85,17 @@ func TestValidateJSON(t *testing.T) {
 	}
 }
 
-
 func TestValidateInput(t *testing.T) {
-    tests := []struct {
-        name        string
-        jsonInput   string
-        version     string
-        expectsError bool
-        errorMsg    string
-    }{
-        {
-            name: "Valid Input JSON",
-            jsonInput: `{
+	tests := []struct {
+		name         string
+		jsonInput    string
+		version      string
+		expectsError bool
+		errorMsg     string
+	}{
+		{
+			name: "Valid Input JSON",
+			jsonInput: `{
                 "metadata": {
                     "schemaVersion": "v1",
                     "timestamp": "2025-02-10T12:00:00Z"
@@ -116,19 +115,19 @@ func TestValidateInput(t *testing.T) {
                     }
                 ]
             }`,
-            version: "v1",
-            expectsError: false,
-        },
-        {
+			version:      "v1",
+			expectsError: false,
+		},
+		{
 			name: "Invalid Input - Missing Required Fields",
 			jsonInput: `{
 				"metadata": {
 					"schemaVersion": "v1"
 				}
 			}`,
-			version: "v1",
+			version:      "v1",
 			expectsError: true,
-			errorMsg: "validation errors: (root): models is required; (root): prompts is required; metadata: timestamp is required",
+			errorMsg:     "validation errors: (root): models is required; (root): prompts is required; metadata: timestamp is required",
 		},
 		{
 			name: "Invalid Version - Schema Not Found",
@@ -152,38 +151,38 @@ func TestValidateInput(t *testing.T) {
 					}
 				]
 			}`,
-			version: "v99",
+			version:      "v99",
 			expectsError: true,
-			errorMsg: "no schema file found for version v99 and type input at v99/input_schema.json",
-		},		
-    }
+			errorMsg:     "no schema file found for version v99 and type input at v99/input_schema.json",
+		},
+	}
 
-    for _, tt := range tests {
-        t.Run(tt.name, func(t *testing.T) {
-            err := ValidateInput(tt.jsonInput, tt.version)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err := ValidateInput(tt.jsonInput, tt.version)
 
-            if tt.expectsError {
-                if err == nil {
-                    t.Errorf("Expected error but got nil")
-                } else if !strings.Contains(err.Error(), tt.errorMsg) {
-                    t.Errorf("Expected error containing '%s', got '%s'", tt.errorMsg, err.Error())
-                }
-            } else {
-                if err != nil {
-                    t.Errorf("Expected no error but got: %s", err)
-                }
-            }
-        })
-    }
+			if tt.expectsError {
+				if err == nil {
+					t.Errorf("Expected error but got nil")
+				} else if !strings.Contains(err.Error(), tt.errorMsg) {
+					t.Errorf("Expected error containing '%s', got '%s'", tt.errorMsg, err.Error())
+				}
+			} else {
+				if err != nil {
+					t.Errorf("Expected no error but got: %s", err)
+				}
+			}
+		})
+	}
 }
 
 func TestValidateOutput(t *testing.T) {
-    jsonString := `{"metadata": {"schemaVersion": "1.0"}, "responses": []}`
-    version := "1.0"
+	jsonString := `{"metadata": {"schemaVersion": "1.0"}, "responses": []}`
+	version := "1.0"
 
-    err := ValidateOutput(jsonString, version)
+	err := ValidateOutput(jsonString, version)
 
-    if err != nil {
-        t.Errorf("Expected no error, but got: %v", err)
-    }
+	if err != nil {
+		t.Errorf("Expected no error, but got: %v", err)
+	}
 }

@@ -59,7 +59,6 @@ func queryOpenAI(prompts []string, llm definitions.Model) ([]string, error) {
 		// Append model response to conversation history
 		messages = append(messages, openai.ChatCompletionMessage{Role: openai.ChatMessageRoleAssistant, Content: answer})
 
-
 		// Call wait for all prompts except the last one
 		if i < len(prompts)-1 {
 			Wait(prompt, llm)

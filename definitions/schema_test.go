@@ -1,8 +1,8 @@
 package definitions
 
 import (
-	"testing"
 	"github.com/xeipuuv/gojsonschema"
+	"testing"
 )
 
 func TestLoadSchema(t *testing.T) {
@@ -62,7 +62,7 @@ func TestSchemaValidation(t *testing.T) {
 			}
 		]
 	}`)
-		result, err := schema.Validate(documentLoader)
+	result, err := schema.Validate(documentLoader)
 	if err != nil {
 		t.Fatalf("Error during schema validation: %v", err)
 	}

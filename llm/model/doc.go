@@ -25,8 +25,9 @@ Features:
   - Enforces API rate limits using Wait function.
 
 Example Usage:
+
 	package main
-	
+
 	import (
 		"fmt"
 		"github.com/open-and-sustainable/alembica/definitions"
@@ -54,4 +55,3 @@ Example Usage:
 	}
 */
 package model
-

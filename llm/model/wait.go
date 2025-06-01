@@ -2,8 +2,8 @@ package model
 
 import (
 	"github.com/open-and-sustainable/alembica/definitions"
-	"github.com/open-and-sustainable/alembica/utils/logger"
 	"github.com/open-and-sustainable/alembica/llm/tokens"
+	"github.com/open-and-sustainable/alembica/utils/logger"
 	"sync"
 	"time"
 )
@@ -47,11 +47,11 @@ func getWaitTime(prompt string, llm definitions.Model) int {
 
 	// Add the current request timestamp
 	requestTimestamps = append(requestTimestamps, now)
-	
+
 	// Get the current number of requests in the last 60 seconds
 	numRequests := len(requestTimestamps)
 	remainingSeconds := 60 - now.Second()
-	
+
 	// Analyze TPM limits
 	tpm_wait_seconds := 0
 	tpmLimit := llm.TPMLimit
@@ -64,7 +64,7 @@ func getWaitTime(prompt string, llm definitions.Model) int {
 			tpm_wait_seconds = remainingSeconds + int(requiredWaitTime)
 		}
 	}
-	
+
 	// Analyze RPM limits
 	rpm_wait_seconds := 0
 	rpmLimit := llm.RPMLimit

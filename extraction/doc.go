@@ -1,6 +1,6 @@
 /*
 Package extraction handles structured information extraction from text inputs.
-It processes user prompts, sequences them correctly, and queries large language models (LLMs) 
+It processes user prompts, sequences them correctly, and queries large language models (LLMs)
 for responses using an abstracted query service.
 
 Core Functionality:
@@ -14,8 +14,9 @@ Features:
   - Implements waiting mechanisms to respect rate limits of LLM APIs.
 
 Example Usage:
+
 	package main
-	
+
 	import (
 		"fmt"
 		"github.com/open-and-sustainable/alembica/extraction"

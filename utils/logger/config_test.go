@@ -40,8 +40,6 @@ func TestDefaultLogger(t *testing.T) {
 	}
 }
 
-
-
 // Test Stdout logging
 func TestStdoutLogging(t *testing.T) {
 	oldStdout := os.Stdout

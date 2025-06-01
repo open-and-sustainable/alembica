@@ -1,5 +1,5 @@
 /*
-Package check provides utilities for selecting appropriate AI models, enforcing token limits, 
+Package check provides utilities for selecting appropriate AI models, enforcing token limits,
 and ensuring compatibility with various LLM providers.
 
 Supported LLM Providers:
@@ -11,11 +11,11 @@ Supported LLM Providers:
 
 Core Components:
   - Model Selection:
-    - `GetModel`: Selects an optimized model based on the provider and user input.
+  - `GetModel`: Selects an optimized model based on the provider and user input.
   - Token Limit Checking:
-    - `RunInputLimitsCheck`: Verifies if a prompt exceeds the maximum token limit for a given model.
+  - `RunInputLimitsCheck`: Verifies if a prompt exceeds the maximum token limit for a given model.
   - Model-Specific Limits:
-    - `ModelMaxTokens`: Stores the maximum token capacities for supported models.
+  - `ModelMaxTokens`: Stores the maximum token capacities for supported models.
 
 Features:
   - **Dynamic model selection** based on token constraints and cost optimization.
@@ -23,6 +23,7 @@ Features:
   - **Supports structured logging** to debug model selection and validation.
 
 Example Usage:
+
 	package main
 
 	import (

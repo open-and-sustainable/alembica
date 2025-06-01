@@ -14,7 +14,7 @@ func numTokensFromPromptCohere(prompt string, modelName string, key string) (num
 
 	// Create the TokenizeRequest
 	request := &cohere.TokenizeRequest{
-		Text:  prompt, 
+		Text:  prompt,
 		Model: modelName,
 	}
 

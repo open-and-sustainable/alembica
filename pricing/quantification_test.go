@@ -31,7 +31,7 @@ func TestComputeCosts(t *testing.T) {
 	// Execute function
 	resultJSON, err := ComputeCosts(inputJSON)
 	if err != nil {
-		t.Errorf("ComputeCosts failed: %v", err)	
+		t.Errorf("ComputeCosts failed: %v", err)
 	}
 	// Ensure output is valid JSON
 	var result map[string]interface{}

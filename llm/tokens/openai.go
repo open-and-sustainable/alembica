@@ -2,8 +2,8 @@ package tokens
 
 import (
 	"fmt"
-	"strings"
 	"github.com/open-and-sustainable/alembica/utils/logger"
+	"strings"
 
 	tiktoken "github.com/pkoukk/tiktoken-go"
 	openai "github.com/sashabaranov/go-openai"

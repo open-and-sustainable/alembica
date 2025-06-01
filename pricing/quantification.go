@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 
 	"github.com/open-and-sustainable/alembica/definitions"
-	"github.com/open-and-sustainable/alembica/utils/logger"
 	"github.com/open-and-sustainable/alembica/llm/tokens"
+	"github.com/open-and-sustainable/alembica/utils/logger"
 	"github.com/open-and-sustainable/alembica/validation"
 
 	"github.com/shopspring/decimal"

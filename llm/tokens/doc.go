@@ -11,15 +11,15 @@ Supported LLM Providers:
 
 Core Components:
   - TokenCounter Interface:
-    - Defines a method `GetNumTokensFromPrompt` for retrieving token counts.
+  - Defines a method `GetNumTokensFromPrompt` for retrieving token counts.
   - RealTokenCounter:
-    - Implements `TokenCounter` using real API calls.
+  - Implements `TokenCounter` using real API calls.
   - numTokensFromPrompt* Functions:
-    - `numTokensFromPromptOpenAI`: Uses OpenAI’s `tiktoken` for token estimation.
-    - `numTokensFromPromptGoogleAI`: Calls Google Gemini API for token counting.
-    - `numTokensFromPromptCohere`: Queries Cohere API for token quantification.
-    - `numTokensFromPromptAnthropic`: Currently mapped to OpenAI token counting.
-    - `numTokensFromPromptDeepSeek`: Uses OpenAI token counting as a fallback.
+  - `numTokensFromPromptOpenAI`: Uses OpenAI’s `tiktoken` for token estimation.
+  - `numTokensFromPromptGoogleAI`: Calls Google Gemini API for token counting.
+  - `numTokensFromPromptCohere`: Queries Cohere API for token quantification.
+  - `numTokensFromPromptAnthropic`: Currently mapped to OpenAI token counting.
+  - `numTokensFromPromptDeepSeek`: Uses OpenAI token counting as a fallback.
 
 Features:
   - Uses provider-specific APIs to ensure accurate token counts.
@@ -27,6 +27,7 @@ Features:
   - Handles unsupported providers by returning zero tokens.
 
 Example Usage:
+
 	package main
 
 	import (
@@ -45,6 +46,5 @@ Example Usage:
 
 		fmt.Printf("Token count: %d\n", numTokens)
 	}
-
 */
 package tokens

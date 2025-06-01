@@ -8,9 +8,9 @@ Supported Schema Types:
 
 Core Functions:
   - ValidateJSON:
-    - Validates a JSON string against a specified schema version and type.
+  - Validates a JSON string against a specified schema version and type.
   - ValidateInput:
-    - Checks if input data conforms to the defined input schema.
+  - Checks if input data conforms to the defined input schema.
 
 Features:
   - Uses `gojsonschema` for schema-based validation.
@@ -18,6 +18,7 @@ Features:
   - Returns detailed validation errors if fields are missing or incorrect.
 
 Example Usage:
+
 	package main
 
 	import (
@@ -54,6 +55,5 @@ Example Usage:
 			fmt.Println("Validation successful!")
 		}
 	}
-
 */
 package validation

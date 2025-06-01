@@ -27,4 +27,3 @@ func numTokensFromPromptGoogleAI(prompt string, modelName string, key string) (n
 
 	return int(tokResp.TotalTokens)
 }
-

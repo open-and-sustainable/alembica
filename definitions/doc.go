@@ -8,13 +8,13 @@ Supported Schema Types:
 
 Core Components:
   - Data Structures:
-    - `Input`: Represents an AI model request with metadata, models, and prompts.
-    - `Output`: Represents an AI model response with metadata and generated answers.
+  - `Input`: Represents an AI model request with metadata, models, and prompts.
+  - `Output`: Represents an AI model response with metadata and generated answers.
   - Schema Management:
-    - `LoadSchema`: Loads and stores JSON schemas for input/output validation.
-    - `SchemaStore`: Holds different versions of schema files.
+  - `LoadSchema`: Loads and stores JSON schemas for input/output validation.
+  - `SchemaStore`: Holds different versions of schema files.
   - Token Counting:
-    - `RealTokenCounter`: Calculates token counts using provider-specific APIs.
+  - `RealTokenCounter`: Calculates token counts using provider-specific APIs.
 
 Features:
   - Uses `gojsonschema` to validate JSON structures.
@@ -22,6 +22,7 @@ Features:
   - Defines standard input and output formats for AI model interactions.
 
 Example Usage:
+
 	package main
 
 	import (
@@ -66,6 +67,5 @@ Example Usage:
 		// Print input structure
 		fmt.Printf("Generated Input: %+v\n", input)
 	}
-
 */
 package definitions

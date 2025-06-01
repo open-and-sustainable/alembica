@@ -10,12 +10,12 @@ Supported LLM Providers:
 
 Core Components:
   - Cost Calculation:
-    - `ComputeCosts`: Processes prompts and calculates their associated costs.
-    - `assessPromptCost`: Computes the cost of an individual prompt.
+  - `ComputeCosts`: Processes prompts and calculates their associated costs.
+  - `assessPromptCost`: Computes the cost of an individual prompt.
   - Token-Based Pricing:
-    - `numCentsFromTokens`: Converts token counts into cost estimates.
+  - `numCentsFromTokens`: Converts token counts into cost estimates.
   - Model Pricing Rates:
-    - `modelRates`: Stores per-model pricing for supported providers.
+  - `modelRates`: Stores per-model pricing for supported providers.
 
 Features:
   - **Uses per-model pricing rates** to compute input costs dynamically.
@@ -23,6 +23,7 @@ Features:
   - **Handles pricing adjustments** (e.g., discounted rates for Google Gemini under 128K tokens).
 
 Example Usage:
+
 	package main
 
 	import (

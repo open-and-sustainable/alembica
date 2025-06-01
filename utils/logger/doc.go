@@ -8,13 +8,13 @@ Supported Logging Levels:
 
 Core Components:
   - Logger Interface:
-    - Defines `Info` and `Error` methods for logging messages.
+  - Defines `Info` and `Error` methods for logging messages.
   - standardLogger:
-    - Implements `Logger` using Go’s built-in `log` package.
+  - Implements `Logger` using Go’s built-in `log` package.
   - SetLogger:
-    - Configures the active logger instance.
+  - Configures the active logger instance.
   - SetupLogging:
-    - Initializes logging with the specified level and optional log file.
+  - Initializes logging with the specified level and optional log file.
 
 Features:
   - Supports **configurable logging levels**.
@@ -23,6 +23,7 @@ Features:
   - Ensures log output formatting consistency.
 
 Example Usage:
+
 	package main
 
 	import (
@@ -40,6 +41,5 @@ Example Usage:
 		logger.Info("This is an informational message.")
 		logger.Error("This is an error message.")
 	}
-
 */
 package logger

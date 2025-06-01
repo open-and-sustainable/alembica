@@ -141,10 +141,11 @@ func getCohereModel(prompt string, modelName string, key string) string {
 }
 
 func getAnthropicModel(prompt string, modelName string, key string) string {
-	model := string(anthropic.ModelClaude_3_Haiku_20240307)
+	var model string
 	switch modelName {
 	case "": // cost optimization
 		// all models have the same context window size, hence leave to haiku as the cheapest
+		model = string(anthropic.ModelClaude_3_Haiku_20240307)
 	case "claude-4-0-opus":
 		model = string(anthropic.ModelClaudeOpus4_0)
 	case "claude-4-0-sonnet":
@@ -160,7 +161,7 @@ func getAnthropicModel(prompt string, modelName string, key string) string {
 	case "claude-3-haiku":
 		model = string(anthropic.ModelClaude_3_Haiku_20240307)
 	default:
-		logger.Error(fmt.Println("Unsopported model: ", modelName))
+		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
 	}
 	return model

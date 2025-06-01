@@ -2,6 +2,7 @@ package test
 
 import (
 	"encoding/json"
+	"fmt"
 	"sort"
 	"strings"
 	"testing"
@@ -21,10 +22,27 @@ func TestMultiSequenceChat(t *testing.T) {
 		t.Skip("Skipping multi-sequence chat tests in short mode")
 	}
 
+	// Setup test data and run extraction
+	_, output, err := setupMultiSequenceTest(t)
+	if err != nil {
+		t.Fatalf("Test setup failed: %v", err)
+	}
+
+	// Group responses by model and sequence for verification
+	responsesByModelAndSequence := groupResponsesByModelAndSequence(output.Responses)
+
+	// Verify the test results
+	verifyResponseCounts(t, output.Responses)
+	verifyContextMaintenance(t, responsesByModelAndSequence)
+	verifyContextIsolation(t, responsesByModelAndSequence)
+}
+
+// setupMultiSequenceTest prepares and runs the test, returning the input and output data
+func setupMultiSequenceTest(t *testing.T) (definitions.Input, definitions.Output, error) {
 	// Load API keys from ENV or a file
 	apiKeys, err := loadAPIKeys("test_keys.txt")
 	if err != nil {
-		t.Fatalf("Failed to load API keys: %v", err)
+		return definitions.Input{}, definitions.Output{}, err
 	}
 	t.Logf("Loaded API Keys: %v\n", apiKeys)
 
@@ -63,14 +81,14 @@ func TestMultiSequenceChat(t *testing.T) {
 	// Convert input to JSON
 	inputJSON, err := json.Marshal(input)
 	if err != nil {
-		t.Fatalf("Failed to marshal input JSON: %v", err)
+		return definitions.Input{}, definitions.Output{}, fmt.Errorf("failed to marshal input JSON: %v", err)
 	}
 	t.Logf("Marshalled Input JSON: %s\n", inputJSON)
 
 	// Run the extraction function
 	outputJSON, err := extraction.Extract(string(inputJSON))
 	if err != nil {
-		t.Fatalf("Failed to extract responses: %v", err)
+		return definitions.Input{}, definitions.Output{}, fmt.Errorf("failed to extract responses: %v", err)
 	}
 	t.Logf("Output JSON: %s\n", outputJSON)
 
@@ -78,16 +96,50 @@ func TestMultiSequenceChat(t *testing.T) {
 	var output definitions.Output
 	err = json.Unmarshal([]byte(outputJSON), &output)
 	if err != nil {
-		t.Fatalf("Failed to parse output JSON: %v", err)
+		return definitions.Input{}, definitions.Output{}, fmt.Errorf("failed to parse output JSON: %v", err)
 	}
 	t.Logf("Parsed Output: %+v\n", output)
 
-	// ORIGINAL VERIFICATION: Count and verify sequence numbers
+	return input, output, nil
+}
+
+// groupResponsesByModelAndSequence organizes responses by model and sequence for easier verification
+func groupResponsesByModelAndSequence(responses []definitions.Response) map[string]map[string][]definitions.Response {
+	responsesByModelAndSequence := make(map[string]map[string][]definitions.Response)
+
+	for _, response := range responses {
+		modelKey := response.Provider + "-" + response.Model
+
+		// Initialize nested maps if they don't exist
+		if _, exists := responsesByModelAndSequence[modelKey]; !exists {
+			responsesByModelAndSequence[modelKey] = make(map[string][]definitions.Response)
+		}
+
+		responsesByModelAndSequence[modelKey][response.SequenceID] = append(
+			responsesByModelAndSequence[modelKey][response.SequenceID],
+			response,
+		)
+	}
+
+	// Sort responses by sequence number for each model and sequence
+	for _, sequenceMap := range responsesByModelAndSequence {
+		for _, responses := range sequenceMap {
+			sort.Slice(responses, func(i, j int) bool {
+				return responses[i].SequenceNumber < responses[j].SequenceNumber
+			})
+		}
+	}
+
+	return responsesByModelAndSequence
+}
+
+// verifyResponseCounts checks that we have the expected number of responses for each sequence
+func verifyResponseCounts(t *testing.T, responses []definitions.Response) {
 	expectedSequences := map[string]int{"chat1": 4, "chat2": 4} // 2 models x 2 prompts each = 4 responses per sequence
 	actualSequences := make(map[string]int)
 
 	// Print each response to examine what you received
-	for _, response := range output.Responses {
+	for _, response := range responses {
 		t.Logf("Response received: %+v\n", response)
 		if _, exists := expectedSequences[response.SequenceID]; exists {
 			actualSequences[response.SequenceID]++
@@ -105,95 +157,81 @@ func TestMultiSequenceChat(t *testing.T) {
 			t.Errorf("Expected %d responses for %s, got %d", expectedCount, seq, actualCount)
 		}
 	}
+}
 
-	// NEW VERIFICATION: Check for contextual awareness within sequences
-	// Group responses by model and sequence
-	responsesByModelAndSequence := make(map[string]map[string][]definitions.Response)
-
-	for _, response := range output.Responses {
-		modelKey := response.Provider + "-" + response.Model
-
-		// Initialize nested maps if they don't exist
-		if _, exists := responsesByModelAndSequence[modelKey]; !exists {
-			responsesByModelAndSequence[modelKey] = make(map[string][]definitions.Response)
-		}
-
-		responsesByModelAndSequence[modelKey][response.SequenceID] = append(
-			responsesByModelAndSequence[modelKey][response.SequenceID],
-			response,
-		)
-	}
-
-	// For each model, sort responses by sequence number and verify context
+// verifyContextMaintenance checks that the model maintains context within a sequence
+func verifyContextMaintenance(t *testing.T, responsesByModelAndSequence map[string]map[string][]definitions.Response) {
 	for modelKey, sequenceMap := range responsesByModelAndSequence {
-		for seqID, responses := range sequenceMap {
-			// Sort responses by sequence number
-			sort.Slice(responses, func(i, j int) bool {
-				return responses[i].SequenceNumber < responses[j].SequenceNumber
-			})
+		// Check chat1 context (name remembering)
+		if responses, ok := sequenceMap["chat1"]; ok && len(responses) >= 2 {
+			verifyNameRemembered(t, modelKey, responses[1].ModelResponses[0])
+		}
 
-			// Now check context awareness
-			if seqID == "chat1" && len(responses) >= 2 {
-				// Check if response to "What's my name?" contains "TestUser"
-				secondResponse := responses[1].ModelResponses[0]
-				var responseObj map[string]interface{}
-
-				// Try to parse the JSON response
-				if err := json.Unmarshal([]byte(secondResponse), &responseObj); err == nil {
-					// Check if remembered_name field contains TestUser
-					if name, ok := responseObj["remembered_name"].(string); ok {
-						if !strings.Contains(strings.ToLower(name), "testuser") {
-							t.Errorf("[%s] Context not maintained in %s: remembered_name=%s doesn't match 'TestUser'",
-								modelKey, seqID, name)
-						} else {
-							t.Logf("[%s] Context successfully maintained in %s", modelKey, seqID)
-						}
-					} else {
-						t.Errorf("[%s] Missing 'remembered_name' field in response for %s", modelKey, seqID)
-						t.Logf("Response content: %s", secondResponse)
-					}
-				} else {
-					// Fallback to checking raw text if JSON parsing fails
-					if !strings.Contains(strings.ToLower(secondResponse), "testuser") {
-						t.Errorf("[%s] Context not maintained in %s: response doesn't contain 'TestUser'",
-							modelKey, seqID)
-						t.Logf("Response content: %s", secondResponse)
-					}
-				}
-			}
-
-			if seqID == "chat2" && len(responses) >= 2 {
-				// Check if response to capital question contains "Paris"
-				secondResponse := responses[1].ModelResponses[0]
-				var responseObj map[string]interface{}
-
-				// Try to parse the JSON response
-				if err := json.Unmarshal([]byte(secondResponse), &responseObj); err == nil {
-					// Check if capital field contains Paris
-					if capital, ok := responseObj["capital"].(string); ok {
-						if !strings.Contains(strings.ToLower(capital), "paris") {
-							t.Errorf("[%s] Context not maintained in %s: capital=%s doesn't match 'Paris'",
-								modelKey, seqID, capital)
-						} else {
-							t.Logf("[%s] Context successfully maintained in %s", modelKey, seqID)
-						}
-					} else {
-						t.Errorf("[%s] Missing 'capital' field in response for %s", modelKey, seqID)
-						t.Logf("Response content: %s", secondResponse)
-					}
-				} else {
-					// Fallback to checking raw text if JSON parsing fails
-					if !strings.Contains(strings.ToLower(secondResponse), "paris") {
-						t.Errorf("[%s] Context not maintained in %s: response doesn't contain 'Paris'",
-							modelKey, seqID)
-						t.Logf("Response content: %s", secondResponse)
-					}
-				}
-			}
+		// Check chat2 context (capital remembering)
+		if responses, ok := sequenceMap["chat2"]; ok && len(responses) >= 2 {
+			verifyCapitalRemembered(t, modelKey, responses[1].ModelResponses[0])
 		}
 	}
+}
 
-	// Verify context isolation (that sequences don't leak into each other)
+// verifyNameRemembered checks if the model remembered the name "TestUser"
+func verifyNameRemembered(t *testing.T, modelKey, responseText string) {
+	var responseObj map[string]interface{}
+
+	// Try to parse the JSON response
+	if err := json.Unmarshal([]byte(responseText), &responseObj); err == nil {
+		// Check if remembered_name field contains TestUser
+		if name, ok := responseObj["remembered_name"].(string); ok {
+			if !strings.Contains(strings.ToLower(name), "testuser") {
+				t.Errorf("[%s] Context not maintained in chat1: remembered_name=%s doesn't match 'TestUser'",
+					modelKey, name)
+			} else {
+				t.Logf("[%s] Context successfully maintained in chat1", modelKey)
+			}
+		} else {
+			t.Errorf("[%s] Missing 'remembered_name' field in response for chat1", modelKey)
+			t.Logf("Response content: %s", responseText)
+		}
+	} else {
+		// Fallback to checking raw text if JSON parsing fails
+		if !strings.Contains(strings.ToLower(responseText), "testuser") {
+			t.Errorf("[%s] Context not maintained in chat1: response doesn't contain 'TestUser'",
+				modelKey)
+			t.Logf("Response content: %s", responseText)
+		}
+	}
+}
+
+// verifyCapitalRemembered checks if the model remembered "Paris" as the capital
+func verifyCapitalRemembered(t *testing.T, modelKey, responseText string) {
+	var responseObj map[string]interface{}
+
+	// Try to parse the JSON response
+	if err := json.Unmarshal([]byte(responseText), &responseObj); err == nil {
+		// Check if capital field contains Paris
+		if capital, ok := responseObj["capital"].(string); ok {
+			if !strings.Contains(strings.ToLower(capital), "paris") {
+				t.Errorf("[%s] Context not maintained in chat2: capital=%s doesn't match 'Paris'",
+					modelKey, capital)
+			} else {
+				t.Logf("[%s] Context successfully maintained in chat2", modelKey)
+			}
+		} else {
+			t.Errorf("[%s] Missing 'capital' field in response for chat2", modelKey)
+			t.Logf("Response content: %s", responseText)
+		}
+	} else {
+		// Fallback to checking raw text if JSON parsing fails
+		if !strings.Contains(strings.ToLower(responseText), "paris") {
+			t.Errorf("[%s] Context not maintained in chat2: response doesn't contain 'Paris'",
+				modelKey)
+			t.Logf("Response content: %s", responseText)
+		}
+	}
+}
+
+// verifyContextIsolation checks that the sequences don't leak context between each other
+func verifyContextIsolation(t *testing.T, responsesByModelAndSequence map[string]map[string][]definitions.Response) {
 	for modelKey, sequenceMap := range responsesByModelAndSequence {
 		if responses, ok := sequenceMap["chat2"]; ok {
 			for _, response := range responses {

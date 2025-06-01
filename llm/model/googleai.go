@@ -53,7 +53,7 @@ func queryGoogleAI(prompts []string, llm definitions.Model) ([]string, error) {
 			logger.Error("[GoogleAI] Error on prompt #%d: %v", i+1, err)
 			return nil, fmt.Errorf("the Google AI response error: %v", err)
 		}
-		
+
 		// Ensure response contains candidates
 		if len(resp.Candidates) == 0 {
 			logger.Error("[GoogleAI] No candidates received for prompt #%d", i+1)
@@ -100,7 +100,7 @@ func queryGoogleAI(prompts []string, llm definitions.Model) ([]string, error) {
 		})
 
 		logger.Info("[GoogleAI] Processed response for prompt #%d: %s", i+1, resultText)
-	
+
 		// Call wait for all prompts except the last one
 		if i < len(prompts)-1 {
 			Wait(prompt, llm)
