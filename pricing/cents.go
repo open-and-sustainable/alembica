@@ -11,7 +11,21 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 )
 
-// Define a map to hold the rates for each model
+// modelRates maps LLM model identifiers to their corresponding pricing rates.
+// 
+// The rates are stored as decimal.Decimal values representing cost per token,
+// calculated as USD dollars per million tokens and then divided by 1,000,000.
+// This ensures precise cost calculations even for very small per-token amounts.
+//
+// Supported providers and models include:
+// - OpenAI: Various GPT models (O1, O3, O4, GPT-4o, GPT-3.5, etc.)
+// - Google AI: Gemini models (1.5 Pro, 1.5 Flash, 2.0 Flash, etc.)
+// - Cohere: Command models (Command-R, Command-R+, Command-R7B, etc.)
+// - Anthropic: Claude models (3.5 Sonnet, 3 Haiku, 3 Opus, etc.)
+// - DeepSeek: DeepSeek Chat and Reasoner models
+//
+// Note: Some models like Google's Gemini have tiered pricing that depends
+// on token count thresholds, which is handled in the numCentsFromTokens function.
 var modelRates = map[string]decimal.Decimal{ // dollar prices per input M token
 	openai.O4Mini:                          decimal.NewFromFloat(1.10).Div(decimal.NewFromInt(1000000)),
 	openai.O1:                              decimal.NewFromFloat(15).Div(decimal.NewFromInt(1000000)),
