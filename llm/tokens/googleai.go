@@ -2,7 +2,6 @@ package tokens
 
 import (
 	"context"
-	"fmt"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
 	genai "github.com/google/generative-ai-go/genai"
