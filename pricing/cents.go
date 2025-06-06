@@ -1,7 +1,6 @@
 package pricing
 
 import (
-	"fmt"
 
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
