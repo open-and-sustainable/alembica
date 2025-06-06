@@ -119,7 +119,7 @@ func getCohereModel(prompt string, modelName string, key string) string {
 	switch modelName {
 	case "":
 		// cost optimization, command-r7b is currently the cheapest and with the most input tokens allowed
-	case "command": // leave the model selected by the user, but chek if supported
+	case "command": // leave the model selected by the user, but check if supported
 		model = modelName
 	case "command-light":
 		model = modelName
@@ -173,9 +173,9 @@ func getDeepSeekModel(prompt string, modelName string, key string) string {
 	case "":
 		// cost optimization: use chat that is cheapest
 		model = "deepseek-chat"
-	case "deepseek-chat": // leave the model selected by the user, but chek if supported
+	case "deepseek-chat": // leave the model selected by the user, but check if supported
 		model = modelName
-	case "deepseek-reasoner": // leave the model selected by the user, but chek if supported
+	case "deepseek-reasoner": // leave the model selected by the user, but check if supported
 		model = modelName
 	default:
 		logger.Error(fmt.Println("Unsupported model: ", modelName))
