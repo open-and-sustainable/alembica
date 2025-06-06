@@ -1,7 +1,6 @@
 package pricing
 
 import (
-	"fmt"
 
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
@@ -12,7 +11,7 @@ import (
 )
 
 // modelRates maps LLM model identifiers to their corresponding pricing rates.
-// 
+//
 // The rates are stored as decimal.Decimal values representing cost per token,
 // calculated as USD dollars per million tokens and then divided by 1,000,000.
 // This ensures precise cost calculations even for very small per-token amounts.
@@ -77,7 +76,7 @@ func numCentsFromTokens(numTokens int, model string) decimal.Decimal {
 	rate, ok := modelRates[model]
 	if !ok {
 		rate = decimal.Zero
-		logger.Error(fmt.Println("Cost estimation unavailable because model not found:", model))
+		logger.Error("Cost estimation unavailable because model not found: %s", model)
 	}
 	// halve the rate if the number of tokens is less than 128K and using Google AI Gemini 1.5 flash
 	if numTokens <= 128000 && ((model == "gemini-1.5-flash") || (model == "gemini-1.5-pro")) {
