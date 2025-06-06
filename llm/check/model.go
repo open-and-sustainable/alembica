@@ -1,7 +1,6 @@
 package check
 
 import (
-	"fmt"
 
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 	"github.com/open-and-sustainable/alembica/utils/logger"
