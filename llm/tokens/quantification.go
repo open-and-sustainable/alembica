@@ -1,7 +1,6 @@
 package tokens
 
 import (
-	"fmt"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 )
 
