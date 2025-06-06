@@ -17,6 +17,20 @@ We welcome contributions to improve `alembica`, whether you're fixing bugs, addi
 - **Branching Strategy**: Create a new branch for each set of related changes and submit a pull request via GitHub.
 - **Code Reviews**: All submissions undergo thorough review to maintain code quality.
 
+#### Repository Overview
+Before contributing, it's helpful to understand how the repository is organized:
+
+- `definitions/` – contains JSON schemas and data structures used for validation.
+- `validation/` – validates input, output, and cost calculations using those schemas.
+- `llm/` – includes model selection, token counting, and provider-specific query functions.
+- `extraction/` – the main entry point that sequences prompts and validates responses.
+- `pricing/` – computes token costs for a request.
+- `utils/logger/` – provides logging utilities.
+- `utils/sharedlib/` – exposes C-shared library functions for use from other languages.
+- `test/` – integration tests with real model providers.
+
+Check the [README](../README.md) and documentation under `docs/` for additional details on these packages and how they work together.
+
 ### Guidelines
 For detailed contribution guidelines, see our [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
