@@ -45,7 +45,7 @@ func (rtc RealTokenCounter) GetNumTokensFromPrompt(prompt string, provider strin
 	case "DeepSeek":
 		numTokens = numTokensFromPromptOpenAI(prompt, "gpt-4o", key)
 	default:
-		logger.Error(fmt.Println("Unsupported LLM provider: ", provider))
+		logger.Error("Unsupported LLM provider: %s", provider)
 		return 0
 	}
 	return numTokens

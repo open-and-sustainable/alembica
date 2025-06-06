@@ -41,7 +41,7 @@ func GetModel(prompt string, providerName string, modelName string, key string) 
 	case "DeepSeek":
 		modelFunc = getDeepSeekModel
 	default:
-		logger.Error(fmt.Println("Unsupported LLM provider: ", providerName))
+		logger.Error("Unsupported LLM provider: %s", providerName)
 		return ""
 	}
 	return modelFunc(prompt, modelName, key)
@@ -81,7 +81,7 @@ func getOpenAIModel(prompt string, modelName string, key string) string {
 	case "gpt-4.1-nano":
 		model = openai.GPT4Dot1Nano
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
@@ -97,7 +97,7 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 			model = "gemini-2.0-flash-lite"
 		}
 	case "gemini-1.0-pro": // deprecated from Feb 15 2025
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	case "gemini-1.5-flash":
 		model = modelName
@@ -108,7 +108,7 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 	case "gemini-2.0-flash":
 		model = modelName
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
@@ -134,7 +134,7 @@ func getCohereModel(prompt string, modelName string, key string) string {
 	case "command-a-03-2025":
 		model = modelName
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
@@ -161,7 +161,7 @@ func getAnthropicModel(prompt string, modelName string, key string) string {
 	case "claude-3-haiku":
 		model = string(anthropic.ModelClaude_3_Haiku_20240307)
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
@@ -178,7 +178,7 @@ func getDeepSeekModel(prompt string, modelName string, key string) string {
 	case "deepseek-reasoner": // leave the model selected by the user, but chek if supported
 		model = modelName
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model

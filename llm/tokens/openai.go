@@ -34,10 +34,10 @@ func numTokensFromPromptOpenAI(prompt string, modelName string, key string) (num
 		tokensPerName = -1
 	default:
 		if strings.Contains(modelName, "gpt-3.5-turbo") {
-			logger.Info(fmt.Println("warning: gpt-3.5-turbo may update over time. Returning num tokens assuming gpt-3.5-turbo-0613."))
+			logger.Info("warning: gpt-3.5-turbo may update over time. Returning num tokens assuming gpt-3.5-turbo-0613.")
 			return numTokensFromPromptOpenAI(prompt, "gpt-3.5-turbo-0613", key)
 		} else if strings.Contains(modelName, "gpt-4") {
-			logger.Info(fmt.Println("warning: gpt-4 may update over time. Returning num tokens assuming computation as in gpt-4-0613, ."))
+			logger.Info("warning: gpt-4 may update over time. Returning num tokens assuming computation as in gpt-4-0613, .")
 			return numTokensFromPromptOpenAI(prompt, "gpt-4-0613", key)
 		} else {
 			err = fmt.Errorf("num_tokens_from_messages() is not implemented for model %s. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens", modelName)
