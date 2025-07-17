@@ -107,7 +107,9 @@ jobs:
 
   build-macos-arm64:
     name: Build macOS ARM64 Shared Library
-    runs-on: macos-latest
+    # Pin to macOS 14 to avoid unexpected updates when macos-latest migrates
+    # to macOS 15. See issue #30.
+    runs-on: macos-14
     permissions:
       contents: write  # Needed for uploading release assets
     steps:
