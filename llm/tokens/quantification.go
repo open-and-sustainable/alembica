@@ -2,6 +2,7 @@ package tokens
 
 import (
 	"fmt"
+
 	"github.com/open-and-sustainable/alembica/utils/logger"
 )
 
@@ -43,6 +44,8 @@ func (rtc RealTokenCounter) GetNumTokensFromPrompt(prompt string, provider strin
 	case "Anthropic":
 		numTokens = numTokensFromPromptOpenAI(prompt, "gpt-4o", key)
 	case "DeepSeek":
+		numTokens = numTokensFromPromptOpenAI(prompt, "gpt-4o", key)
+	case "Perplexity":
 		numTokens = numTokensFromPromptOpenAI(prompt, "gpt-4o", key)
 	default:
 		logger.Error(fmt.Println("Unsupported LLM provider: ", provider))

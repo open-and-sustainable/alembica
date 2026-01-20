@@ -2,11 +2,11 @@ package tokens
 
 import (
 	"fmt"
-	"github.com/open-and-sustainable/alembica/utils/logger"
 	"strings"
 
+	"github.com/open-and-sustainable/alembica/utils/logger"
 	tiktoken "github.com/pkoukk/tiktoken-go"
-	openai "github.com/sashabaranov/go-openai"
+	"github.com/sashabaranov/go-openai"
 )
 
 func numTokensFromPromptOpenAI(prompt string, modelName string, key string) (numTokens int) {

@@ -9,6 +9,37 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.1.0] - 2026-01-20
+### Added
+- Support for OpenAI GPT-5 series models (GPT-5, GPT-5.1, GPT-5.2, GPT-5-mini, GPT-5-nano)
+- Support for Anthropic Claude 4.5 series models (Claude 4.5 Opus, Claude 4.5 Sonnet, Claude 4.5 Haiku)
+- Support for Google AI Gemini 2.5 series models (Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 2.5 Flash-Lite)
+- Support for Google AI Gemini 3 series preview models (Gemini 3 Pro Preview, Gemini 3 Flash Preview)
+- Support for Perplexity Sonar models (Sonar, Sonar Pro, Sonar Reasoning Pro, Sonar Deep Research)
+- Support for Cohere Command A Reasoning model (command-a-reasoning-08-2025)
+### Changed
+- **BREAKING**: Migrated from community OpenAI SDK (github.com/sashabaranov/go-openai) to official OpenAI SDK (github.com/openai/openai-go/v3)
+- Updated Anthropic SDK from v1.2.1 to v1.19.0 with breaking changes requiring versioned model identifiers
+- Updated Cohere SDK from v2.14.1 to v2.16.1
+- Updated tiktoken-go from v0.1.7 to v0.1.8
+- Updated OpenTelemetry dependencies from v1.36.0 to v1.39.0
+- Updated golang.org/x dependencies (crypto, net, oauth2, sync, sys, text, time)
+- Updated gRPC from v1.72.2 to v1.78.0 and protobuf from v1.36.6 to v1.36.11
+- Updated AWS SDK from v1.36.3 to v1.41.1
+- Updated Go version from 1.24.2 to 1.25
+- Updated OpenAI model pricing: o3 ($10.00 → $2.00/M), gpt-4o ($5.00 → $2.50/M)
+- Updated DeepSeek V3.2 pricing: deepseek-chat ($0.27 → $0.28/M), deepseek-reasoner ($0.55 → $0.28/M)
+- Updated DeepSeek context window from 64K to 128K tokens
+- DeepSeek models now support automatic context caching (cache hit: $0.028/M, 90% cheaper than cache miss)
+### Deprecated
+- Claude 3.5 Sonnet (v1 and v2) - end of life March 2026
+- Claude 3.5 Haiku - end of life July 2026
+- Gemini 1.5 Pro 001, Gemini 1.5 Flash 001 - end of life May 27, 2025
+- Gemini 1.5 Pro 002, Gemini 1.5 Flash 002, Gemini 1.5 Flash-8B 001 - end of life September 24, 2025
+- OpenAI chatgpt-4o-latest - end of life February 17, 2026
+- OpenAI gpt-4-0314, gpt-4-1106-preview, gpt-4-0125-preview - end of life March 26, 2026
+- OpenAI gpt-3.5-turbo-instruct, babbage-002, davinci-002, gpt-3.5-turbo-1106 - end of life September 28, 2026
+
 ## [0.0.8] - 2025-06-01
 ### Fixed
 - Formatting issues and spelling errors.

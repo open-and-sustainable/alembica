@@ -5,8 +5,7 @@ import (
 
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 
-	anthropic "github.com/anthropics/anthropic-sdk-go"
-	openai "github.com/sashabaranov/go-openai"
+	"github.com/openai/openai-go/v3/shared"
 )
 
 const (
@@ -23,6 +22,11 @@ const (
 	GPT4MaxTokens         = 128000
 	GPT4TurboMaxTokens    = 128000
 	GPT35TurboMaxTokens   = 16385
+	GPT5MaxTokens         = 400000
+	GPT5Dot1MaxTokens     = 400000
+	GPT5Dot2MaxTokens     = 400000
+	GPT5MiniMaxTokens     = 128000
+	GPT5NanoMaxTokens     = 128000
 	// GoogleAI Models
 	Gemini20FlashMaxTokens     = 1048576
 	Gemini20FlashLiteMaxTokens = 1048576
@@ -30,11 +34,12 @@ const (
 	Gemini15ProMaxTokens       = 2097152
 	Gemini10ProMaxTokens       = 32760
 	// Cohere Models
-	CommandMaxTokens      = 4096
-	CommandLightMaxTokens = 4096
-	CommandRMaxTokens     = 128000
-	CommandRPlusMaxTokens = 128000
-	CommandAMaxTokens     = 256000
+	CommandMaxTokens           = 4096
+	CommandLightMaxTokens      = 4096
+	CommandRMaxTokens          = 128000
+	CommandRPlusMaxTokens      = 128000
+	CommandAMaxTokens          = 256000
+	CommandAReasoningMaxTokens = 256000
 	// Anthropic Models
 	AnthropicMaxTokens = 200000
 	// DeepSeek Models
@@ -42,39 +47,45 @@ const (
 )
 
 var ModelMaxTokens = map[string]int{
-	openai.O4Mini:                          O4MiniMaxTokens,
-	openai.O1:                              O1MaxTokens,
-	openai.O1Mini:                          O1MiniMaxTokens,
-	openai.O3:                              O3MaxTokens,
-	openai.O3Mini:                          O3MiniMaxTokens,
-	openai.GPT4Dot1:                        GPT4MiniMaxTokens,
-	openai.GPT4Dot1Mini:                    GPT4Dot1MiniMaxTokens,
-	openai.GPT4Dot1Nano:                    GPT4Dot1NanoMaxTokens,
-	openai.GPT4oMini:                       GPT4MiniMaxTokens,
-	openai.GPT4o:                           GPT4MaxTokens,
-	openai.GPT4Turbo:                       GPT4TurboMaxTokens,
-	openai.GPT3Dot5Turbo:                   GPT35TurboMaxTokens,
-	"gemini-2.0-flash":                     Gemini20FlashMaxTokens,
-	"gemini-2.0-flash-lite":                Gemini20FlashLiteMaxTokens,
-	"gemini-1.5-flash":                     Gemini15FlashMaxTokens,
-	"gemini-1.5-pro":                       Gemini15ProMaxTokens,
-	"gemini-1.0-pro":                       Gemini10ProMaxTokens,
-	"command-a-03-2025":                    CommandAMaxTokens,
-	"command-r-08-2024":                    CommandRMaxTokens,
-	"command-r7b-12-2024":                  CommandRMaxTokens,
-	"command-r-plus":                       CommandRPlusMaxTokens,
-	"command-r":                            CommandRMaxTokens,
-	"command-light":                        CommandLightMaxTokens,
-	"command":                              CommandMaxTokens,
-	string(anthropic.ModelClaudeOpus4_0):   AnthropicMaxTokens,
-	string(anthropic.ModelClaudeSonnet4_0): AnthropicMaxTokens,
-	string(anthropic.ModelClaude3_7SonnetLatest):   AnthropicMaxTokens,
-	string(anthropic.ModelClaude3_5SonnetLatest):   AnthropicMaxTokens,
-	string(anthropic.ModelClaude3_5HaikuLatest):    AnthropicMaxTokens,
-	string(anthropic.ModelClaude3OpusLatest):       AnthropicMaxTokens,
-	string(anthropic.ModelClaude_3_Haiku_20240307): AnthropicMaxTokens,
-	"deepseek-chat":     DeepSeekChatMaxTokens,
-	"deepseek-reasoner": DeepSeekChatMaxTokens,
+	string(shared.ChatModelO4Mini):      O4MiniMaxTokens,
+	string(shared.ChatModelO1):          O1MaxTokens,
+	string(shared.ChatModelO1Mini):      O1MiniMaxTokens,
+	string(shared.ChatModelO3):          O3MaxTokens,
+	string(shared.ChatModelO3Mini):      O3MiniMaxTokens,
+	string(shared.ChatModelGPT4_1):      GPT4MiniMaxTokens,
+	string(shared.ChatModelGPT4_1Mini):  GPT4Dot1MiniMaxTokens,
+	string(shared.ChatModelGPT4_1Nano):  GPT4Dot1NanoMaxTokens,
+	string(shared.ChatModelGPT4oMini):   GPT4MiniMaxTokens,
+	string(shared.ChatModelGPT4o):       GPT4MaxTokens,
+	string(shared.ChatModelGPT4Turbo):   GPT4TurboMaxTokens,
+	string(shared.ChatModelGPT3_5Turbo): GPT35TurboMaxTokens,
+	string(shared.ChatModelGPT5):        GPT5MaxTokens,
+	string(shared.ChatModelGPT5_1):      GPT5Dot1MaxTokens,
+	string(shared.ChatModelGPT5_2):      GPT5Dot2MaxTokens,
+	string(shared.ChatModelGPT5Mini):    GPT5MiniMaxTokens,
+	string(shared.ChatModelGPT5Nano):    GPT5NanoMaxTokens,
+	"gemini-2.0-flash":                  Gemini20FlashMaxTokens,
+	"gemini-2.0-flash-lite":             Gemini20FlashLiteMaxTokens,
+	"gemini-1.5-flash":                  Gemini15FlashMaxTokens,
+	"gemini-1.5-pro":                    Gemini15ProMaxTokens,
+	"gemini-1.0-pro":                    Gemini10ProMaxTokens,
+	"command-a-03-2025":                 CommandAMaxTokens,
+	"command-a-reasoning-08-2025":       CommandAReasoningMaxTokens,
+	"command-r-08-2024":                 CommandRMaxTokens,
+	"command-r7b-12-2024":               CommandRMaxTokens,
+	"command-r-plus":                    CommandRPlusMaxTokens,
+	"command-r":                         CommandRMaxTokens,
+	"command-light":                     CommandLightMaxTokens,
+	"command":                           CommandMaxTokens,
+	"claude-opus-4-0-20251101":          AnthropicMaxTokens,
+	"claude-sonnet-4-0-20250514":        AnthropicMaxTokens,
+	"claude-3-7-sonnet-20250219":        AnthropicMaxTokens,
+	"claude-3-5-sonnet-20241022":        AnthropicMaxTokens,
+	"claude-3-5-haiku-20241022":         AnthropicMaxTokens,
+	"claude-3-opus-20240229":            AnthropicMaxTokens,
+	"claude-3-haiku-20240307":           AnthropicMaxTokens,
+	"deepseek-chat":                     DeepSeekChatMaxTokens,
+	"deepseek-reasoner":                 DeepSeekChatMaxTokens,
 }
 
 // RunInputLimitsCheck verifies if the number of tokens in given prompts exceed the allowed limits for a specified model.

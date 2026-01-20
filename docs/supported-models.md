@@ -5,7 +5,7 @@ layout: default
 
 # Supported Models
 
-`alembica` supports a variety of AI models from leading providers including OpenAI, GoogleAI, Cohere, Anthropic, and DeepSeek.
+`alembica` supports a variety of AI models from leading providers including OpenAI, GoogleAI, Cohere, Anthropic, DeepSeek, and Perplexity.
 
 The table below provides an overview of all supported models, organized by provider. For each model, you can find its maximum input token capacity and the cost per million input tokens. This information helps you select the appropriate model based on your context length requirements and budget considerations.
 
@@ -22,6 +22,21 @@ Each model has specific limits for input size and costs, as summarized below:
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td style="text-align: left;">Claude 4.5 Opus</td>
+            <td style="text-align: right;">200,000</td>
+            <td style="text-align: right;">$15.00</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Claude 4.5 Sonnet</td>
+            <td style="text-align: right;">200,000</td>
+            <td style="text-align: right;">$3.00</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Claude 4.5 Haiku</td>
+            <td style="text-align: right;">200,000</td>
+            <td style="text-align: right;">$1.00</td>
+        </tr>
         <tr>
             <td style="text-align: left;">Claude 4.0 Opus</td>
             <td style="text-align: right;">200,000</td>
@@ -77,6 +92,11 @@ Each model has specific limits for input size and costs, as summarized below:
             <td style="text-align: right;">$2.5</td>
         </tr>
         <tr>
+            <td style="text-align: left;">Command A Reasoning</td>
+            <td style="text-align: right;">256,000</td>
+            <td style="text-align: right;">Free (preview)</td>
+        </tr>
+        <tr>
             <td style="text-align: left;">Command R+</td>
             <td style="text-align: right;">128,000</td>
             <td style="text-align: right;">$2.50</td>
@@ -109,8 +129,8 @@ Each model has specific limits for input size and costs, as summarized below:
     </tbody>
 </table>
 
-## DeepSeek
-DeepSeek V3 models cost depends on cache and time of use. Here are the pricing details of maximum rates of input tokens. Please consider also that DeepSeek cost is significantly higher for output tokens.
+## Perplexity
+Perplexity Sonar models with real-time web search capabilities. OpenAI-compatible API.
 
 <table class="table-spacing">
     <thead>
@@ -122,14 +142,49 @@ DeepSeek V3 models cost depends on cache and time of use. Here are the pricing d
     </thead>
     <tbody>
         <tr>
-            <td style="text-align: left;">DeepSeek-V3-Chat</td>
-            <td style="text-align: right;">64,000</td>
-            <td style="text-align: right;">$0.27</td>
+            <td style="text-align: left;">Sonar</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$1.00</td>
         </tr>
         <tr>
-            <td style="text-align: left;">DeepSeek-V3-Reasoner</td>
-            <td style="text-align: right;">64,000</td>
-            <td style="text-align: right;">$0.55</td>
+            <td style="text-align: left;">Sonar Pro</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$3.00</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Sonar Reasoning Pro</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$2.00</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Sonar Deep Research</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$2.00</td>
+        </tr>
+    </tbody>
+</table>
+
+## DeepSeek
+DeepSeek V3.2 models feature automatic context caching. Cache hit rate: $0.028/M tokens (90% cheaper). Cache miss rate shown below. Maximum output: 8K for chat, 64K for reasoner.
+
+<table class="table-spacing">
+    <thead>
+        <tr>
+            <th style="text-align: left;">Model</th>
+            <th style="text-align: right;">Maximum Input Tokens</th>
+            <th style="text-align: right;">Cost of 1M Input Tokens</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: left;">DeepSeek-V3.2-Chat</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$0.28 (cache miss)</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">DeepSeek-V3.2-Reasoner</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$0.28 (cache miss)</td>
         </tr>
     </tbody>
 </table>
@@ -146,10 +201,36 @@ DeepSeek V3 models cost depends on cache and time of use. Here are the pricing d
     </thead>
     <tbody>
         <tr>
+            <td style="text-align: left;">Gemini 3 Pro Preview</td>
+            <td style="text-align: right;">1,048,576</td>
+            <td style="text-align: right;">$2.00 (≤200k), $4.00 (>200k)</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Gemini 3 Flash Preview</td>
+            <td style="text-align: right;">1,048,576</td>
+            <td style="text-align: right;">$0.50</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Gemini 2.5 Pro</td>
+            <td style="text-align: right;">1,048,576</td>
+            <td style="text-align: right;">$1.25 (≤200k), $2.50 (>200k)</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Gemini 2.5 Flash</td>
+            <td style="text-align: right;">1,048,576</td>
+            <td style="text-align: right;">$0.30</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Gemini 2.5 Flash-Lite</td>
+            <td style="text-align: right;">1,048,576</td>
+            <td style="text-align: right;">$0.10</td>
+        </tr>
+        <tr>
             <td style="text-align: left;">Gemini 2.0 Flash Lite</td>
             <td style="text-align: right;">1,048,576</td>
             <td style="text-align: right;">$0.075</td>
-        </tr>        <tr>
+        </tr>
+        <tr>
             <td style="text-align: left;">Gemini 2.0 Flash</td>
             <td style="text-align: right;">1,048,576</td>
             <td style="text-align: right;">$0.10</td>
@@ -165,7 +246,7 @@ DeepSeek V3 models cost depends on cache and time of use. Here are the pricing d
             <td style="text-align: right;">$2.50</td>
         </tr>
         <tr>
-            <td style="text-align: left;">Gemini 1.0 Pro</td>
+            <td style="text-align: left;">Gemini 1.0 Pro (deprecated)</td>
             <td style="text-align: right;">32,760</td>
             <td style="text-align: right;">$0.50</td>
         </tr>
@@ -184,6 +265,31 @@ DeepSeek V3 models cost depends on cache and time of use. Here are the pricing d
     </thead>
     <tbody>
         <tr>
+            <td style="text-align: left;">GPT-5.2</td>
+            <td style="text-align: right;">400,000</td>
+            <td style="text-align: right;">$1.75</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-5.1</td>
+            <td style="text-align: right;">400,000</td>
+            <td style="text-align: right;">$1.25</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-5</td>
+            <td style="text-align: right;">400,000</td>
+            <td style="text-align: right;">$1.25</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-5 Mini</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$0.25</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-5 Nano</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$0.05</td>
+        </tr>
+        <tr>
             <td style="text-align: left;">o4 Mini</td>
             <td style="text-align: right;">200,000</td>
             <td style="text-align: right;">$1.10</td>
@@ -196,7 +302,7 @@ DeepSeek V3 models cost depends on cache and time of use. Here are the pricing d
         <tr>
             <td style="text-align: left;">o3</td>
             <td style="text-align: right;">200,000</td>
-            <td style="text-align: right;">$10.00</td>
+            <td style="text-align: right;">$2.00</td>
         </tr>
         <tr>
             <td style="text-align: left;">o1 Mini</td>
@@ -231,7 +337,7 @@ DeepSeek V3 models cost depends on cache and time of use. Here are the pricing d
         <tr>
             <td style="text-align: left;">GPT-4o</td>
             <td style="text-align: right;">128,000</td>
-            <td style="text-align: right;">$5.00</td>
+            <td style="text-align: right;">$2.50</td>
         </tr>
         <tr>
             <td style="text-align: left;">GPT-4 Turbo</td>

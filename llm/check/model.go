@@ -6,8 +6,7 @@ import (
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
-	anthropic "github.com/anthropics/anthropic-sdk-go"
-	openai "github.com/sashabaranov/go-openai"
+	"github.com/openai/openai-go/v3/shared"
 )
 
 // GetModel selects the appropriate model for the given provider based on user input and internal logic.
@@ -40,6 +39,8 @@ func GetModel(prompt string, providerName string, modelName string, key string) 
 		modelFunc = getAnthropicModel
 	case "DeepSeek":
 		modelFunc = getDeepSeekModel
+	case "Perplexity":
+		modelFunc = getPerplexityModel
 	default:
 		logger.Error(fmt.Println("Unsupported LLM provider: ", providerName))
 		return ""
@@ -48,38 +49,48 @@ func GetModel(prompt string, providerName string, modelName string, key string) 
 }
 
 func getOpenAIModel(prompt string, modelName string, key string) string {
-	model := openai.GPT4oMini
+	model := string(shared.ChatModelGPT4oMini)
 	switch modelName {
 	case "": // cost optimization
 		// old code before GPT 4 Omni mini model availability -- now the only solution to minimize the cost
 		/*numTokens := numTokensFromMessages([]openai.ChatCompletionMessage{{Role: openai.ChatMessageRoleUser, Content: prompt}}, model)
 		if numTokens > 16385 {
-			model = openai.GPT4o
+			model = string(shared.ChatModelGPT4o)
 		}*/
 	case "gpt-3.5-turbo":
-		model = openai.GPT3Dot5Turbo
+		model = string(shared.ChatModelGPT3_5Turbo)
 	case "gpt-4-turbo":
-		model = openai.GPT4Turbo
+		model = string(shared.ChatModelGPT4Turbo)
 	case "gpt-4o":
-		model = openai.GPT4o
+		model = string(shared.ChatModelGPT4o)
 	case "gpt-4o-mini":
-		model = openai.GPT4oMini
+		model = string(shared.ChatModelGPT4oMini)
 	case "o1":
-		model = openai.O1
+		model = string(shared.ChatModelO1)
 	case "o1-mini":
-		model = openai.O1Mini
+		model = string(shared.ChatModelO1Mini)
 	case "o3":
-		model = openai.O3
+		model = string(shared.ChatModelO3)
 	case "o3-mini":
-		model = openai.O3Mini
+		model = string(shared.ChatModelO3Mini)
 	case "o4-mini":
-		model = openai.O4Mini
+		model = string(shared.ChatModelO4Mini)
 	case "gpt-4.1":
-		model = openai.GPT4Dot1
+		model = string(shared.ChatModelGPT4_1)
 	case "gpt-4.1-mini":
-		model = openai.GPT4Dot1Mini
+		model = string(shared.ChatModelGPT4_1Mini)
 	case "gpt-4.1-nano":
-		model = openai.GPT4Dot1Nano
+		model = string(shared.ChatModelGPT4_1Nano)
+	case "gpt-5":
+		model = string(shared.ChatModelGPT5)
+	case "gpt-5.1":
+		model = string(shared.ChatModelGPT5_1)
+	case "gpt-5.2":
+		model = string(shared.ChatModelGPT5_2)
+	case "gpt-5-mini":
+		model = string(shared.ChatModelGPT5Mini)
+	case "gpt-5-nano":
+		model = string(shared.ChatModelGPT5Nano)
 	default:
 		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
@@ -88,17 +99,27 @@ func getOpenAIModel(prompt string, modelName string, key string) string {
 }
 
 func getGoogleAIModel(prompt string, modelName string, key string) string {
-	model := "gemini-1.5-pro"
+	model := "gemini-2.5-flash-lite"
 	switch modelName {
-	case "": // cost optimization, input token limit values: gemini-1.5-flash 1048576, gemini-1.5-pro 2097152
+	case "": // cost optimization, default to most cost-effective model
 		counter := tokens.RealTokenCounter{}
 		numTokens := counter.GetNumTokensFromPrompt(prompt, "GoogleAI", modelName, key)
 		if numTokens <= 1048576 {
-			model = "gemini-2.0-flash-lite"
+			model = "gemini-2.5-flash-lite"
 		}
 	case "gemini-1.0-pro": // deprecated from Feb 15 2025
 		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
+	case "gemini-3-pro-preview":
+		model = modelName
+	case "gemini-3-flash-preview":
+		model = modelName
+	case "gemini-2.5-pro":
+		model = modelName
+	case "gemini-2.5-flash":
+		model = modelName
+	case "gemini-2.5-flash-lite":
+		model = modelName
 	case "gemini-1.5-flash":
 		model = modelName
 	case "gemini-1.5-pro":
@@ -133,6 +154,8 @@ func getCohereModel(prompt string, modelName string, key string) string {
 		model = modelName
 	case "command-a-03-2025":
 		model = modelName
+	case "command-a-reasoning-08-2025":
+		model = modelName
 	default:
 		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
@@ -145,21 +168,27 @@ func getAnthropicModel(prompt string, modelName string, key string) string {
 	switch modelName {
 	case "": // cost optimization
 		// all models have the same context window size, hence leave to haiku as the cheapest
-		model = string(anthropic.ModelClaude_3_Haiku_20240307)
+		model = "claude-haiku-4-5-20251015"
+	case "claude-4-5-opus":
+		model = "claude-opus-4-5-20260320"
+	case "claude-4-5-sonnet":
+		model = "claude-sonnet-4-5-20260320"
+	case "claude-4-5-haiku":
+		model = "claude-haiku-4-5-20251015"
 	case "claude-4-0-opus":
-		model = string(anthropic.ModelClaudeOpus4_0)
+		model = "claude-opus-4-0-20251101"
 	case "claude-4-0-sonnet":
-		model = string(anthropic.ModelClaudeSonnet4_0)
+		model = "claude-sonnet-4-0-20250514"
 	case "claude-3-7-sonnet":
-		model = string(anthropic.ModelClaude3_7SonnetLatest)
+		model = "claude-3-7-sonnet-20250219"
 	case "claude-3-5-sonnet":
-		model = string(anthropic.ModelClaude3_5SonnetLatest)
+		model = "claude-3-5-sonnet-20241022"
 	case "claude-3-5-haiku":
-		model = string(anthropic.ModelClaude3_5HaikuLatest)
+		model = "claude-3-5-haiku-20241022"
 	case "claude-3-opus":
-		model = string(anthropic.ModelClaude3OpusLatest)
+		model = "claude-3-opus-20240229"
 	case "claude-3-haiku":
-		model = string(anthropic.ModelClaude_3_Haiku_20240307)
+		model = "claude-3-haiku-20240307"
 	default:
 		logger.Error(fmt.Println("Unsupported model: ", modelName))
 		return ""
@@ -176,6 +205,27 @@ func getDeepSeekModel(prompt string, modelName string, key string) string {
 	case "deepseek-chat": // leave the model selected by the user, but chek if supported
 		model = modelName
 	case "deepseek-reasoner": // leave the model selected by the user, but chek if supported
+		model = modelName
+	default:
+		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		return ""
+	}
+	return model
+}
+
+func getPerplexityModel(prompt string, modelName string, key string) string {
+	model := "sonar"
+	switch modelName {
+	case "":
+		// cost optimization: use sonar as the cheapest
+		model = "sonar"
+	case "sonar":
+		model = modelName
+	case "sonar-pro":
+		model = modelName
+	case "sonar-reasoning-pro":
+		model = modelName
+	case "sonar-deep-research":
 		model = modelName
 	default:
 		logger.Error(fmt.Println("Unsupported model: ", modelName))

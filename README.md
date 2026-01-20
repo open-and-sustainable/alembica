@@ -11,6 +11,8 @@
 `alembica` simplifies the use of **Large Language Models (LLMs)** to extract structured datasets from unstructured corpora of text.
 It provides a **flexible and scalable framework** to process, synthesize, and transform textual information into structured formats suitable for analysis and further processing.
 
+Supports **OpenAI, Google AI, Anthropic, Cohere, DeepSeek, and Perplexity** providers.
+
 ---
 
 ## Installation (Go)

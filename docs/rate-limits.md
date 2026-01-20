@@ -21,70 +21,126 @@ Exceeding these limits may result in request throttling or errors. `alembica` he
 **Disclaimer:** Daily limits (RPD and TPD) are not currently supported by `alembica`. Users are responsible for implementing and respecting these constraints on their own within their applications.
 
 ## Anthropic
-**(May 2025, tier 1 users)**
+**(January 2026, Tier 1 users)**
+
+Anthropic uses a tiered usage system (Tier 1-4) where rate limits apply at the organization level across all models. The limits below represent Tier 1 thresholds. Higher tiers provide increased limits and are automatically granted based on cumulative API credit purchases and usage history.
+
+**Tier 1 Requirements:**
+- Credit Purchase: $5
+- Maximum Spend Limit: $100/month
+
+**Tier 1 Rate Limits (applies to all Claude models):**
+- **RPM (Requests Per Minute):** 50
+- **ITPM (Input Tokens Per Minute):** Varies by model class (see below)
+- **OTPM (Output Tokens Per Minute):** Varies by model class (see below)
+
 <table class="table-spacing">
     <thead>
         <tr>
-            <th style="text-align: left;">Model</th>
+            <th style="text-align: left;">Model Class</th>
             <th style="text-align: right;">RPM</th>
-            <th style="text-align: right;">TPM</th>
-            <th style="text-align: right;">TPD</th>
+            <th style="text-align: right;">ITPM</th>
+            <th style="text-align: right;">OTPM</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td style="text-align: left;">Claude 4.0 Opus</td>
+            <td style="text-align: left;">Opus 4.x (4.0, 4.5)</td>
             <td style="text-align: right;">50</td>
             <td style="text-align: right;">20,000</td>
-            <td style="text-align: right;">1,000,000</td>
+            <td style="text-align: right;">8,000</td>
         </tr>
         <tr>
-            <td style="text-align: left;">Claude 4.0 Sonnet</td>
+            <td style="text-align: left;">Sonnet 4.x (4.0, 4.5)</td>
             <td style="text-align: right;">50</td>
             <td style="text-align: right;">20,000</td>
-            <td style="text-align: right;">1,000,000</td>
+            <td style="text-align: right;">8,000</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Haiku 4.5</td>
+            <td style="text-align: right;">50</td>
+            <td style="text-align: right;">25,000</td>
+            <td style="text-align: right;">10,000</td>
         </tr>
         <tr>
             <td style="text-align: left;">Claude 3.7 Sonnet</td>
             <td style="text-align: right;">50</td>
-            <td style="text-align: right;">20,000</td>
-            <td style="text-align: right;">1,000,000</td>
+            <td style="text-align: right;">40,000</td>
+            <td style="text-align: right;">8,000</td>
         </tr>
         <tr>
             <td style="text-align: left;">Claude 3.5 Sonnet</td>
             <td style="text-align: right;">50</td>
             <td style="text-align: right;">40,000</td>
-            <td style="text-align: right;">1,000,000</td>
+            <td style="text-align: right;">8,000</td>
         </tr>
         <tr>
             <td style="text-align: left;">Claude 3.5 Haiku</td>
             <td style="text-align: right;">50</td>
             <td style="text-align: right;">50,000</td>
-            <td style="text-align: right;">5,000,000</td>
+            <td style="text-align: right;">10,000</td>
         </tr>
         <tr>
             <td style="text-align: left;">Claude 3 Opus</td>
             <td style="text-align: right;">50</td>
             <td style="text-align: right;">20,000</td>
-            <td style="text-align: right;">1,000,000</td>
+            <td style="text-align: right;">8,000</td>
         </tr>
         <tr>
             <td style="text-align: left;">Claude 3 Sonnet</td>
             <td style="text-align: right;">50</td>
             <td style="text-align: right;">40,000</td>
-            <td style="text-align: right;">1,000,000</td>
+            <td style="text-align: right;">8,000</td>
         </tr>
         <tr>
             <td style="text-align: left;">Claude 3 Haiku</td>
             <td style="text-align: right;">50</td>
             <td style="text-align: right;">50,000</td>
-            <td style="text-align: right;">5,000,000</td>
+            <td style="text-align: right;">10,000</td>
         </tr>
     </tbody>
 </table>
 
+**Note:** Only uncached input tokens and cache creation tokens count towards ITPM limits for most models. Cached tokens (cache reads) do not count, effectively allowing 5-10x higher throughput when using prompt caching. For detailed information about Anthropic's tiered system, visit their [official rate limits documentation](https://platform.claude.com/docs/en/api/rate-limits).
+
 ## Cohere
 Cohere production keys have no limit, but trial keys are limited to 20 API calls per minute.
+
+## Perplexity
+**(January 2026, Tier 1 users)**
+
+Perplexity uses a tiered usage system (Tier 0-5) where rate limits increase based on cumulative API credit purchases. Tier 1 requires $50+ in lifetime purchases.
+
+**Tier 1 Rate Limits:**
+
+<table class="table-spacing">
+    <thead>
+        <tr>
+            <th style="text-align: left;">Model</th>
+            <th style="text-align: right;">RPM</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: left;">Sonar Deep Research</td>
+            <td style="text-align: right;">10</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Sonar Reasoning Pro</td>
+            <td style="text-align: right;">150</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Sonar Pro</td>
+            <td style="text-align: right;">150</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Sonar</td>
+            <td style="text-align: right;">150</td>
+        </tr>
+    </tbody>
+</table>
+
+**Note:** Tiers are based on cumulative purchases. Higher tiers (2-5) provide significantly increased rate limits. For detailed information, visit [Perplexity's rate limits documentation](https://docs.perplexity.ai/guides/rate-limits-usage-tiers).
 
 ## DeepSeek
 DeepSeek does not impose rate limits.

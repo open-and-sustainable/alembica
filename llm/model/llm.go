@@ -2,6 +2,7 @@ package model
 
 import (
 	"fmt"
+
 	"github.com/open-and-sustainable/alembica/definitions"
 )
 
@@ -45,6 +46,8 @@ func (dqs DefaultQueryService) QueryLLM(prompts []string, llm definitions.Model)
 		queryFunc = queryAnthropic
 	case "DeepSeek":
 		queryFunc = queryDeepSeek
+	case "Perplexity":
+		queryFunc = queryPerplexity
 	default:
 		return nil, fmt.Errorf("unsupported LLM provider: %s", llm.Provider)
 	}

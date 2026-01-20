@@ -10,7 +10,7 @@ layout: default
 ### Prerequisites
 Before installing `alembica`, ensure you have:
 - **Go (latest stable version)** – Required for using `alembica` as a library.
-- **API Keys** – Necessary for accessing external LLM providers (OpenAI, Google, Cohere, etc.).
+- **API Keys** – Necessary for accessing external LLM providers (OpenAI, Google, Cohere, Anthropic, DeepSeek, Perplexity, etc.).
 - **Git** – Recommended for managing the source code **if developing `alembica`**.
 
 ### Install `alembica`

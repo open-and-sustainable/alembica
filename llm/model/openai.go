@@ -4,38 +4,40 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"github.com/open-and-sustainable/alembica/definitions"
 	"github.com/open-and-sustainable/alembica/utils/logger"
-
-	openai "github.com/sashabaranov/go-openai"
+	"github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
 )
 
 func queryOpenAI(prompts []string, llm definitions.Model) ([]string, error) {
 	answers := []string{}
 
 	// Create a new OpenAI client
-	client := openai.NewClient(llm.APIKey)
+	client := openai.NewClient(
+		option.WithAPIKey(llm.APIKey),
+	)
 
 	// Initialize conversation history
-	messages := []openai.ChatCompletionMessage{}
+	messages := []openai.ChatCompletionMessageParamUnion{}
 
 	for i, prompt := range prompts {
 		// Append user message to conversation history
-		messages = append(messages, openai.ChatCompletionMessage{Role: openai.ChatMessageRoleUser, Content: prompt})
-
-		completionParams := openai.ChatCompletionRequest{
-			Model:    llm.Model,
-			Messages: messages,
-			ResponseFormat: &openai.ChatCompletionResponseFormat{
-				Type: openai.ChatCompletionResponseFormatTypeJSONObject,
-			},
-			Temperature: float32(llm.Temperature),
-		}
+		messages = append(messages, openai.UserMessage(prompt))
 
 		// Make API call
-		resp, err := client.CreateChatCompletion(context.Background(), completionParams)
-		if err != nil || len(resp.Choices) != 1 {
-			logger.Error("Completion error: err:%v len(choices):%v\n", err, len(resp.Choices))
+		resp, err := client.Chat.Completions.New(context.Background(), openai.ChatCompletionNewParams{
+			Model:    openai.ChatModel(llm.Model),
+			Messages: messages,
+			ResponseFormat: openai.ChatCompletionNewParamsResponseFormatUnion{
+				OfJSONObject: &openai.ResponseFormatJSONObjectParam{},
+			},
+			Temperature: openai.Float(llm.Temperature),
+		})
+
+		if err != nil {
+			logger.Error("Completion error: %v", err)
 			return nil, fmt.Errorf("no response from OpenAI: %v", err)
 		}
 
@@ -57,7 +59,7 @@ func queryOpenAI(prompts []string, llm definitions.Model) ([]string, error) {
 		answers = append(answers, answer)
 
 		// Append model response to conversation history
-		messages = append(messages, openai.ChatCompletionMessage{Role: openai.ChatMessageRoleAssistant, Content: answer})
+		messages = append(messages, openai.AssistantMessage(answer))
 
 		// Call wait for all prompts except the last one
 		if i < len(prompts)-1 {

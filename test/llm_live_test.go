@@ -19,11 +19,12 @@ import (
 func loadAPIKeys(filename string) (map[string]string, error) {
 	// Map the expected API key environment variable names to the provider names.
 	envKeyToProvider := map[string]string{
-		"OPENAI_API_KEY":    "OpenAI",
-		"GOOGLE_AI_API_KEY": "GoogleAI",
-		"CO_API_KEY":        "Cohere",
-		"ANTHROPIC_API_KEY": "Anthropic",
-		"DEEPSEEK_API_KEY":  "DeepSeek",
+		"OPENAI_API_KEY":     "OpenAI",
+		"GOOGLE_AI_API_KEY":  "GoogleAI",
+		"CO_API_KEY":         "Cohere",
+		"ANTHROPIC_API_KEY":  "Anthropic",
+		"DEEPSEEK_API_KEY":   "DeepSeek",
+		"PERPLEXITY_API_KEY": "Perplexity",
 	}
 
 	// Initialize a map to store the API keys indexed by provider name.
@@ -94,7 +95,7 @@ func TestLiveQueryLLM(t *testing.T) {
 		t.Fatalf("Failed to load API keys: %v", err)
 	}
 
-	providers := []string{"OpenAI", "GoogleAI", "Cohere", "Anthropic", "DeepSeek"}
+	providers := []string{"OpenAI", "GoogleAI", "Cohere", "Anthropic", "DeepSeek", "Perplexity"}
 
 	prompts := []string{
 		"Please provide a JSON response: { \"question\": \"What is the capital of France?\" }",

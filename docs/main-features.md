@@ -18,7 +18,7 @@ Ensures that input queries are properly formatted before being processed by LLMs
 Calculates token-based processing costs before submitting queries to LLM providers, helping users optimize their usage.
 
 - Estimates costs **based on token consumption** per model and provider.
-- Supports **OpenAI, GoogleAI, Cohere, Anthropic, and DeepSeek** pricing models.
+- Supports **OpenAI, GoogleAI, Cohere, Anthropic, DeepSeek, and Perplexity** pricing models.
 - Enables informed decision-making by providing **real-time cost estimates**.
 
 ## Data Extraction

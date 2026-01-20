@@ -2,10 +2,11 @@ package test
 
 import (
 	"encoding/json"
-	"github.com/open-and-sustainable/alembica/definitions"
-	"github.com/open-and-sustainable/alembica/extraction"
 	"testing"
 	"time"
+
+	"github.com/open-and-sustainable/alembica/definitions"
+	"github.com/open-and-sustainable/alembica/extraction"
 )
 
 func TestLiveExtraction(t *testing.T) {
@@ -21,7 +22,7 @@ func TestLiveExtraction(t *testing.T) {
 		t.Fatalf("Failed to load output schema: %v", err)
 	}
 
-	providers := []string{"OpenAI", "GoogleAI", "Cohere", "Anthropic", "DeepSeek"}
+	providers := []string{"OpenAI", "GoogleAI", "Cohere", "Anthropic", "DeepSeek", "Perplexity"}
 
 	for _, provider := range providers {
 		apiKey, exists := apiKeys[provider]

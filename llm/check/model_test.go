@@ -18,7 +18,9 @@ func TestGetModelSupportedModels(t *testing.T) {
 		{"GoogleAI Gemini 1.5 Flash", "prompt", "GoogleAI", "gemini-1.5-flash", "api-key", "gemini-1.5-flash"},
 		{"Cohere Command-R", "prompt", "Cohere", "command-r", "api-key", "command-r"},
 		{"Anthropic Claude-3 Sonnet", "prompt", "Anthropic", "claude-3-sonnet", "api-key", ""},
-		{"Anthropic Claude-3.7 Sonnet", "prompt", "Anthropic", "claude-3-7-sonnet", "api-key", "claude-3-7-sonnet-latest"}, // Updated expected model
+		{"Anthropic Claude-3.7 Sonnet", "prompt", "Anthropic", "claude-3-7-sonnet", "api-key", "claude-3-7-sonnet-20250219"},
+		{"Perplexity Sonar", "prompt", "Perplexity", "sonar", "api-key", "sonar"},
+		{"Perplexity Sonar Pro", "prompt", "Perplexity", "sonar-pro", "api-key", "sonar-pro"},
 	}
 
 	for _, tt := range tests {
