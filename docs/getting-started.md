@@ -45,7 +45,7 @@ func main() {
 ```
 
 ## API Reference
-Avalable at [https://pkg.go.dev/github.com/open-and-sustainable/alembica](https://pkg.go.dev/github.com/open-and-sustainable/alembica).
+Available at [https://pkg.go.dev/github.com/open-and-sustainable/alembica](https://pkg.go.dev/github.com/open-and-sustainable/alembica).
 
 ## Configuration
 `alembica` requires API keys to interact with LLM providers. API keys should be included within the JSON input data structures instead of environment variables or separate configuration files.

@@ -1,7 +1,6 @@
 package check
 
 import (
-	"fmt"
 
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 	"github.com/open-and-sustainable/alembica/utils/logger"
@@ -42,7 +41,7 @@ func GetModel(prompt string, providerName string, modelName string, key string) 
 	case "Perplexity":
 		modelFunc = getPerplexityModel
 	default:
-		logger.Error(fmt.Println("Unsupported LLM provider: ", providerName))
+		logger.Error("Unsupported LLM provider: %s", providerName)
 		return ""
 	}
 	return modelFunc(prompt, modelName, key)
@@ -92,7 +91,7 @@ func getOpenAIModel(prompt string, modelName string, key string) string {
 	case "gpt-5-nano":
 		model = string(shared.ChatModelGPT5Nano)
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
@@ -108,7 +107,7 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 			model = "gemini-2.5-flash-lite"
 		}
 	case "gemini-1.0-pro": // deprecated from Feb 15 2025
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	case "gemini-3-pro-preview":
 		model = modelName
@@ -129,7 +128,7 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 	case "gemini-2.0-flash":
 		model = modelName
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
@@ -140,7 +139,7 @@ func getCohereModel(prompt string, modelName string, key string) string {
 	switch modelName {
 	case "":
 		// cost optimization, command-r7b is currently the cheapest and with the most input tokens allowed
-	case "command": // leave the model selected by the user, but chek if supported
+	case "command": // leave the model selected by the user, but check if supported
 		model = modelName
 	case "command-light":
 		model = modelName
@@ -157,7 +156,7 @@ func getCohereModel(prompt string, modelName string, key string) string {
 	case "command-a-reasoning-08-2025":
 		model = modelName
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
@@ -190,7 +189,7 @@ func getAnthropicModel(prompt string, modelName string, key string) string {
 	case "claude-3-haiku":
 		model = "claude-3-haiku-20240307"
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
@@ -202,12 +201,12 @@ func getDeepSeekModel(prompt string, modelName string, key string) string {
 	case "":
 		// cost optimization: use chat that is cheapest
 		model = "deepseek-chat"
-	case "deepseek-chat": // leave the model selected by the user, but chek if supported
+	case "deepseek-chat": // leave the model selected by the user, but check if supported
 		model = modelName
-	case "deepseek-reasoner": // leave the model selected by the user, but chek if supported
+	case "deepseek-reasoner": // leave the model selected by the user, but check if supported
 		model = modelName
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
