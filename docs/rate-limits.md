@@ -20,6 +20,8 @@ Exceeding these limits may result in request throttling or errors. `alembica` he
 
 **Disclaimer:** Daily limits (RPD and TPD) are not currently supported by `alembica`. Users are responsible for implementing and respecting these constraints on their own within their applications.
 
+**Cloud/local note:** AWS Bedrock, Azure AI, Vertex AI, and SelfHosted deployments have provider-specific rate limits that are not documented here. Set `tpm_limit` and `rpm_limit` in your input JSON when you need client-side throttling.
+
 ## Anthropic
 **(January 2026, Tier 1 users)**
 

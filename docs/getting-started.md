@@ -10,7 +10,7 @@ layout: default
 ### Prerequisites
 Before installing `alembica`, ensure you have:
 - **Go (latest stable version)** – Required for using `alembica` as a library.
-- **API Keys** – Necessary for accessing external LLM providers (OpenAI, Google, Cohere, Anthropic, DeepSeek, Perplexity, etc.).
+- **API Keys** – Necessary for accessing external LLM providers (OpenAI, Google, Cohere, Anthropic, DeepSeek, Perplexity, AWS Bedrock, Azure AI, Vertex AI, etc.).
 - **Git** – Recommended for managing the source code **if developing `alembica`**.
 
 ### Install `alembica`
@@ -46,6 +46,85 @@ func main() {
 
 ## Schema Versioning
 Use `schemaVersion: "v2"` when you need cloud/local providers (AWS Bedrock, Azure AI, Vertex AI, SelfHosted) or non-enumerated model IDs. Existing `v1` inputs remain supported.
+
+## Cloud and Local Providers (Examples)
+Use the same `extraction.Extract` call; only the JSON fields change. These examples use `schemaVersion: "v2"`.
+
+### Self-Hosted (OpenAI-Compatible)
+```json
+{
+  "metadata": { "schemaVersion": "v2", "timestamp": "2026-01-20T00:00:00Z" },
+  "models": [
+    {
+      "provider": "SelfHosted",
+      "model": "llama3.1:70b",
+      "api_key": "",
+      "base_url": "http://localhost:11434/v1",
+      "temperature": 0.7
+    }
+  ],
+  "prompts": [
+    { "sequenceId": "1", "sequenceNumber": 1, "promptContent": "Respond with JSON: {\"hello\":\"world\"}" }
+  ]
+}
+```
+
+### AWS Bedrock
+```json
+{
+  "metadata": { "schemaVersion": "v2", "timestamp": "2026-01-20T00:00:00Z" },
+  "models": [
+    {
+      "provider": "AWSBedrock",
+      "model": "meta.llama3-70b-instruct-v1:0",
+      "region": "us-east-1",
+      "temperature": 0.7
+    }
+  ],
+  "prompts": [
+    { "sequenceId": "1", "sequenceNumber": 1, "promptContent": "Respond with JSON: {\"hello\":\"world\"}" }
+  ]
+}
+```
+
+### Azure AI (Azure OpenAI)
+```json
+{
+  "metadata": { "schemaVersion": "v2", "timestamp": "2026-01-20T00:00:00Z" },
+  "models": [
+    {
+      "provider": "AzureAI",
+      "model": "my-deployment-name",
+      "api_key": "your-azure-key",
+      "base_url": "https://your-resource.openai.azure.com",
+      "api_version": "2024-06-01",
+      "temperature": 0.7
+    }
+  ],
+  "prompts": [
+    { "sequenceId": "1", "sequenceNumber": 1, "promptContent": "Respond with JSON: {\"hello\":\"world\"}" }
+  ]
+}
+```
+
+### Vertex AI (Model Garden)
+```json
+{
+  "metadata": { "schemaVersion": "v2", "timestamp": "2026-01-20T00:00:00Z" },
+  "models": [
+    {
+      "provider": "VertexAI",
+      "model": "meta/llama3-70b-instruct",
+      "project_id": "your-gcp-project",
+      "location": "us-central1",
+      "temperature": 0.7
+    }
+  ],
+  "prompts": [
+    { "sequenceId": "1", "sequenceNumber": 1, "promptContent": "Respond with JSON: {\"hello\":\"world\"}" }
+  ]
+}
+```
 
 ## API Reference
 Available at [https://pkg.go.dev/github.com/open-and-sustainable/alembica](https://pkg.go.dev/github.com/open-and-sustainable/alembica).

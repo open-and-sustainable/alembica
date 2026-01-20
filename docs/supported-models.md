@@ -5,11 +5,113 @@ layout: default
 
 # Supported Models
 
-`alembica` supports a variety of AI models from leading providers including OpenAI, GoogleAI, Cohere, Anthropic, DeepSeek, and Perplexity.
+`alembica` supports a variety of AI models from leading providers including OpenAI, GoogleAI, Cohere, Anthropic, DeepSeek, Perplexity, AWS Bedrock, Azure AI, Vertex AI, and self-hosted OpenAI-compatible endpoints.
 
 The table below provides an overview of all supported models, organized by provider. For each model, you can find its maximum input token capacity and the cost per million input tokens. This information helps you select the appropriate model based on your context length requirements and budget considerations.
 
-Each model has specific limits for input size and costs, as summarized below:
+Each model has specific limits for input size and costs, as summarized below. Cloud and self-hosted providers use custom model IDs, and costs are not computed by `alembica` for those providers.
+
+## Self-Hosted (OpenAI-Compatible)
+Local endpoints such as Ollama, vLLM, LM Studio, or LocalAI are supported via the `SelfHosted` provider. Model IDs and limits are defined by your local runtime, and costs are not computed.
+
+## OpenAI
+
+<table class="table-spacing">
+    <thead>
+        <tr>
+            <th style="text-align: left;">Model</th>
+            <th style="text-align: right;">Maximum Input Tokens</th>
+            <th style="text-align: right;">Cost of 1M Input Tokens</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: left;">GPT-5.2</td>
+            <td style="text-align: right;">400,000</td>
+            <td style="text-align: right;">$1.75</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-5.1</td>
+            <td style="text-align: right;">400,000</td>
+            <td style="text-align: right;">$1.25</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-5</td>
+            <td style="text-align: right;">400,000</td>
+            <td style="text-align: right;">$1.25</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-5 Mini</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$0.25</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-5 Nano</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$0.05</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">o4 Mini</td>
+            <td style="text-align: right;">200,000</td>
+            <td style="text-align: right;">$1.10</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">o3 Mini</td>
+            <td style="text-align: right;">200,000</td>
+            <td style="text-align: right;">$1.10</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">o3</td>
+            <td style="text-align: right;">200,000</td>
+            <td style="text-align: right;">$2.00</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">o1 Mini</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$1.10</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">o1</td>
+            <td style="text-align: right;">200,000</td>
+            <td style="text-align: right;">$15.00</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-4.1 Nano</td>
+            <td style="text-align: right;">1,000,000</td>
+            <td style="text-align: right;">$0.10</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-4.1 Mini</td>
+            <td style="text-align: right;">1,000,000</td>
+            <td style="text-align: right;">$0.40</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-4.1</td>
+            <td style="text-align: right;">1,000,000</td>
+            <td style="text-align: right;">$2.00</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-4o Mini</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$0.15</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-4o</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$2.50</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-4 Turbo</td>
+            <td style="text-align: right;">128,000</td>
+            <td style="text-align: right;">$10.00</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">GPT-3.5 Turbo</td>
+            <td style="text-align: right;">16,385</td>
+            <td style="text-align: right;">$0.50</td>
+        </tr>
+    </tbody>
+</table>
 
 ## Anthropic
 
@@ -253,104 +355,14 @@ DeepSeek V3.2 models feature automatic context caching. Cache hit rate: $0.028/M
     </tbody>
 </table>
 
-## OpenAI
+## AWS Bedrock (Llama and other models)
+AWS Bedrock models are addressed by their Bedrock model IDs. Costs and context limits vary by model and are not tracked by `alembica`.
 
-<table class="table-spacing">
-    <thead>
-        <tr>
-            <th style="text-align: left;">Model</th>
-            <th style="text-align: right;">Maximum Input Tokens</th>
-            <th style="text-align: right;">Cost of 1M Input Tokens</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="text-align: left;">GPT-5.2</td>
-            <td style="text-align: right;">400,000</td>
-            <td style="text-align: right;">$1.75</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-5.1</td>
-            <td style="text-align: right;">400,000</td>
-            <td style="text-align: right;">$1.25</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-5</td>
-            <td style="text-align: right;">400,000</td>
-            <td style="text-align: right;">$1.25</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-5 Mini</td>
-            <td style="text-align: right;">128,000</td>
-            <td style="text-align: right;">$0.25</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-5 Nano</td>
-            <td style="text-align: right;">128,000</td>
-            <td style="text-align: right;">$0.05</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">o4 Mini</td>
-            <td style="text-align: right;">200,000</td>
-            <td style="text-align: right;">$1.10</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">o3 Mini</td>
-            <td style="text-align: right;">200,000</td>
-            <td style="text-align: right;">$1.10</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">o3</td>
-            <td style="text-align: right;">200,000</td>
-            <td style="text-align: right;">$2.00</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">o1 Mini</td>
-            <td style="text-align: right;">128,000</td>
-            <td style="text-align: right;">$1.10</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">o1</td>
-            <td style="text-align: right;">200,000</td>
-            <td style="text-align: right;">$15.00</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-4.1 Nano</td>
-            <td style="text-align: right;">1,000,000</td>
-            <td style="text-align: right;">$0.10</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-4.1 Mini</td>
-            <td style="text-align: right;">1,000,000</td>
-            <td style="text-align: right;">$0.40</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-4.1</td>
-            <td style="text-align: right;">1,000,000</td>
-            <td style="text-align: right;">$2.00</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-4o Mini</td>
-            <td style="text-align: right;">128,000</td>
-            <td style="text-align: right;">$0.15</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-4o</td>
-            <td style="text-align: right;">128,000</td>
-            <td style="text-align: right;">$2.50</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-4 Turbo</td>
-            <td style="text-align: right;">128,000</td>
-            <td style="text-align: right;">$10.00</td>
-        </tr>
-        <tr>
-            <td style="text-align: left;">GPT-3.5 Turbo</td>
-            <td style="text-align: right;">16,385</td>
-            <td style="text-align: right;">$0.50</td>
-        </tr>
-    </tbody>
-</table>
+## Azure AI (Azure OpenAI / Model Catalog)
+Azure deployments are addressed by your deployment name in the `model` field. Costs and limits vary by deployment and are not tracked by `alembica`.
+
+## Vertex AI (Model Garden)
+Vertex AI models are addressed by their model IDs in the Model Garden. Costs and context limits vary by model and are not tracked by `alembica`.
 
 <div id="wcb" class="carbonbadge"></div>
 <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
