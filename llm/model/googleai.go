@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"github.com/open-and-sustainable/alembica/definitions"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
@@ -96,7 +97,7 @@ func queryGoogleAI(prompts []string, llm definitions.Model) ([]string, error) {
 		answers = append(answers, resultText)
 		cs.History = append(cs.History, &genai.Content{
 			Parts: []genai.Part{genai.Text(resultText)},
-			Role:  "assistant",
+			Role:  "model",
 		})
 
 		logger.Info("[GoogleAI] Processed response for prompt #%d: %s", i+1, resultText)

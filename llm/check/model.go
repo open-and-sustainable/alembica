@@ -1,7 +1,6 @@
 package check
 
 import (
-
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
@@ -227,7 +226,7 @@ func getPerplexityModel(prompt string, modelName string, key string) string {
 	case "sonar-deep-research":
 		model = modelName
 	default:
-		logger.Error(fmt.Println("Unsupported model: ", modelName))
+		logger.Error("Unsupported model: %s", modelName)
 		return ""
 	}
 	return model
