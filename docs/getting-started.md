@@ -18,6 +18,19 @@ Before installing `alembica`, ensure you have:
 go get github.com/open-and-sustainable/alembica
 ```
 
+### Two Commands: Library vs MCP
+`alembica` is a Go library. The optional MCP server is a separate command.
+
+Install the MCP server:
+```sh
+go install github.com/open-and-sustainable/alembica/cmd/alembica-mcp@latest
+```
+
+Run the MCP server:
+```sh
+alembica-mcp
+```
+
 ## Using alembica in Your Go Project
 To use `alembica` as a library in your Go code:
 ```go

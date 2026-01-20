@@ -24,6 +24,7 @@ layout: default
 - [Use in Other Languages](cshared-library)
 - [API Reference](https://pkg.go.dev/github.com/open-and-sustainable/alembica)
 - [Help & Resources](help-resources)
+- [MCP Server](mcp-server)
 
 ## License
 `alembica` is released under the [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl-3.0.html).

@@ -1,8 +1,7 @@
 cff-version: 1.2.0
 title: alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
 message: >-
-  v0.2.0 - Added cloud provider support (AWS Bedrock, Azure AI, Vertex AI),
-  self-hosted OpenAI-compatible endpoints, and schema v2 for cloud/local fields.
+  v0.3.0 - Added MCP server for agent tool access and MCP live integration tests.
 type: software
 doi: 10.5281/zenodo.14899666
 authors:

@@ -9,6 +9,13 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.3.0] - 2026-01-21
+### Added
+- MCP server (`cmd/alembica-mcp`) exposing validation, extraction, cost, and schema tools over MCP stdio
+- MCP live integration test covering OpenAI and DeepSeek via the MCP server
+### Changed
+- Documentation reorganized with nested navigation and MCP setup/usage details
+
 ## [0.2.0] - 2026-01-20
 ### Added
 - Cloud provider support for AWS Bedrock, Azure AI, and Vertex AI

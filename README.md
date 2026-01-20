@@ -32,6 +32,11 @@ If you want to use `alembica` in **other programming languages**, check out the 
 **[User Guide](https://open-and-sustainable.github.io/alembica/)** – Learn how to use `alembica` in different programming languages.
 **[API Reference](https://pkg.go.dev/github.com/open-and-sustainable/alembica)** – Explore the Go package documentation.
 
+## MCP Server
+`alembica` includes an optional MCP server for agent tool access.
+
+See the User Guide MCP page for install/run steps and tool schemas.
+
 ---
 
 ## Features
