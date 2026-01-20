@@ -9,11 +9,6 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
-## [0.1.1] - 2026-01-20
-### Fixed
-- Fixed CI/CD build failure for macOS Intel (AMD64) shared libraries by migrating from deprecated macos-13 runner to macos-15-intel
-- Updated macOS ARM64 runner to macos-latest for automatic future updates
-
 ## [0.2.0] - 2026-01-20
 ### Added
 - Cloud provider support for AWS Bedrock, Azure AI, and Vertex AI
@@ -21,6 +16,11 @@ Security: For vulnerabilities.
 - Schema version `v2` to allow cloud/local provider fields and non-enumerated model IDs
 ### Changed
 - Cost estimation returns zero for cloud/local providers (AWS Bedrock, Azure AI, Vertex AI, SelfHosted)
+
+## [0.1.1] - 2026-01-20
+### Fixed
+- Fixed CI/CD build failure for macOS Intel (AMD64) shared libraries by migrating from deprecated macos-13 runner to macos-15-intel
+- Updated macOS ARM64 runner to macos-latest for automatic future updates
 
 ## [0.1.0] - 2026-01-20
 ### Added
