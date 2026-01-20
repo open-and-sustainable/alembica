@@ -9,6 +9,11 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.1.1] - 2026-01-20
+### Fixed
+- Fixed CI/CD build failure for macOS Intel (AMD64) shared libraries by migrating from deprecated macos-13 runner to macos-15-intel
+- Updated macOS ARM64 runner to macos-latest for automatic future updates
+
 ## [0.1.0] - 2026-01-20
 ### Added
 - Support for OpenAI GPT-5 series models (GPT-5, GPT-5.1, GPT-5.2, GPT-5-mini, GPT-5-nano)

@@ -1,10 +1,8 @@
 cff-version: 1.2.0
 title: alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
 message: >-
-  v0.1.0 - Major model updates and SDK migrations.
-  Added support for Claude 4.5, Gemini 2.5/3, GPT-5 series, Perplexity Sonar, and Cohere Command A Reasoning models.
-  Updated pricing for all providers and migrated to official OpenAI SDK.
-  Enhanced DeepSeek V3.2 support with 128K context and automatic caching.
+  v0.1.1 - CI/CD fixes for macOS Intel shared library builds.
+  Fixed deprecated macos-13 runner migration to macos-15-intel and macos-latest for ARM64.
 type: software
 doi: 10.5281/zenodo.14899666
 authors:
