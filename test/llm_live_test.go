@@ -95,7 +95,8 @@ func TestLiveQueryLLM(t *testing.T) {
 		t.Fatalf("Failed to load API keys: %v", err)
 	}
 
-	providers := []string{"OpenAI", "GoogleAI", "Cohere", "Anthropic", "DeepSeek", "Perplexity"}
+	// Anthropic disabled temporarily due to billing issues in live tests.
+	providers := []string{"OpenAI", "GoogleAI", "Cohere", "DeepSeek", "Perplexity"}
 
 	prompts := []string{
 		"Please provide a JSON response: { \"question\": \"What is the capital of France?\" }",

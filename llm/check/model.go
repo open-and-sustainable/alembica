@@ -39,6 +39,8 @@ func GetModel(prompt string, providerName string, modelName string, key string) 
 		modelFunc = getDeepSeekModel
 	case "Perplexity":
 		modelFunc = getPerplexityModel
+	case "AWSBedrock", "AzureAI", "VertexAI", "SelfHosted":
+		modelFunc = getPassthroughModel
 	default:
 		logger.Error("Unsupported LLM provider: %s", providerName)
 		return ""
@@ -209,6 +211,14 @@ func getDeepSeekModel(prompt string, modelName string, key string) string {
 		return ""
 	}
 	return model
+}
+
+func getPassthroughModel(prompt string, modelName string, key string) string {
+	if modelName == "" {
+		logger.Error("Unsupported model: %s", modelName)
+		return ""
+	}
+	return modelName
 }
 
 func getPerplexityModel(prompt string, modelName string, key string) string {

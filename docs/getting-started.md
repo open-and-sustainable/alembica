@@ -44,6 +44,9 @@ func main() {
 }
 ```
 
+## Schema Versioning
+Use `schemaVersion: "v2"` when you need cloud/local providers (AWS Bedrock, Azure AI, Vertex AI, SelfHosted) or non-enumerated model IDs. Existing `v1` inputs remain supported.
+
 ## API Reference
 Available at [https://pkg.go.dev/github.com/open-and-sustainable/alembica](https://pkg.go.dev/github.com/open-and-sustainable/alembica).
 

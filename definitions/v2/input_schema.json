@@ -1,0 +1,105 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Schema for validating input data with multiple models and prompts including simplified sequencing",
+    "type": "object",
+    "properties": {
+        "metadata": {
+            "type": "object",
+            "properties": {
+                "schemaVersion": {
+                    "type": "string",
+                    "description": "Version of the schema definition"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Timestamp of when the input was generated"
+                }
+            },
+            "required": ["schemaVersion", "timestamp"]
+        },
+        "models": {
+            "type": "array",
+            "description": "Array of models to be run",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "provider": {
+                        "type": "string",
+                        "enum": ["OpenAI", "GoogleAI", "Cohere", "Anthropic", "DeepSeek", "Perplexity", "AWSBedrock", "AzureAI", "VertexAI", "SelfHosted"]
+                    },
+                    "api_key": {
+                        "type": "string",
+                        "description": "API key for the model provider; if empty, the key is fetched from environment variables"
+                    },
+                    "model": {
+                        "type": "string",
+                        "description": "Model identifier or deployment name"
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 2
+                    },
+                    "tpm_limit": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "rpm_limit": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "base_url": {
+                        "type": "string",
+                        "description": "Override base URL for OpenAI-compatible endpoints (self-hosted or Azure)"
+                    },
+                    "endpoint_type": {
+                        "type": "string",
+                        "description": "Endpoint type for custom providers (e.g., openai-compatible)"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "Cloud region for AWS Bedrock or Vertex AI"
+                    },
+                    "project_id": {
+                        "type": "string",
+                        "description": "GCP project ID for Vertex AI"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "GCP location for Vertex AI"
+                    },
+                    "api_version": {
+                        "type": "string",
+                        "description": "API version for Azure OpenAI endpoints"
+                    }
+                },
+                "required": ["provider", "model", "temperature"]
+            }
+        },
+        "prompts": {
+            "type": "array",
+            "description": "Array of prompts to be run, sequenced by ID and number",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "promptContent": {
+                        "type": "string",
+                        "description": "Content of the prompt"
+                    },
+                    "sequenceId": {
+                        "type": "string",
+                        "description": "Identifier for the sequence to which this prompt belongs"
+                    },
+                    "sequenceNumber": {
+                        "type": "integer",
+                        "description": "The order number of this prompt within its sequence",
+                        "minimum": 1
+                    }
+                },
+                "required": ["promptContent", "sequenceId", "sequenceNumber"]
+            }
+        }
+    },
+    "required": ["metadata", "models", "prompts"]
+}

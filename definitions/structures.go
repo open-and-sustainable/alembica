@@ -8,12 +8,18 @@ type InputMetadata struct {
 }
 
 type Model struct {
-	Provider    string  `json:"provider"`
-	APIKey      string  `json:"api_key"`
-	Model       string  `json:"model"`
-	Temperature float64 `json:"temperature"`
-	TPMLimit    int     `json:"tpm_limit"`
-	RPMLimit    int     `json:"rpm_limit"`
+	Provider     string  `json:"provider"`
+	APIKey       string  `json:"api_key"`
+	Model        string  `json:"model"`
+	Temperature  float64 `json:"temperature"`
+	TPMLimit     int     `json:"tpm_limit"`
+	RPMLimit     int     `json:"rpm_limit"`
+	BaseURL      string  `json:"base_url,omitempty"`
+	EndpointType string  `json:"endpoint_type,omitempty"`
+	Region       string  `json:"region,omitempty"`
+	ProjectID    string  `json:"project_id,omitempty"`
+	Location     string  `json:"location,omitempty"`
+	APIVersion   string  `json:"api_version,omitempty"`
 }
 
 type Prompt struct {

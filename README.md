@@ -11,7 +11,7 @@
 `alembica` simplifies the use of **Large Language Models (LLMs)** to extract structured datasets from unstructured corpora of text.
 It provides a **flexible and scalable framework** to process, synthesize, and transform textual information into structured formats suitable for analysis and further processing.
 
-Supports **OpenAI, Google AI, Anthropic, Cohere, DeepSeek, and Perplexity** providers.
+Supports **OpenAI, Google AI, Anthropic, Cohere, DeepSeek, Perplexity, AWS Bedrock, Azure AI, Vertex AI, and Self-Hosted OpenAI-compatible** providers.
 
 ---
 
@@ -39,6 +39,15 @@ If you want to use `alembica` in **other programming languages**, check out the 
 - **Validation of Input** – Ensures that queries are correctly formatted to support proper interaction with models.
 - **Cost Assessment** – Calculates token costs based on the requested extraction and different model pricing.
 - **Data Extraction** – Processes unstructured text and transforms it into structured datasets for further analysis.
+
+Note: Cost estimation is not supported for Self-Hosted, AWS Bedrock, Azure AI, or Vertex AI providers and will return zero.
+
+Optional model fields for cloud/local providers:
+- `base_url` and `api_version` for Azure/OpenAI-compatible endpoints
+- `region` for AWS Bedrock
+- `project_id` and `location` for Vertex AI
+
+Use `schemaVersion: "v2"` when you need these cloud/local provider fields or non-enumerated model IDs.
 
 ---
 

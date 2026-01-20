@@ -48,6 +48,14 @@ func (dqs DefaultQueryService) QueryLLM(prompts []string, llm definitions.Model)
 		queryFunc = queryDeepSeek
 	case "Perplexity":
 		queryFunc = queryPerplexity
+	case "AWSBedrock":
+		queryFunc = queryAWSBedrock
+	case "AzureAI":
+		queryFunc = queryAzureAI
+	case "VertexAI":
+		queryFunc = queryVertexAI
+	case "SelfHosted":
+		queryFunc = querySelfHosted
 	default:
 		return nil, fmt.Errorf("unsupported LLM provider: %s", llm.Provider)
 	}

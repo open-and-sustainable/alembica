@@ -14,6 +14,14 @@ Security: For vulnerabilities.
 - Fixed CI/CD build failure for macOS Intel (AMD64) shared libraries by migrating from deprecated macos-13 runner to macos-15-intel
 - Updated macOS ARM64 runner to macos-latest for automatic future updates
 
+## [0.2.0] - 2026-01-20
+### Added
+- Cloud provider support for AWS Bedrock, Azure AI, and Vertex AI
+- Self-hosted OpenAI-compatible endpoints via the `SelfHosted` provider
+- Schema version `v2` to allow cloud/local provider fields and non-enumerated model IDs
+### Changed
+- Cost estimation returns zero for cloud/local providers (AWS Bedrock, Azure AI, Vertex AI, SelfHosted)
+
 ## [0.1.0] - 2026-01-20
 ### Added
 - Support for OpenAI GPT-5 series models (GPT-5, GPT-5.1, GPT-5.2, GPT-5-mini, GPT-5-nano)

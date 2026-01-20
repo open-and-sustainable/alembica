@@ -53,20 +53,15 @@ func setupMultiSequenceTest(t *testing.T) (definitions.Input, definitions.Output
 			SchemaVersion: "v1",
 			Timestamp:     time.Now().Format(time.RFC3339),
 		},
-		Models: []definitions.Model{
-			{
-				Provider:    "OpenAI",
-				APIKey:      apiKeys["OpenAI"],
-				Model:       check.GetModel("", "OpenAI", "gpt-4-turbo", ""),
-				Temperature: 0.7,
-			},
-			{
-				Provider:    "Anthropic",
-				APIKey:      apiKeys["Anthropic"],
-				Model:       check.GetModel("", "Anthropic", "claude-3-5-sonnet", ""),
-				Temperature: 0.7,
-			},
+	Models: []definitions.Model{
+		{
+			Provider:    "OpenAI",
+			APIKey:      apiKeys["OpenAI"],
+			Model:       check.GetModel("", "OpenAI", "gpt-4-turbo", ""),
+			Temperature: 0.7,
 		},
+		// Anthropic disabled temporarily due to billing issues in live tests.
+	},
 		Prompts: []definitions.Prompt{
 			// Sequence 1: Requires contextual memory
 			{PromptContent: "My name is TestUser. Respond with a JSON object with greeting field.", SequenceID: "chat1", SequenceNumber: 1},
@@ -135,7 +130,7 @@ func groupResponsesByModelAndSequence(responses []definitions.Response) map[stri
 
 // verifyResponseCounts checks that we have the expected number of responses for each sequence
 func verifyResponseCounts(t *testing.T, responses []definitions.Response) {
-	expectedSequences := map[string]int{"chat1": 4, "chat2": 4} // 2 models x 2 prompts each = 4 responses per sequence
+	expectedSequences := map[string]int{"chat1": 2, "chat2": 2} // 1 model x 2 prompts each = 2 responses per sequence
 	actualSequences := make(map[string]int)
 
 	// Print each response to examine what you received

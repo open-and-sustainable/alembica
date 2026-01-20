@@ -8,6 +8,11 @@ Supported LLM Providers:
   - Cohere (Command-R, Command-R+, Command-R7B)
   - Anthropic (Claude-3.5-Sonnet, Claude-3-Haiku, Claude-3-Opus)
   - DeepSeek (DeepSeek-Chat)
+  - Perplexity (Sonar, Sonar Pro, Sonar Reasoning Pro)
+  - AWSBedrock (Llama variants via Bedrock)
+  - AzureAI (Azure OpenAI deployments)
+  - VertexAI (Llama variants via Vertex Model Garden)
+  - SelfHosted (OpenAI-compatible endpoints)
 
 Core Functions:
   - QueryLLM: A generic interface for querying different LLMs.

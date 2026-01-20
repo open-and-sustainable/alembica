@@ -12,13 +12,14 @@ Ensures that input queries are properly formatted before being processed by LLMs
 
 - Uses **JSON schema validation** to enforce structured input.
 - Helps avoid malformed queries that could lead to incorrect or costly API calls.
-- Supports multiple schema versions for flexibility.
+- Supports multiple schema versions for flexibility. Use `v2` for cloud/local providers.
 
 ## Cost Assessment
 Calculates token-based processing costs before submitting queries to LLM providers, helping users optimize their usage.
 
 - Estimates costs **based on token consumption** per model and provider.
 - Supports **OpenAI, GoogleAI, Cohere, Anthropic, DeepSeek, and Perplexity** pricing models.
+- Cloud/local providers (AWS Bedrock, Azure AI, Vertex AI, SelfHosted) return zero cost.
 - Enables informed decision-making by providing **real-time cost estimates**.
 
 ## Data Extraction
