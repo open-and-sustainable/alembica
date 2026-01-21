@@ -21,3 +21,6 @@ Set the schema version in your input JSON:
 - `validation.ValidateOutput(json, version)`
 - `validation.ValidateCost(json, version)`
 
+
+<div id="wcb" class="carbonbadge"></div>
+<script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
