@@ -1,6 +1,7 @@
 package check
 
 import (
+	"fmt"
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
@@ -42,7 +43,7 @@ func GetModel(prompt string, providerName string, modelName string, key string) 
 	case "AWSBedrock", "AzureAI", "VertexAI", "SelfHosted":
 		modelFunc = getPassthroughModel
 	default:
-		logger.Error("Unsupported LLM provider: %s", providerName)
+		logger.Error(fmt.Sprintf("Unsupported LLM provider: %s", providerName))
 		return ""
 	}
 	return modelFunc(prompt, modelName, key)
@@ -92,7 +93,7 @@ func getOpenAIModel(prompt string, modelName string, key string) string {
 	case "gpt-5-nano":
 		model = string(shared.ChatModelGPT5Nano)
 	default:
-		logger.Error("Unsupported model: %s", modelName)
+		logger.Error(fmt.Sprintf("Unsupported model: %s", modelName))
 		return ""
 	}
 	return model
@@ -108,7 +109,7 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 			model = "gemini-2.5-flash-lite"
 		}
 	case "gemini-1.0-pro": // deprecated from Feb 15 2025
-		logger.Error("Unsupported model: %s", modelName)
+		logger.Error(fmt.Sprintf("Unsupported model: %s", modelName))
 		return ""
 	case "gemini-3-pro-preview":
 		model = modelName
@@ -129,7 +130,7 @@ func getGoogleAIModel(prompt string, modelName string, key string) string {
 	case "gemini-2.0-flash":
 		model = modelName
 	default:
-		logger.Error("Unsupported model: %s", modelName)
+		logger.Error(fmt.Sprintf("Unsupported model: %s", modelName))
 		return ""
 	}
 	return model
@@ -157,7 +158,7 @@ func getCohereModel(prompt string, modelName string, key string) string {
 	case "command-a-reasoning-08-2025":
 		model = modelName
 	default:
-		logger.Error("Unsupported model: %s", modelName)
+		logger.Error(fmt.Sprintf("Unsupported model: %s", modelName))
 		return ""
 	}
 	return model
@@ -190,7 +191,7 @@ func getAnthropicModel(prompt string, modelName string, key string) string {
 	case "claude-3-haiku":
 		model = "claude-3-haiku-20240307"
 	default:
-		logger.Error("Unsupported model: %s", modelName)
+		logger.Error(fmt.Sprintf("Unsupported model: %s", modelName))
 		return ""
 	}
 	return model
@@ -207,7 +208,7 @@ func getDeepSeekModel(prompt string, modelName string, key string) string {
 	case "deepseek-reasoner": // leave the model selected by the user, but check if supported
 		model = modelName
 	default:
-		logger.Error("Unsupported model: %s", modelName)
+		logger.Error(fmt.Sprintf("Unsupported model: %s", modelName))
 		return ""
 	}
 	return model
@@ -215,7 +216,7 @@ func getDeepSeekModel(prompt string, modelName string, key string) string {
 
 func getPassthroughModel(prompt string, modelName string, key string) string {
 	if modelName == "" {
-		logger.Error("Unsupported model: %s", modelName)
+		logger.Error(fmt.Sprintf("Unsupported model: %s", modelName))
 		return ""
 	}
 	return modelName
@@ -236,7 +237,7 @@ func getPerplexityModel(prompt string, modelName string, key string) string {
 	case "sonar-deep-research":
 		model = modelName
 	default:
-		logger.Error("Unsupported model: %s", modelName)
+		logger.Error(fmt.Sprintf("Unsupported model: %s", modelName))
 		return ""
 	}
 	return model

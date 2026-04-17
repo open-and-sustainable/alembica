@@ -38,7 +38,7 @@ func queryPerplexity(prompts []string, llm definitions.Model) ([]string, error) 
 		})
 
 		if err != nil {
-			logger.Error("Completion error: %v", err)
+			logger.Error(fmt.Sprintf("Completion error: %v", err))
 			return nil, fmt.Errorf("no response from Perplexity: %v", err)
 		}
 
@@ -48,7 +48,7 @@ func queryPerplexity(prompts []string, llm definitions.Model) ([]string, error) 
 			logger.Error("Failed to marshal response:", err)
 			return nil, err
 		}
-		logger.Info("Full Perplexity response: %s\n", string(respJSON))
+		logger.Info(fmt.Sprintf("Full Perplexity response: %s", string(respJSON)))
 
 		// Extract response text
 		if len(resp.Choices) == 0 || resp.Choices[0].Message.Content == "" {

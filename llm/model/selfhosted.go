@@ -42,16 +42,16 @@ func querySelfHosted(prompts []string, llm definitions.Model) ([]string, error) 
 			Temperature: openai.Float(llm.Temperature),
 		})
 		if err != nil {
-			logger.Error("Completion error: %v", err)
+			logger.Error(fmt.Sprintf("Completion error: %v", err))
 			return nil, fmt.Errorf("no response from SelfHosted endpoint: %v", err)
 		}
 
 		respJSON, err := json.MarshalIndent(resp, "", "  ")
 		if err != nil {
-			logger.Error("Failed to marshal response: %v", err)
+			logger.Error(fmt.Sprintf("Failed to marshal response: %v", err))
 			return nil, err
 		}
-		logger.Info("Full SelfHosted response: %s\n", string(respJSON))
+		logger.Info(fmt.Sprintf("Full SelfHosted response: %s", string(respJSON)))
 
 		if len(resp.Choices) == 0 || resp.Choices[0].Message.Content == "" {
 			logger.Error("No content found in response")

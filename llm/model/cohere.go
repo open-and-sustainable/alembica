@@ -29,12 +29,12 @@ func queryCohere(prompts []string, llm definitions.Model) ([]string, error) {
 
 		// Log request for debugging
 		reqJSON, _ := json.MarshalIndent(chatRequest, "", "  ")
-		logger.Info("Sending Cohere request: %s\n", string(reqJSON))
+		logger.Info(fmt.Sprintf("Sending Cohere request: %s", string(reqJSON)))
 
 		// Make API call
 		response, err := client.Chat(context.TODO(), chatRequest)
 		if err != nil {
-			logger.Error("Cohere API error: %v", err)
+			logger.Error(fmt.Sprintf("Cohere API error: %v", err))
 			return nil, fmt.Errorf("[Cohere] API error: %v", err)
 		}
 
@@ -47,10 +47,10 @@ func queryCohere(prompts []string, llm definitions.Model) ([]string, error) {
 		// Log full response JSON
 		respJSON, err := json.MarshalIndent(response, "", "  ")
 		if err != nil {
-			logger.Error("Failed to marshal response: %v", err)
+			logger.Error(fmt.Sprintf("Failed to marshal response: %v", err))
 			return nil, err
 		}
-		logger.Info("Full Cohere response: %s\n", string(respJSON))
+		logger.Info(fmt.Sprintf("Full Cohere response: %s", string(respJSON)))
 
 		// Ensure valid response
 		if len(response.Text) == 0 {

@@ -22,7 +22,7 @@ func Extract(inputJSON string) (string, error) {
 	var inputData definitions.Input
 	err := json.Unmarshal([]byte(inputJSON), &inputData)
 	if err != nil {
-		logger.Error("error parsing input JSON: %v", err)
+		logger.Error(fmt.Sprintf("error parsing input JSON: %v", err))
 		return "", err
 	}
 
@@ -65,7 +65,7 @@ func Extract(inputJSON string) (string, error) {
 			// Query the model with all prompts in the sequence at once
 			responses, err := queryService.QueryLLM(promptContents, modelInstance)
 			if err != nil {
-				logger.Error("error querying LLM: %v", err)
+				logger.Error(fmt.Sprintf("error querying LLM: %v", err))
 				continue
 			}
 
@@ -88,12 +88,12 @@ func Extract(inputJSON string) (string, error) {
 
 	outputJSON, err := json.Marshal(outputData)
 	if err != nil {
-		logger.Error("error generating output JSON: %v", err)
+		logger.Error(fmt.Sprintf("error generating output JSON: %v", err))
 		return "", fmt.Errorf("error generating output JSON: %v", err)
 	}
 
 	if err := validation.ValidateOutput(string(outputJSON), inputData.Metadata.SchemaVersion); err != nil {
-		logger.Error("error validating output JSON: %v", err)
+		logger.Error(fmt.Sprintf("error validating output JSON: %v", err))
 		return "", err
 	}
 

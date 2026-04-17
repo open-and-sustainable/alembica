@@ -37,7 +37,7 @@ func queryOpenAI(prompts []string, llm definitions.Model) ([]string, error) {
 		})
 
 		if err != nil {
-			logger.Error("Completion error: %v", err)
+			logger.Error(fmt.Sprintf("Completion error: %v", err))
 			return nil, fmt.Errorf("no response from OpenAI: %v", err)
 		}
 
@@ -47,7 +47,7 @@ func queryOpenAI(prompts []string, llm definitions.Model) ([]string, error) {
 			logger.Error("Failed to marshal response:", err)
 			return nil, err
 		}
-		logger.Info("Full OpenAI response: %s\n", string(respJSON))
+		logger.Info(fmt.Sprintf("Full OpenAI response: %s", string(respJSON)))
 
 		// Extract response text
 		if len(resp.Choices) == 0 || resp.Choices[0].Message.Content == "" {

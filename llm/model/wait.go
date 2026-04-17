@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"github.com/open-and-sustainable/alembica/definitions"
 	"github.com/open-and-sustainable/alembica/llm/tokens"
 	"github.com/open-and-sustainable/alembica/utils/logger"
@@ -89,7 +90,7 @@ func waitWithStatus(waitTime int) {
 	remainingTime := waitTime
 	for range ticker.C {
 		if remainingTime%5 == 0 {
-			logger.Info("Waiting... %d seconds remaining\n", remainingTime)
+			logger.Info(fmt.Sprintf("Waiting... %d seconds remaining", remainingTime))
 		}
 		remainingTime--
 		if remainingTime <= 0 {

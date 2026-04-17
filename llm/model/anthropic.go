@@ -35,7 +35,7 @@ func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
 			},
 		})
 		if err != nil {
-			logger.Error("Anthropic API error: %v", err)
+			logger.Error(fmt.Sprintf("Anthropic API error: %v", err))
 			return nil, fmt.Errorf("[Anthropic] API error: %v", err)
 		}
 
@@ -46,7 +46,7 @@ func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
 		}
 
 		// Log the response from Anthropic
-		logger.Info("Anthropic response first block: %s", message.Content[0].Text)
+		logger.Info(fmt.Sprintf("Anthropic response first block: %s", message.Content[0].Text))
 
 		// Extract response text
 		textBlock := extractTextBlock(message.Content)
@@ -57,7 +57,7 @@ func queryAnthropic(prompts []string, llm definitions.Model) ([]string, error) {
 		// Extract valid JSON from response
 		answer, err := extractJSONString(textBlock)
 		if err != nil {
-			logger.Error("Failed to extract JSON from response: %v", err)
+			logger.Error(fmt.Sprintf("Failed to extract JSON from response: %v", err))
 			return nil, fmt.Errorf("no valid JSON review response from Anthropic: %v", err)
 		}
 		answers = append(answers, answer)
