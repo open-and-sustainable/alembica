@@ -1,6 +1,7 @@
 package pricing
 
 import (
+	"fmt"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
 	"github.com/shopspring/decimal"
@@ -91,7 +92,7 @@ func numCentsFromTokens(numTokens int, model string) decimal.Decimal {
 	rate, ok := modelRates[model]
 	if !ok {
 		rate = decimal.Zero
-		logger.Info("Cost estimation unavailable because model not found: %s", model)
+		logger.Info(fmt.Sprintf("Cost estimation unavailable because model not found: %s", model))
 	}
 	// halve the rate if the number of tokens is less than 128K and using Google AI Gemini 1.5 flash
 	if numTokens <= 128000 && ((model == "gemini-1.5-flash") || (model == "gemini-1.5-pro")) {

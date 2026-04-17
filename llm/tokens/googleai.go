@@ -2,6 +2,7 @@ package tokens
 
 import (
 	"context"
+	"fmt"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
 	genai "github.com/google/generative-ai-go/genai"
@@ -12,7 +13,7 @@ func numTokensFromPromptGoogleAI(prompt string, modelName string, key string) (n
 	ctx := context.Background()
 	client, err := genai.NewClient(ctx, option.WithAPIKey(key))
 	if err != nil {
-		logger.Error("[GoogleAI] Failed to create client: %v", err)
+		logger.Error(fmt.Sprintf("[GoogleAI] Failed to create client: %v", err))
 		return 0
 	}
 	defer client.Close()
@@ -20,7 +21,7 @@ func numTokensFromPromptGoogleAI(prompt string, modelName string, key string) (n
 	model := client.GenerativeModel(modelName)
 	tokResp, err := model.CountTokens(ctx, genai.Text(prompt))
 	if err != nil {
-		logger.Error("[GoogleAI] Failed to count tokens: %v", err)
+		logger.Error(fmt.Sprintf("[GoogleAI] Failed to count tokens: %v", err))
 		return 0 // ✅ Do NOT stop execution
 	}
 

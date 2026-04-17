@@ -9,6 +9,12 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.3.1] - 2026-04-17
+### Fixed
+- Fixed logger call sites that used printf-style format strings with a logger implementation based on println-style semantics
+- Updated direct Go dependencies to newer releases
+- Bumped the module Go version to `1.26.0`
+
 ## [0.3.0] - 2026-01-21
 ### Added
 - MCP server (`cmd/alembica-mcp`) exposing validation, extraction, cost, and schema tools over MCP stdio

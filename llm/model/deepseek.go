@@ -40,19 +40,19 @@ func queryDeepSeek(prompts []string, llm definitions.Model) ([]string, error) {
 		resp, err := client.CreateChatCompletion(context.Background(), completionParams)
 		if err != nil {
 			if apiErr, ok := err.(*deepseek.APIError); ok {
-				logger.Error("API Error: HTTP %d, Code %d, Message: %s", apiErr.StatusCode, apiErr.APICode, apiErr.Message)
+				logger.Error(fmt.Sprintf("API Error: HTTP %d, Code %d, Message: %s", apiErr.StatusCode, apiErr.APICode, apiErr.Message))
 			} else {
-				logger.Error("Unexpected error: %v", err)
+				logger.Error(fmt.Sprintf("Unexpected error: %v", err))
 			}
 			return nil, fmt.Errorf("no response from deepseek: %v", err)
 		}
 
 		respJSON, err := json.MarshalIndent(resp, "", "  ")
 		if err != nil {
-			logger.Error("Failed to marshal response: %v", err)
+			logger.Error(fmt.Sprintf("Failed to marshal response: %v", err))
 			return nil, err
 		}
-		logger.Info("Full deepseek response: %s\n", string(respJSON))
+		logger.Info(fmt.Sprintf("Full deepseek response: %s", string(respJSON)))
 
 		if len(resp.Choices) == 0 || resp.Choices[0].Message.Content == "" {
 			logger.Error("No content found in response")

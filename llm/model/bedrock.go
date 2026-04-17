@@ -23,7 +23,7 @@ func queryAWSBedrock(prompts []string, llm definitions.Model) ([]string, error) 
 	ctx := context.Background()
 	cfg, err := config.LoadDefaultConfig(ctx, config.WithRegion(llm.Region))
 	if err != nil {
-		logger.Error("AWS config error: %v", err)
+		logger.Error(fmt.Sprintf("AWS config error: %v", err))
 		return nil, err
 	}
 
@@ -46,7 +46,7 @@ func queryAWSBedrock(prompts []string, llm definitions.Model) ([]string, error) 
 			},
 		})
 		if err != nil {
-			logger.Error("Bedrock API error: %v", err)
+			logger.Error(fmt.Sprintf("Bedrock API error: %v", err))
 			return nil, fmt.Errorf("no response from AWS Bedrock: %v", err)
 		}
 
