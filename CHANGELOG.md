@@ -9,6 +9,11 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.3.2] - 2026-04-22
+### Added
+- GitHub Actions workflow to publish the Alembica MCP server to the MCP Registry on pushed version tags using GitHub OIDC
+- Registry `server.json` metadata for the `alembica-mcp` OCI package
+
 ## [0.3.1] - 2026-04-17
 ### Fixed
 - Fixed logger call sites that used printf-style format strings with a logger implementation based on println-style semantics

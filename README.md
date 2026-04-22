@@ -37,6 +37,11 @@ If you want to use `alembica` in **other programming languages**, check out the 
 
 See the User Guide MCP page for install/run steps and tool schemas.
 
+## MCP Registry publishing
+The MCP server is published to the MCP Registry by GitHub Actions when a version tag such as `v1.2.3` is pushed.
+
+The workflow uses GitHub OIDC for authentication, and each new registry version is published explicitly by CI rather than implicitly from GitHub Releases.
+
 ---
 
 ## Features

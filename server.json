@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.open-and-sustainable/alembica-mcp",
+  "title": "Alembica MCP",
+  "description": "MCP server for validating Alembica inputs and outputs, computing costs, and running extraction workflows.",
+  "repository": {
+    "url": "https://github.com/open-and-sustainable/alembica",
+    "source": "github"
+  },
+  "version": "0.0.0",
+  "packages": [
+    {
+      "registryType": "oci",
+      "identifier": "ghcr.io/open-and-sustainable/alembica-mcp:0.0.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

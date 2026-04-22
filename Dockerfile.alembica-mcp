@@ -1,0 +1,18 @@
+FROM golang:1.26 AS builder
+
+WORKDIR /src
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /out/alembica-mcp ./cmd/alembica-mcp
+
+FROM gcr.io/distroless/static-debian12:nonroot
+
+LABEL io.modelcontextprotocol.server.name="io.github.open-and-sustainable/alembica-mcp"
+
+COPY --from=builder /out/alembica-mcp /usr/local/bin/alembica-mcp
+
+ENTRYPOINT ["/usr/local/bin/alembica-mcp"]
