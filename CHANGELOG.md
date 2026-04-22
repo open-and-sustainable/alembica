@@ -9,6 +9,10 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.3.3] - 2026-04-22
+### Fixed
+- Missing cicd action.
+
 ## [0.3.2] - 2026-04-22
 ### Added
 - GitHub Actions workflow to publish the Alembica MCP server to the MCP Registry on pushed version tags using GitHub OIDC
