@@ -5,22 +5,53 @@ layout: default
 
 # MCP Server
 
-The optional MCP server exposes `alembica` tools to agents over stdio.
+The optional MCP server exposes `alembica` tools to agents over `stdio`.
 
-## Install and Run
-```sh
-go install github.com/open-and-sustainable/alembica/cmd/alembica-mcp@latest
-alembica-mcp
-```
+The MCP server supports three usage patterns:
 
-## Tools
+- local installation from the Go source
+- container-based execution from the GHCR image
+- registry-based use through the MCP Registry
+
+The MCP server only supports schema version `v2`.
+
+## Available Tools
+
 - `alembica_validate_input`
 - `alembica_validate_output`
 - `alembica_extract`
 - `alembica_compute_costs`
 - `alembica_list_schemas`
 
-Agents discover tool schemas via `tools/list` and call them with `tools/call`. The MCP server only supports schema version `v2`.
+Agents discover tool schemas via `tools/list` and call them with `tools/call`.
+
+## Use from Go Source
+
+Use this when you want a local binary built directly from the project source.
+
+```sh
+go install github.com/open-and-sustainable/alembica/cmd/alembica-mcp@latest
+alembica-mcp
+```
+
+## Use from the GHCR Container Image
+
+Use this when you want to run the MCP server without a local Go toolchain.
+
+```sh
+docker pull ghcr.io/open-and-sustainable/alembica-mcp:main
+docker run --rm -i ghcr.io/open-and-sustainable/alembica-mcp:main
+```
+
+Replace `main` with a released version tag when you want a fixed server version.
+
+## Use from the MCP Registry
+
+Use this when your agent platform supports MCP Registry server discovery and installation.
+
+The Alembica MCP server is published explicitly by GitHub Actions on pushed version tags such as `v0.3.2`, using GitHub OIDC authentication and the registry publisher CLI.
+
+The registry entry points to the published OCI package for the MCP server, so agents can resolve a versioned package rather than a repository source tree.
 
 ## Example Requests
 Example `tools/list` request:
@@ -42,6 +73,8 @@ Example `tools/call` request:
   }
 }
 ```
+
+In all cases, clients interact with the server through standard MCP `tools/list` and `tools/call` requests.
 
 <div id="wcb" class="carbonbadge"></div>
 <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>

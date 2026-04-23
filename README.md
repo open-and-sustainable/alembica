@@ -35,7 +35,9 @@ If you want to use `alembica` in **other programming languages**, check out the 
 ## MCP Server
 `alembica` includes an optional MCP server for agent tool access.
 
-See the User Guide MCP page for install/run steps and tool schemas.
+The MCP server can be used from a locally built Go binary, the GHCR container image, or the MCP Registry.
+
+See the User Guide MCP page for installation options, run commands, and tool schemas.
 
 ## MCP Registry publishing
 The MCP server is published to the MCP Registry by GitHub Actions when a version tag such as `v1.2.3` is pushed.
