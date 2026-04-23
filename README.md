@@ -3,6 +3,7 @@
 **Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.**
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/open-and-sustainable/alembica.svg)](https://pkg.go.dev/github.com/open-and-sustainable/alembica) [![Go Report Card](https://goreportcard.com/badge/github.com/open-and-sustainable/alembica)](https://goreportcard.com/report/github.com/open-and-sustainable/alembica) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14899666.svg)](https://doi.org/10.5281/zenodo.14899666)
+[![MCP Registry](https://img.shields.io/badge/MCP%20Registry-Alembica%20MCP-0A7B83)](https://registry.modelcontextprotocol.io/?q=alembica)
 
 ---
 
@@ -36,6 +37,10 @@ If you want to use `alembica` in **other programming languages**, check out the 
 `alembica` includes an optional MCP server for agent tool access.
 
 The MCP server can be used from a locally built Go binary, the GHCR container image, or the MCP Registry.
+
+Available in the official MCP Registry:
+- https://registry.modelcontextprotocol.io/?q=alembica
+- Server ID: `io.github.open-and-sustainable/alembica-mcp`
 
 See the User Guide MCP page for installation options, run commands, and tool schemas.
 
