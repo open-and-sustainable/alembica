@@ -5,21 +5,21 @@ import (
 	"fmt"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
-	genai "github.com/google/generative-ai-go/genai"
-	option "google.golang.org/api/option"
+	"google.golang.org/genai"
 )
 
 func numTokensFromPromptGoogleAI(prompt string, modelName string, key string) (numTokens int) {
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, option.WithAPIKey(key))
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{
+		APIKey:  key,
+		Backend: genai.BackendGeminiAPI,
+	})
 	if err != nil {
 		logger.Error(fmt.Sprintf("[GoogleAI] Failed to create client: %v", err))
 		return 0
 	}
-	defer client.Close()
 
-	model := client.GenerativeModel(modelName)
-	tokResp, err := model.CountTokens(ctx, genai.Text(prompt))
+	tokResp, err := client.Models.CountTokens(ctx, modelName, genai.Text(prompt), nil)
 	if err != nil {
 		logger.Error(fmt.Sprintf("[GoogleAI] Failed to count tokens: %v", err))
 		return 0 // ✅ Do NOT stop execution

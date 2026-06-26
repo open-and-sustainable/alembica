@@ -8,8 +8,7 @@ import (
 	"github.com/open-and-sustainable/alembica/definitions"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
-	genai "github.com/google/generative-ai-go/genai"
-	option "google.golang.org/api/option"
+	"google.golang.org/genai"
 )
 
 func queryGoogleAI(prompts []string, llm definitions.Model) ([]string, error) {
@@ -18,38 +17,39 @@ func queryGoogleAI(prompts []string, llm definitions.Model) ([]string, error) {
 	// Create a new context for API calls
 	ctx := context.Background()
 
-	// Create a new Google Generative AI client using the API key
-	client, err := genai.NewClient(ctx, option.WithAPIKey(llm.APIKey))
+	// Create a new Google Gemini API client using the API key
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{
+		APIKey:  llm.APIKey,
+		Backend: genai.BackendGeminiAPI,
+	})
 	if err != nil {
 		logger.Error(fmt.Sprintf("[GoogleAI] Failed to create client: %v", err))
 		return nil, err
 	}
-	defer client.Close()
 
 	// Log selected model
 	logger.Info(fmt.Sprintf("[GoogleAI] Using model: %s", llm.Model))
 
-	// Select and configure the generative model
-	model := client.GenerativeModel(llm.Model)
-	model.SetTemperature(float32(llm.Temperature))
-	model.SetCandidateCount(1)
-	model.ResponseMIMEType = "application/json"
+	// Configure the generative model
+	config := &genai.GenerateContentConfig{
+		Temperature:      genai.Ptr(float32(llm.Temperature)),
+		CandidateCount:   1,
+		ResponseMIMEType: "application/json",
+	}
 
-	// Start a new chat session
-	cs := model.StartChat()
+	// Start a new chat session; history is maintained automatically by SendMessage
+	cs, err := client.Chats.Create(ctx, llm.Model, config, nil)
+	if err != nil {
+		logger.Error(fmt.Sprintf("[GoogleAI] Failed to create chat: %v", err))
+		return nil, err
+	}
 
 	// Loop over prompts while maintaining chat history
 	for i, prompt := range prompts {
 		logger.Info(fmt.Sprintf("[GoogleAI] Sending prompt #%d: %s", i+1, prompt))
 
-		// Append user message to conversation history
-		cs.History = append(cs.History, &genai.Content{
-			Parts: []genai.Part{genai.Text(prompt)},
-			Role:  "user",
-		})
-
 		// Send message to model
-		resp, err := cs.SendMessage(ctx, genai.Text(prompt))
+		resp, err := cs.SendMessage(ctx, genai.Part{Text: prompt})
 		if err != nil {
 			logger.Error(fmt.Sprintf("[GoogleAI] Error on prompt #%d: %v", i+1, err))
 			return nil, fmt.Errorf("the Google AI response error: %v", err)
@@ -76,16 +76,8 @@ func queryGoogleAI(prompts []string, llm definitions.Model) ([]string, error) {
 			return nil, fmt.Errorf("no content in response")
 		}
 
-		// Iterate over parts to extract text
-		var resultText string
-		for _, part := range content.Parts {
-			switch v := part.(type) {
-			case genai.Text:
-				resultText += string(v)
-			default:
-				logger.Error(fmt.Sprintf("[GoogleAI] Unhandled response part type: %T", part))
-			}
-		}
+		// Concatenate all text parts of the response
+		resultText := resp.Text()
 
 		// Validate extracted text
 		if resultText == "" {
@@ -93,12 +85,8 @@ func queryGoogleAI(prompts []string, llm definitions.Model) ([]string, error) {
 			return nil, fmt.Errorf("empty response from Google AI")
 		}
 
-		// Append response to answers and history
+		// Append response to answers
 		answers = append(answers, resultText)
-		cs.History = append(cs.History, &genai.Content{
-			Parts: []genai.Part{genai.Text(resultText)},
-			Role:  "model",
-		})
 
 		logger.Info(fmt.Sprintf("[GoogleAI] Processed response for prompt #%d: %s", i+1, resultText))
 

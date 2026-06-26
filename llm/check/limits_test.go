@@ -5,7 +5,6 @@ import (
 	"strings"
 	"testing"
 
-	anthropic "github.com/anthropics/anthropic-sdk-go"
 	"github.com/sashabaranov/go-openai"
 )
 
@@ -31,7 +30,7 @@ func (mtc MockTokenCounter) GetNumTokensFromPrompt(prompt string, provider strin
 			return 4000 // Below the limit of 4096
 		}
 		return 5000 // Above the limit to test failure scenarios in other cases
-	case string(anthropic.ModelClaude_3_Haiku_20240307):
+	case "claude-3-haiku-20240307":
 		return 250000 // Exceeds the limit for demonstration
 	default:
 		return 5000 // Default token count should not trigger errors unless specified
@@ -84,7 +83,7 @@ func TestRunInputLimitsCheck(t *testing.T) {
 			name:     "Prompt exceeds token limit - Anthropic Claude",
 			prompt:   generateLongPrompt(250000), // Exceeds AnthropicMaxTokens
 			provider: "Anthropic",
-			model:    string(anthropic.ModelClaude_3_Haiku_20240307),
+			model:    "claude-3-haiku-20240307",
 			key:      "test-key",
 			wantErr:  true,
 			errMsg:   "number of tokens in prompt",

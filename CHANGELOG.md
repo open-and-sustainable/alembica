@@ -9,6 +9,11 @@ Removed: For features removed in this release.
 Fixed: For any bug fixes.
 Security: For vulnerabilities.
 
+## [0.3.4] - 2026-06-26
+### Changed
+- Migrated the GoogleAI and VertexAI providers off the deprecated `github.com/google/generative-ai-go` and `cloud.google.com/go/vertexai` libraries to the unified `google.golang.org/genai` SDK
+- Updated Go dependencies to their latest releases
+
 ## [0.3.3] - 2026-04-22
 ### Fixed
 - Missing cicd action.

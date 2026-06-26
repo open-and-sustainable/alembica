@@ -8,7 +8,7 @@ import (
 	"github.com/open-and-sustainable/alembica/definitions"
 	"github.com/open-and-sustainable/alembica/utils/logger"
 
-	genai "cloud.google.com/go/vertexai/genai"
+	"google.golang.org/genai"
 )
 
 func queryVertexAI(prompts []string, llm definitions.Model) ([]string, error) {
@@ -19,29 +19,33 @@ func queryVertexAI(prompts []string, llm definitions.Model) ([]string, error) {
 	}
 
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, llm.ProjectID, llm.Location)
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{
+		Project:  llm.ProjectID,
+		Location: llm.Location,
+		Backend:  genai.BackendVertexAI,
+	})
 	if err != nil {
 		logger.Error(fmt.Sprintf("[VertexAI] Failed to create client: %v", err))
 		return nil, err
 	}
-	defer client.Close()
 
-	model := client.GenerativeModel(llm.Model)
-	model.SetTemperature(float32(llm.Temperature))
-	model.SetCandidateCount(1)
-	model.ResponseMIMEType = "application/json"
+	config := &genai.GenerateContentConfig{
+		Temperature:      genai.Ptr(float32(llm.Temperature)),
+		CandidateCount:   1,
+		ResponseMIMEType: "application/json",
+	}
 
-	cs := model.StartChat()
+	// Start a new chat session; history is maintained automatically by SendMessage
+	cs, err := client.Chats.Create(ctx, llm.Model, config, nil)
+	if err != nil {
+		logger.Error(fmt.Sprintf("[VertexAI] Failed to create chat: %v", err))
+		return nil, err
+	}
 
 	for i, prompt := range prompts {
 		logger.Info(fmt.Sprintf("[VertexAI] Sending prompt #%d: %s", i+1, prompt))
 
-		cs.History = append(cs.History, &genai.Content{
-			Parts: []genai.Part{genai.Text(prompt)},
-			Role:  "user",
-		})
-
-		resp, err := cs.SendMessage(ctx, genai.Text(prompt))
+		resp, err := cs.SendMessage(ctx, genai.Part{Text: prompt})
 		if err != nil {
 			logger.Error(fmt.Sprintf("[VertexAI] Error on prompt #%d: %v", i+1, err))
 			return nil, fmt.Errorf("the Vertex AI response error: %v", err)
@@ -65,26 +69,13 @@ func queryVertexAI(prompts []string, llm definitions.Model) ([]string, error) {
 			return nil, fmt.Errorf("no content in response")
 		}
 
-		var resultText string
-		for _, part := range content.Parts {
-			switch v := part.(type) {
-			case genai.Text:
-				resultText += string(v)
-			default:
-				logger.Error(fmt.Sprintf("[VertexAI] Unhandled response part type: %T", part))
-			}
-		}
-
+		resultText := resp.Text()
 		if resultText == "" {
 			logger.Error(fmt.Sprintf("[VertexAI] No text content extracted for prompt #%d", i+1))
 			return nil, fmt.Errorf("empty response from Vertex AI")
 		}
 
 		answers = append(answers, resultText)
-		cs.History = append(cs.History, &genai.Content{
-			Parts: []genai.Part{genai.Text(resultText)},
-			Role:  "model",
-		})
 
 		if i < len(prompts)-1 {
 			Wait(prompt, llm)
