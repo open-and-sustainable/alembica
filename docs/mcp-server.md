@@ -39,11 +39,11 @@ alembica-mcp
 Use this when you want to run the MCP server without a local Go toolchain.
 
 ```sh
-docker pull ghcr.io/open-and-sustainable/alembica-mcp:0.3.3
-docker run --rm -i ghcr.io/open-and-sustainable/alembica-mcp:0.3.3
+docker pull ghcr.io/open-and-sustainable/alembica-mcp:0.3.4
+docker run --rm -i ghcr.io/open-and-sustainable/alembica-mcp:0.3.4
 ```
 
-Replace `0.3.3` with the released version you want to run.
+Replace `0.3.4` with the released version you want to run.
 
 ## Use from the MCP Registry
 
@@ -57,7 +57,7 @@ Registry references:
 
 - Discovery page: `https://registry.modelcontextprotocol.io/?q=alembica`
 - Server ID: `io.github.open-and-sustainable/alembica-mcp`
-- Versioned API example: `https://registry.modelcontextprotocol.io/v0.1/servers/io.github.open-and-sustainable%2Falembica-mcp/versions/0.3.3`
+- Versioned API example: `https://registry.modelcontextprotocol.io/v0.1/servers/io.github.open-and-sustainable%2Falembica-mcp/versions/0.3.4`
 
 ## Example Requests
 Example `tools/list` request:
