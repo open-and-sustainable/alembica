@@ -39,17 +39,17 @@ alembica-mcp
 Use this when you want to run the MCP server without a local Go toolchain.
 
 ```sh
-docker pull ghcr.io/open-and-sustainable/alembica-mcp:0.3.4
-docker run --rm -i ghcr.io/open-and-sustainable/alembica-mcp:0.3.4
+docker pull ghcr.io/open-and-sustainable/alembica-mcp:0.3.5
+docker run --rm -i ghcr.io/open-and-sustainable/alembica-mcp:0.3.5
 ```
 
-Replace `0.3.4` with the released version you want to run.
+Replace `0.3.5` with the released version you want to run.
 
 ## Use from the MCP Registry
 
 Use this when your agent platform supports MCP Registry server discovery and installation.
 
-The Alembica MCP server is published explicitly by GitHub Actions on pushed version tags such as `v0.3.2`, using GitHub OIDC authentication and the registry publisher CLI.
+The Alembica MCP server is published explicitly by GitHub Actions on pushed version tags such as `v0.3.5`, using GitHub OIDC authentication and the registry publisher CLI.
 
 The registry entry points to the published OCI package for the MCP server, so agents can resolve a versioned package rather than a repository source tree.
 
@@ -57,7 +57,7 @@ Registry references:
 
 - Discovery page: `https://registry.modelcontextprotocol.io/?q=alembica`
 - Server ID: `io.github.open-and-sustainable/alembica-mcp`
-- Versioned API example: `https://registry.modelcontextprotocol.io/v0.1/servers/io.github.open-and-sustainable%2Falembica-mcp/versions/0.3.4`
+- Versioned API example: `https://registry.modelcontextprotocol.io/v0.1/servers/io.github.open-and-sustainable%2Falembica-mcp/versions/0.3.5`
 
 ## Example Requests
 Example `tools/list` request:

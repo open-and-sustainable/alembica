@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 title: alembica - Open Science Software for Semantic Synthesis and Extraction of Information from Unstructured Sources.
 message: >-
-  v0.3.4 - Migrated Google AI providers to google.golang.org/genai.
+  v0.3.5 - Updated Go dependencies, including gRPC security fixes.
 type: software
 doi: 10.5281/zenodo.14899666
 authors:
